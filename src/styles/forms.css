@@ -610,6 +610,78 @@ button.location-current-btn:focus-visible {
   color: #8fb0c6;
 }
 
+/* Recent-locations history rows inside the suggestions dropdown */
+.location-recent-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.location-recent-row .location-recent-select {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.location-recent-icon {
+  flex-shrink: 0;
+  font-size: 0.85rem;
+  color: #8fb0c6;
+}
+
+.location-recent-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+button.location-recent-remove {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #8fb0c6;
+}
+
+button.location-recent-remove:not(:disabled):hover,
+button.location-recent-remove:focus-visible {
+  background: rgba(69, 133, 169, 0.2);
+  color: #dfebf6;
+  transform: none;
+  filter: none;
+}
+
+.location-suggestions-action {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: #9fc1da;
+  border-radius: 8px;
+  text-align: left;
+  padding: 8px 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.location-suggestions-action:not(:disabled):hover,
+.location-suggestions-action:focus-visible {
+  background: rgba(69, 133, 169, 0.2);
+  transform: none;
+  filter: none;
+}
+
+.location-suggestions-action--danger {
+  color: #ffbda8;
+}
+
 .theme-note {
   margin: 0 0 8px;
   font-size: 0.8rem;

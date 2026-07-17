@@ -87,8 +87,6 @@ export default function SettingsPanel({
   );
 
   const isAuxEditorActive = isColorEditorActive;
-  const showLocationSuggestions =
-    state.isLocationFocused && locationSuggestions.length > 0;
 
   const toggleSection = (id: SectionId) => {
     setOpenSections((prev) => {
@@ -130,7 +128,7 @@ export default function SettingsPanel({
                 onLocationFocus={() => setLocationFocused(true)}
                 onLocationBlur={() => setLocationFocused(false)}
                 searchNow={searchNow}
-                showLocationSuggestions={showLocationSuggestions}
+                isLocationFocused={state.isLocationFocused}
                 locationSuggestions={locationSuggestions}
                 isLocationSearching={isLocationSearching}
                 onLocationSelect={onLocationSelect}
