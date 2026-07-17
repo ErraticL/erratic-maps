@@ -10,6 +10,7 @@ import { localStorageCache } from "@/core/cache/localStorageCache";
 import { fetchAdapter } from "@/core/http/fetchAdapter";
 import { googleFontsAdapter } from "@/core/fonts/googleFontsAdapter";
 import { createNominatimAdapter } from "@/features/location/infrastructure/nominatimAdapter";
+import { createRecentLocationsStore } from "@/features/location/infrastructure/recentLocationsStore";
 
 /* ── Location / Geocoding ── */
 
@@ -18,6 +19,15 @@ const nominatim = createNominatimAdapter(fetchAdapter, localStorageCache);
 export const searchLocations = nominatim.searchLocations;
 export const geocodeLocation = nominatim.geocodeLocation;
 export const reverseGeocodeCoordinates = nominatim.reverseGeocode;
+
+/* ── Recent location history ── */
+
+const recentLocations = createRecentLocationsStore();
+
+export const listRecentLocations = recentLocations.list;
+export const addRecentLocation = recentLocations.add;
+export const removeRecentLocation = recentLocations.remove;
+export const clearRecentLocations = recentLocations.clear;
 
 /* ── Fonts ── */
 
