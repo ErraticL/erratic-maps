@@ -14,6 +14,16 @@ import "@fontsource/spline-sans-mono/400.css";
 import "@fontsource/spline-sans-mono/500.css";
 import "@fontsource/bebas-neue/400.css";
 
+// Default poster typefaces. Every poster falls back to these when no custom
+// font is chosen, but nothing ever loaded them — until now they silently
+// degraded to the generic sans/mono stack. Weights match preview.css.
+import "@fontsource/space-grotesk/300.css";
+import "@fontsource/space-grotesk/400.css";
+import "@fontsource/space-grotesk/700.css";
+import "@fontsource/ibm-plex-mono/300.css";
+import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource/ibm-plex-mono/700.css";
+
 import "./styles/index.css";
 
 const syncDisplayMode = () => {

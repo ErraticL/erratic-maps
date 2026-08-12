@@ -31,6 +31,14 @@ Bebas Neue
 Poster typefaces
 ----------------
 
+Space Grotesk (default poster title face)
+  Copyright 2020 The Space Grotesk Project Authors
+  https://github.com/floriankarsten/space-grotesk
+
+IBM Plex Mono (default poster body face)
+  Copyright 2017 IBM Corp. All rights reserved.
+  https://github.com/IBM/plex
+
 Lato
   Copyright (c) 2010-2011 by tyPoland Lukasz Dziedzic (team@latofonts.com),
   with Reserved Font Name "Lato".
