@@ -6,7 +6,7 @@ import { captureMapAsCanvas } from "@/features/export/infrastructure/mapExporter
 import { compositeExport } from "@/features/poster/infrastructure/renderer";
 import { resolveCanvasSize } from "@/features/poster/infrastructure/renderer/canvas";
 import { getAllMarkerIcons } from "@/features/markers/infrastructure/iconRegistry";
-import { ensureGoogleFont } from "@/core/services";
+import { ensureFont } from "@/core/services";
 import {
   createPngBlob,
   createPdfBlobFromCanvas,
@@ -138,7 +138,7 @@ export function useExport() {
       try {
         // Ensure font is loaded before compositing text
         if (form.showPosterText && form.fontFamily.trim()) {
-          await ensureGoogleFont(form.fontFamily.trim());
+          await ensureFont(form.fontFamily.trim());
         }
 
         const widthCm = Number(form.width) || DEFAULT_POSTER_WIDTH_CM;

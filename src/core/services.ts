@@ -8,7 +8,7 @@
 
 import { localStorageCache } from "@/core/cache/localStorageCache";
 import { fetchAdapter } from "@/core/http/fetchAdapter";
-import { googleFontsAdapter } from "@/core/fonts/googleFontsAdapter";
+import { localFontsAdapter } from "@/core/fonts/localFontsAdapter";
 import { createNominatimAdapter } from "@/features/location/infrastructure/nominatimAdapter";
 import { createRecentLocationsStore } from "@/features/location/infrastructure/recentLocationsStore";
 
@@ -31,8 +31,8 @@ export const clearRecentLocations = recentLocations.clear;
 
 /* ── Fonts ── */
 
-export const ensureGoogleFont =
-  googleFontsAdapter.ensureFont.bind(googleFontsAdapter);
+export const ensureFont =
+  localFontsAdapter.ensureFont.bind(localFontsAdapter);
 
 /* ── Poster compositing ── */
 

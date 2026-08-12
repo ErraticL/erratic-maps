@@ -37,7 +37,7 @@ import {
   DEFAULT_CITY,
   DEFAULT_COUNTRY,
 } from "@/core/config";
-import { ensureGoogleFont, reverseGeocodeCoordinates } from "@/core/services";
+import { ensureFont, reverseGeocodeCoordinates } from "@/core/services";
 import {
   createCustomLayoutOption,
   formatLayoutDimensions,
@@ -112,7 +112,7 @@ export default function PreviewPanel() {
     const family = form.fontFamily.trim();
     if (!family) return;
 
-    void ensureGoogleFont(family).catch(() => {
+    void ensureFont(family).catch(() => {
       // Ignore font loading failures; fallback stack remains in place.
     });
   }, [form.fontFamily]);
