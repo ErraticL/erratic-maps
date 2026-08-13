@@ -1,4 +1,5 @@
-﻿import {
+import { useState } from "react";
+import {
   APP_VERSION,
   CONTACT_EMAIL,
   LEGAL_NOTICE_URL,
@@ -6,6 +7,8 @@
 } from "@/core/config";
 import { InfoIcon } from "@/shared/ui/Icons";
 import { openLegalDoc } from "@/features/legal/application/legalDoc";
+import AttributionModal from "@/shared/ui/AttributionModal";
+import MapAttributionLinks from "@/shared/ui/MapAttributionLinks";
 
 function handleCookieSettings() {
   const gfc = (window as any).googlefc;
@@ -16,6 +19,7 @@ function handleCookieSettings() {
 
 export default function FooterNote() {
   const appVersion = APP_VERSION;
+  const [isAttributionOpen, setIsAttributionOpen] = useState(false);
   const contactEmail = String(CONTACT_EMAIL ?? "").trim();
   // These vars hold the raw markdown URLs; the links open the in-app modal.
   const imprintAvailable = Boolean(String(LEGAL_NOTICE_URL ?? "").trim());
@@ -83,54 +87,26 @@ export default function FooterNote() {
             OpenStreetMap contributors
           </a>
         </p>
+        {/* Desktop: opens the attribution modal (hidden on mobile via CSS). */}
         <button
           type="button"
           className="desktop-footer-info-btn"
           aria-label="More map attribution"
-          aria-expanded="false"
+          aria-haspopup="dialog"
+          aria-expanded={isAttributionOpen}
+          onClick={() => setIsAttributionOpen(true)}
         >
           <InfoIcon />
         </button>
+        {/* Mobile: shown inline inside the settings drawer (CSS controls it). */}
         <div className="desktop-footer-attribution">
-          Tiles &copy;{" "}
-          <a
-            className="source-link"
-            href="https://openmaptiles.org/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            OpenMapTiles
-          </a>
-          {" | "}Powered by{" "}
-          <a
-            className="source-link"
-            href="https://openfreemap.org/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            OpenFreeMap
-          </a>
-          {", "}
-          <a
-            className="source-link"
-            href="https://nominatim.openstreetmap.org/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Nominatim
-          </a>
-          {" & "}
-          <a
-            className="source-link"
-            href="https://maplibre.org/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            MapLibre
-          </a>
-          .
+          <MapAttributionLinks />
         </div>
       </div>
+
+      {isAttributionOpen && (
+        <AttributionModal onClose={() => setIsAttributionOpen(false)} />
+      )}
     </footer>
   );
 }
