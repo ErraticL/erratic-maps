@@ -9,6 +9,7 @@ import { InfoIcon } from "@/shared/ui/Icons";
 import { openLegalDoc } from "@/features/legal/application/legalDoc";
 import AttributionModal from "@/shared/ui/AttributionModal";
 import MapAttributionLinks from "@/shared/ui/MapAttributionLinks";
+import { trackEvent } from "@/shared/utils/analytics";
 
 function handleCookieSettings() {
   const gfc = (window as any).googlefc;
@@ -33,7 +34,11 @@ export default function FooterNote() {
       <div className="desktop-footer-left">
         <p className="source-note">
           {contactEmail && (
-            <a className="source-link" href={`mailto:${contactEmail}`}>
+            <a
+              className="source-link"
+              href={`mailto:${contactEmail}`}
+              onClick={() => trackEvent("email_click")}
+            >
               {contactEmail}
             </a>
           )}
@@ -42,7 +47,10 @@ export default function FooterNote() {
             <button
               type="button"
               className="source-link"
-              onClick={() => openLegalDoc("imprint")}
+              onClick={() => {
+                trackEvent("imprint_click");
+                openLegalDoc("imprint");
+              }}
             >
               Imprint
             </button>
@@ -52,7 +60,10 @@ export default function FooterNote() {
             <button
               type="button"
               className="source-link"
-              onClick={() => openLegalDoc("privacy")}
+              onClick={() => {
+                trackEvent("privacy_click");
+                openLegalDoc("privacy");
+              }}
             >
               Data Privacy
             </button>
@@ -61,7 +72,10 @@ export default function FooterNote() {
           <button
             type="button"
             className="source-link"
-            onClick={handleCookieSettings}
+            onClick={() => {
+              trackEvent("cookie_settings_click");
+              handleCookieSettings();
+            }}
           >
             Cookie Settings
           </button>
@@ -94,7 +108,10 @@ export default function FooterNote() {
           aria-label="More map attribution"
           aria-haspopup="dialog"
           aria-expanded={isAttributionOpen}
-          onClick={() => setIsAttributionOpen(true)}
+          onClick={() => {
+            trackEvent("attribution_opened");
+            setIsAttributionOpen(true);
+          }}
         >
           <InfoIcon />
         </button>
