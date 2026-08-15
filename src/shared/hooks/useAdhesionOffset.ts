@@ -12,11 +12,15 @@ import { useEffect } from "react";
  * every candidate they render and keeps whichever is actually flush with the
  * bottom of the viewport. Collapsed and off-screen wrappers contribute nothing.
  */
-const CONTAINER_ID = "fixed_container_bottom";
-const CANDIDATES = `#${CONTAINER_ID}, #${CONTAINER_ID} > *, .adhesion_wrapper`;
+// Only the individual ad slots, never Mediavine's outer container: that one is
+// also flush with the bottom but reserves room for the hidden video player, so
+// measuring it pushes the UI hundreds of pixels up.
+const CANDIDATES = "#fixed_container_bottom > *, .adhesion_wrapper";
 const CSS_VAR = "--ad-adhesion-height";
 // Treat "within a few px of the bottom" as flush, to absorb sub-pixel layout.
 const BOTTOM_TOLERANCE_PX = 4;
+// An adhesion bar is a banner; anything taller is a container we shouldn't clear.
+const MAX_PLAUSIBLE_HEIGHT_PX = 250;
 
 export function useAdhesionOffset(): void {
   useEffect(() => {
@@ -25,10 +29,18 @@ export function useAdhesionOffset(): void {
     const measure = () => {
       let covered = 0;
       for (const el of document.querySelectorAll<HTMLElement>(CANDIDATES)) {
+        // Mediavine keeps unfilled slots mounted but hidden; they reserve
+        // layout space, so height alone isn't enough to tell them apart.
+        if (getComputedStyle(el).visibility === "hidden") continue;
+
         const rect = el.getBoundingClientRect();
         const isFlushWithBottom =
           Math.abs(rect.bottom - window.innerHeight) <= BOTTOM_TOLERANCE_PX;
-        if (rect.height > 0 && isFlushWithBottom) {
+        if (
+          isFlushWithBottom &&
+          rect.height > 0 &&
+          rect.height <= MAX_PLAUSIBLE_HEIGHT_PX
+        ) {
           covered = Math.max(covered, rect.height);
         }
       }
