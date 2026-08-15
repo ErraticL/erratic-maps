@@ -868,7 +868,9 @@
     position: fixed;
     left: 0;
     right: 0;
-    bottom: 0;
+    /* Sit above the ad adhesion bar when one is present (see
+       useAdhesionOffset); 0 when it isn't. */
+    bottom: var(--ad-adhesion-height, 0px);
     z-index: 31;
     align-items: center;
     justify-content: space-between;
