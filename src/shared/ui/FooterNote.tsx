@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { useConsentButtonSlot } from "@/shared/hooks/useConsentButtonSlot";
 import {
   APP_VERSION,
   CONTACT_EMAIL,
@@ -35,6 +36,9 @@ function handleLegalClick(
 export default function FooterNote() {
   const appVersion = APP_VERSION;
   const [isAttributionOpen, setIsAttributionOpen] = useState(false);
+  // Mediavine's CMP injects its consent button; host it beside the legal links.
+  const consentSlotRef = useRef<HTMLSpanElement>(null);
+  useConsentButtonSlot(consentSlotRef);
   const contactEmail = String(CONTACT_EMAIL ?? "").trim();
   // These vars hold the raw markdown URLs; the links open the in-app modal.
   const imprintAvailable = Boolean(String(LEGAL_NOTICE_URL ?? "").trim());
@@ -73,6 +77,7 @@ export default function FooterNote() {
               Data Privacy
             </a>
           )}
+          <span className="footer-consent-slot" ref={consentSlotRef} />
         </p>
       </div>
 

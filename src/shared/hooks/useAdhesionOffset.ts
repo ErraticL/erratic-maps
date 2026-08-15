@@ -1,16 +1,18 @@
 import { useEffect } from "react";
 
 /**
- * Mediavine renders its adhesion ad and sticky video into a fixed-position
- * container pinned to the bottom of the viewport, which would otherwise cover
- * the app's own bottom-anchored UI (desktop footer, mobile nav).
+ * Mediavine pins its adhesion ad to the bottom of the viewport, where it would
+ * cover the app's own bottom-anchored UI (desktop footer, mobile nav).
  *
- * Publishes that container's height as `--ad-adhesion-height` so those
- * elements can sit above it. The value tracks the live height, which varies by
- * breakpoint (desktop vs mobile adhesion) and grows when the sticky video
- * player opens; it stays 0px when no ad is present.
+ * Publishes the adhesion bar's height as `--ad-adhesion-height` so those
+ * elements can sit above it. The value tracks the live height, which differs
+ * between the desktop and mobile units, and is 0 when no ad renders.
+ *
+ * Measures the adhesion wrapper itself rather than Mediavine's outer fixed
+ * container: that container also holds the sticky video player, which floats
+ * in the corner and is far taller than the bar actually blocking the footer.
  */
-const CONTAINER_ID = "fixed_container_bottom";
+const ADHESION_SELECTOR = ".adhesion_wrapper";
 const CSS_VAR = "--ad-adhesion-height";
 
 export function useAdhesionOffset(): void {
@@ -18,32 +20,33 @@ export function useAdhesionOffset(): void {
     const root = document.documentElement;
     let resizeObserver: ResizeObserver | null = null;
 
-    const observe = (container: HTMLElement) => {
+    const observe = (bars: HTMLElement[]) => {
+      // Mediavine ships a wrapper per breakpoint (desktop/tablet/mobile) and
+      // collapses the ones that don't apply, so take the tallest.
       const measure = () => {
-        // Measure the overlap with the viewport bottom rather than the
-        // element height: the container also holds collapsed/hidden wrappers
-        // that shouldn't push the UI up.
-        const { top, height } = container.getBoundingClientRect();
-        const covered = height > 0 ? Math.max(0, window.innerHeight - top) : 0;
-        root.style.setProperty(CSS_VAR, `${Math.round(covered)}px`);
+        const height = Math.max(...bars.map((bar) => bar.offsetHeight), 0);
+        root.style.setProperty(CSS_VAR, `${height}px`);
       };
       resizeObserver = new ResizeObserver(measure);
-      resizeObserver.observe(container);
+      bars.forEach((bar) => resizeObserver?.observe(bar));
       measure();
     };
 
-    const existing = document.getElementById(CONTAINER_ID);
-    if (existing) {
+    const find = () =>
+      Array.from(document.querySelectorAll<HTMLElement>(ADHESION_SELECTOR));
+
+    const existing = find();
+    if (existing.length > 0) {
       observe(existing);
       return () => resizeObserver?.disconnect();
     }
 
-    // Their script injects the container after load, so wait for it.
+    // Their script injects the bar after load, so wait for it.
     const mutationObserver = new MutationObserver(() => {
-      const container = document.getElementById(CONTAINER_ID);
-      if (!container) return;
+      const bars = find();
+      if (bars.length === 0) return;
       mutationObserver.disconnect();
-      observe(container);
+      observe(bars);
     });
     mutationObserver.observe(document.body, { childList: true, subtree: true });
 

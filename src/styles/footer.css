@@ -15,6 +15,28 @@
   color: #9bb3c5;
 }
 
+/* Hosts Mediavine's injected consent button (see useConsentButtonSlot).
+   Their markup is fixed, so match it to the neighbouring legal links here. */
+.footer-consent-slot:has(> *)::before {
+  content: " | ";
+}
+
+.footer-consent-slot,
+.footer-consent-slot > * {
+  display: inline;
+}
+
+.footer-consent-slot button {
+  color: #cbe8ff;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
 .source-link {
   color: #cbe8ff;
   text-decoration: underline;
