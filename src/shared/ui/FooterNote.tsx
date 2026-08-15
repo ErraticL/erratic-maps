@@ -6,10 +6,31 @@ import {
   PRIVACY_URL,
 } from "@/core/config";
 import { InfoIcon } from "@/shared/ui/Icons";
-import { openLegalDoc } from "@/features/legal/application/legalDoc";
+import {
+  openLegalDoc,
+  LEGAL_DOC_PAGES,
+  type LegalDocType,
+} from "@/features/legal/application/legalDoc";
 import AttributionModal from "@/shared/ui/AttributionModal";
 import MapAttributionLinks from "@/shared/ui/MapAttributionLinks";
 import { trackEvent } from "@/shared/utils/analytics";
+
+/**
+ * Legal links point at the build-time static pages so they're real, crawlable
+ * URLs, but a plain click opens the in-app modal instead. Modified clicks
+ * (new tab/window, middle click) fall through to the static page.
+ */
+function handleLegalClick(
+  event: React.MouseEvent<HTMLAnchorElement>,
+  doc: LegalDocType,
+) {
+  trackEvent(`${doc}_click`);
+  if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) {
+    return;
+  }
+  event.preventDefault();
+  openLegalDoc(doc);
+}
 
 function handleCookieSettings() {
   const gfc = (window as any).googlefc;
@@ -44,29 +65,23 @@ export default function FooterNote() {
           )}
           {contactEmail && (imprintAvailable || privacyAvailable) && " | "}
           {imprintAvailable && (
-            <button
-              type="button"
+            <a
               className="source-link"
-              onClick={() => {
-                trackEvent("imprint_click");
-                openLegalDoc("imprint");
-              }}
+              href={LEGAL_DOC_PAGES.imprint}
+              onClick={(event) => handleLegalClick(event, "imprint")}
             >
               Imprint
-            </button>
+            </a>
           )}
           {imprintAvailable && privacyAvailable && " | "}
           {privacyAvailable && (
-            <button
-              type="button"
+            <a
               className="source-link"
-              onClick={() => {
-                trackEvent("privacy_click");
-                openLegalDoc("privacy");
-              }}
+              href={LEGAL_DOC_PAGES.privacy}
+              onClick={(event) => handleLegalClick(event, "privacy")}
             >
               Data Privacy
-            </button>
+            </a>
           )}
           {hasLegalLinks && " | "}
           <button
