@@ -21,11 +21,20 @@ export function useAdhesionOffset(): void {
     let resizeObserver: ResizeObserver | null = null;
 
     const observe = (bars: HTMLElement[]) => {
-      // Mediavine ships a wrapper per breakpoint (desktop/tablet/mobile) and
-      // collapses the ones that don't apply, so take the tallest.
+      // Mediavine ships a wrapper per breakpoint and leaves the inactive ones
+      // in the DOM, so measure how much of the viewport bottom each actually
+      // covers rather than trusting its height: a wrapper that is collapsed or
+      // parked off-screen then contributes nothing.
       const measure = () => {
-        const height = Math.max(...bars.map((bar) => bar.offsetHeight), 0);
-        root.style.setProperty(CSS_VAR, `${height}px`);
+        const covered = bars.reduce((max, bar) => {
+          const rect = bar.getBoundingClientRect();
+          const overlap = Math.min(
+            Math.max(window.innerHeight - rect.top, 0),
+            rect.height,
+          );
+          return Math.max(max, overlap);
+        }, 0);
+        root.style.setProperty(CSS_VAR, `${Math.round(covered)}px`);
       };
       resizeObserver = new ResizeObserver(measure);
       bars.forEach((bar) => resizeObserver?.observe(bar));
