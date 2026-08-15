@@ -234,7 +234,23 @@ ${body}
   };
 }
 
+/**
+ * Emits ads.txt for whichever network is actually selling the inventory.
+ *
+ * Mediavine keeps the partner list current on their own servers and asks
+ * publishers to 301 /ads.txt there, so we emit a redirect rather than copy a
+ * snapshot that would go stale between deploys. AdSense has a single stable
+ * seller line, so that one is written directly.
+ *
+ * Under "both", AdSense is still the network serving ads (Mediavine's script
+ * is only present for pre-launch verification), so its seller line has to
+ * stay authorized — redirecting to Mediavine would deauthorize the inventory
+ * that is currently earning.
+ */
 function adsTxtPlugin() {
+  const MEDIAVINE_ADS_TXT = (siteId) =>
+    `https://adstxt.journeymv.com/sites/${siteId}/ads.txt`;
+
   let resolvedConfig;
   return {
     name: "ads-txt",
@@ -242,17 +258,47 @@ function adsTxtPlugin() {
       resolvedConfig = config;
     },
     closeBundle() {
-      const clientId = resolvedConfig.env.VITE_ADSENSE_PUBLISHER_ID;
+      const env = resolvedConfig.env;
+      const provider = String(env.VITE_AD_PROVIDER ?? "adsense")
+        .trim()
+        .toLowerCase();
+      const outDir = path.resolve(
+        resolvedConfig.root,
+        resolvedConfig.build.outDir,
+      );
+      const adsTxtPath = path.join(outDir, "ads.txt");
+
+      if (provider === "mediavine") {
+        const siteId = String(env.VITE_MEDIAVINE_SITE_ID ?? "").trim();
+        if (!siteId) {
+          console.warn(
+            "[ads-txt] VITE_MEDIAVINE_SITE_ID is not set — skipping ads.txt redirect",
+          );
+          return;
+        }
+        // A static file takes precedence over a redirect rule on most hosts,
+        // so make sure nothing shadows it.
+        fs.rmSync(adsTxtPath, { force: true });
+        fs.writeFileSync(
+          path.join(outDir, "_redirects"),
+          `/ads.txt ${MEDIAVINE_ADS_TXT(siteId)} 301\n`,
+          "utf8",
+        );
+        console.log("[ads-txt] wrote /ads.txt → Mediavine 301 redirect");
+        return;
+      }
+
+      const clientId = env.VITE_ADSENSE_PUBLISHER_ID;
       if (!clientId) {
         console.warn("[ads-txt] VITE_ADSENSE_PUBLISHER_ID is not set — skipping ads.txt generation");
         return;
       }
-      const outDir = path.resolve(resolvedConfig.root, resolvedConfig.build.outDir);
       fs.writeFileSync(
-        path.join(outDir, "ads.txt"),
+        adsTxtPath,
         `google.com, ${clientId}, DIRECT, f08c47fec0942fa0\n`,
         "utf8",
       );
+      console.log("[ads-txt] wrote AdSense ads.txt");
     },
   };
 }
