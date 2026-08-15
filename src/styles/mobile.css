@@ -424,7 +424,7 @@
   .mobile-export-fab-trigger {
     position: fixed;
     right: 16px;
-    bottom: calc(84px + env(safe-area-inset-bottom, 0px));
+    bottom: calc(84px + env(safe-area-inset-bottom, 0px) + var(--ad-adhesion-height, 0px));
     z-index: 101;
     width: 60px;
     height: 44px;
@@ -459,7 +459,7 @@
   .mobile-marker-edit-done {
     position: fixed;
     left: 16px;
-    bottom: calc(84px + env(safe-area-inset-bottom, 0px));
+    bottom: calc(84px + env(safe-area-inset-bottom, 0px) + var(--ad-adhesion-height, 0px));
     z-index: 101;
     display: inline-flex;
     align-items: center;
@@ -486,7 +486,7 @@
   }
 
   html[data-display-mode="standalone"] .mobile-marker-edit-done {
-    bottom: calc(74px + env(safe-area-inset-bottom, 0px));
+    bottom: calc(74px + env(safe-area-inset-bottom, 0px) + var(--ad-adhesion-height, 0px));
   }
 
   .mobile-export-modal-backdrop {

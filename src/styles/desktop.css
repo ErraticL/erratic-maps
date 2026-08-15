@@ -1090,7 +1090,7 @@
   .desktop-install-badge {
     display: flex;
     position: fixed;
-    bottom: 62px;
+    bottom: calc(62px + var(--ad-adhesion-height, 0px));
     left: 18px;
     z-index: 30;
     align-items: center;
@@ -1179,7 +1179,7 @@
   .desktop-export-fab {
     display: flex;
     position: fixed;
-    bottom: 52px;
+    bottom: calc(52px + var(--ad-adhesion-height, 0px));
     right: 18px;
     z-index: 30;
     flex-direction: column;
@@ -1340,7 +1340,7 @@
   .desktop-settings-deco {
     display: flex;
     position: fixed;
-    bottom: 18px;
+    bottom: calc(18px + var(--ad-adhesion-height, 0px));
     left: 18px;
     z-index: 20;
     align-items: center;
