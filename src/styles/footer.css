@@ -22,9 +22,14 @@
   content: " | ";
 }
 
+/* The wrapper needs the font reset too: `font: inherit` on the button would
+   otherwise inherit the size Mediavine sets on this wrapper. */
 .footer-consent-slot,
 .footer-consent-slot .consumer-privacy {
   display: inline !important;
+  font: inherit !important;
+  letter-spacing: inherit !important;
+  color: inherit !important;
 }
 
 .footer-consent-slot .consumer-privacy-btn {

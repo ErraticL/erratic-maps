@@ -2,66 +2,67 @@ import { useEffect } from "react";
 
 /**
  * Mediavine pins its adhesion ad to the bottom of the viewport, where it would
- * cover the app's own bottom-anchored UI (desktop footer, mobile nav).
+ * cover the app's own bottom-anchored UI (footer, nav, export button).
  *
- * Publishes the adhesion bar's height as `--ad-adhesion-height` so those
- * elements can sit above it. The value tracks the live height, which differs
- * between the desktop and mobile units, and is 0 when no ad renders.
+ * Publishes how far that ad reaches up the viewport as `--ad-adhesion-height`
+ * so those elements can sit above it, and 0 when no ad is showing.
  *
- * Measures the adhesion wrapper itself rather than Mediavine's outer fixed
- * container: that container also holds the sticky video player, which floats
- * in the corner and is far taller than the bar actually blocking the footer.
+ * Their markup is not a stable contract — wrapper classes and per-breakpoint
+ * containers change — so rather than matching a specific class, this measures
+ * every candidate they render and keeps whichever is actually flush with the
+ * bottom of the viewport. Collapsed and off-screen wrappers contribute nothing.
  */
-const ADHESION_SELECTOR = ".adhesion_wrapper";
+const CONTAINER_ID = "fixed_container_bottom";
+const CANDIDATES = `#${CONTAINER_ID}, #${CONTAINER_ID} > *, .adhesion_wrapper`;
 const CSS_VAR = "--ad-adhesion-height";
+// Treat "within a few px of the bottom" as flush, to absorb sub-pixel layout.
+const BOTTOM_TOLERANCE_PX = 4;
 
 export function useAdhesionOffset(): void {
   useEffect(() => {
     const root = document.documentElement;
-    let resizeObserver: ResizeObserver | null = null;
 
-    const observe = (bars: HTMLElement[]) => {
-      // Mediavine ships a wrapper per breakpoint and leaves the inactive ones
-      // in the DOM, so measure how much of the viewport bottom each actually
-      // covers rather than trusting its height: a wrapper that is collapsed or
-      // parked off-screen then contributes nothing.
-      const measure = () => {
-        const covered = bars.reduce((max, bar) => {
-          const rect = bar.getBoundingClientRect();
-          const overlap = Math.min(
-            Math.max(window.innerHeight - rect.top, 0),
-            rect.height,
-          );
-          return Math.max(max, overlap);
-        }, 0);
-        root.style.setProperty(CSS_VAR, `${Math.round(covered)}px`);
-      };
-      resizeObserver = new ResizeObserver(measure);
-      bars.forEach((bar) => resizeObserver?.observe(bar));
-      measure();
+    const measure = () => {
+      let covered = 0;
+      for (const el of document.querySelectorAll<HTMLElement>(CANDIDATES)) {
+        const rect = el.getBoundingClientRect();
+        const isFlushWithBottom =
+          Math.abs(rect.bottom - window.innerHeight) <= BOTTOM_TOLERANCE_PX;
+        if (rect.height > 0 && isFlushWithBottom) {
+          covered = Math.max(covered, rect.height);
+        }
+      }
+      root.style.setProperty(CSS_VAR, `${Math.round(covered)}px`);
     };
 
-    const find = () =>
-      Array.from(document.querySelectorAll<HTMLElement>(ADHESION_SELECTOR));
+    // Ad scripts mutate the DOM constantly and each measure forces layout, so
+    // coalesce bursts into a single read per frame.
+    let frame = 0;
+    const scheduleMeasure = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        measure();
+      });
+    };
 
-    const existing = find();
-    if (existing.length > 0) {
-      observe(existing);
-      return () => resizeObserver?.disconnect();
-    }
+    measure();
 
-    // Their script injects the bar after load, so wait for it.
-    const mutationObserver = new MutationObserver(() => {
-      const bars = find();
-      if (bars.length === 0) return;
-      mutationObserver.disconnect();
-      observe(bars);
+    // The ad is injected after load, resizes between breakpoints, and can be
+    // dismissed, so re-measure on DOM changes as well as viewport resizes.
+    const mutationObserver = new MutationObserver(scheduleMeasure);
+    mutationObserver.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["style", "class"],
     });
-    mutationObserver.observe(document.body, { childList: true, subtree: true });
+    window.addEventListener("resize", scheduleMeasure);
 
     return () => {
+      if (frame) cancelAnimationFrame(frame);
       mutationObserver.disconnect();
-      resizeObserver?.disconnect();
+      window.removeEventListener("resize", scheduleMeasure);
     };
   }, []);
 }
