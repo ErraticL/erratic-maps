@@ -197,7 +197,8 @@
 .export-fab-trigger-desktop {
   position: fixed;
   right: 18px;
-  bottom: 52px;
+  /* Clear the ad adhesion bar when one is present (see useAdhesionOffset). */
+  bottom: calc(52px + var(--ad-adhesion-height, 0px));
   z-index: 101;
   height: 44px;
   padding: 0 16px;
