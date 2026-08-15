@@ -21,9 +21,6 @@ import {
 } from "@/core/config";
 import { trackEvent, setUserProperty } from "@/core/services";
 
-export const ADBLOCK_LIMIT_EVENT = "terraink:adblock-limit";
-export const ADBLOCK_WARN_EVENT = "terraink:adblock-warn";
-
 const EXPORT_COUNT_STORAGE_KEY = "terraink.poster.count";
 
 export type SupportPromptVariant = "follow";

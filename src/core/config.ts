@@ -39,34 +39,6 @@ export const DEFAULT_LON = 9.732;
 export const DEFAULT_CITY = "Hanover";
 export const DEFAULT_COUNTRY = "Germany";
 
-/**
- * Per-type switches for ad components. Each ad placement is OFF unless its
- * VITE_ADS_*_ENABLED var is explicitly set to "true".
- *   infeed  → theme list + map settings
- *   sidebar → poster preview panel
- *   modal   → post-download support modal
- */
-const adTypeEnabled = (value: unknown): boolean =>
-  String(value ?? "").trim().toLowerCase() === "true";
-
-export const ADS_INFEED_ENABLED = adTypeEnabled(
-  import.meta.env.VITE_ADS_INFEED_ENABLED,
-);
-export const ADS_SIDEBAR_ENABLED = adTypeEnabled(
-  import.meta.env.VITE_ADS_SIDEBAR_ENABLED,
-);
-export const ADS_MODAL_ENABLED = adTypeEnabled(
-  import.meta.env.VITE_ADS_MODAL_ENABLED,
-);
-
-export const ADSENSE_AD_CLIENT = import.meta.env.VITE_ADSENSE_AD_CLIENT ?? "";
-export const AD_SLOT_INFEED = import.meta.env.VITE_AD_SLOT_INFEED ?? "";
-// data-ad-layout-key for the in-feed (fluid) unit — generated in AdSense.
-export const AD_LAYOUT_KEY_INFEED =
-  import.meta.env.VITE_AD_LAYOUT_KEY_INFEED ?? "";
-export const AD_SLOT_SIDEBAR = import.meta.env.VITE_AD_SLOT_SIDEBAR ?? "";
-export const AD_SLOT_MODAL = import.meta.env.VITE_AD_SLOT_MODAL ?? "";
-
 export const REPO_URL = import.meta.env.VITE_REPO_URL ?? "";
 export const REPO_API_URL = import.meta.env.VITE_REPO_API_URL ?? "";
 export const CONTACT_EMAIL = import.meta.env.VITE_CONTACT_EMAIL ?? "";

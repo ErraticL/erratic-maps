@@ -2,14 +2,6 @@ import type { RefObject } from "react";
 import ThemeCard from "./ThemeCard";
 import { EditIcon } from "@/shared/ui/Icons";
 import type { ThemeOption } from "../domain/types";
-import AdUnit from "@/shared/ui/AdUnit";
-import {
-  AD_SLOT_INFEED,
-  AD_LAYOUT_KEY_INFEED,
-  ADS_INFEED_ENABLED,
-} from "@/core/config";
-
-const AD_AFTER_NTH_CARD = 4;
 
 interface ThemeSummarySectionProps {
   listRef?: RefObject<HTMLDivElement>;
@@ -58,29 +50,14 @@ export default function ThemeSummarySection({
         aria-label="Theme options"
         ref={listRef}
       >
-        {themeOptions.flatMap((themeOption, i) => {
-          const card = (
-            <ThemeCard
-              key={themeOption.id}
-              themeOption={themeOption}
-              isSelected={themeOption.id === selectedThemeId}
-              onClick={() => onThemeSelect(themeOption.id)}
-            />
-          );
-          if ((i + 1) % AD_AFTER_NTH_CARD === 0) {
-            return [
-              card,
-              <AdUnit
-                key={`ad-theme-${i}`}
-                slot={AD_SLOT_INFEED}
-                enabled={ADS_INFEED_ENABLED}
-                format="fluid"
-                layoutKey={AD_LAYOUT_KEY_INFEED}
-              />,
-            ];
-          }
-          return [card];
-        })}
+        {themeOptions.map((themeOption) => (
+          <ThemeCard
+            key={themeOption.id}
+            themeOption={themeOption}
+            isSelected={themeOption.id === selectedThemeId}
+            onClick={() => onThemeSelect(themeOption.id)}
+          />
+        ))}
       </div>
     </div>
   );

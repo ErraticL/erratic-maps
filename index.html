@@ -140,7 +140,7 @@
         }
       }
     </script>
-    <!-- Consent Mode v2 — must load before GA4 and AdSense -->
+    <!-- Consent Mode v2 — must load before GA4 and the ad script -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
@@ -203,10 +203,10 @@
       });
     </script>
 
-    <!-- Mediavine ad script — injected by the ad-provider plugin when
+    <!-- Mediavine ad script — injected by the ads plugin when
          VITE_MEDIAVINE_SITE_ID is set. Placed ahead of GA4 so its CMP can
          signal consent before Analytics loads. -->
-    <!-- ad-provider:mediavine -->
+    <!-- mediavine-script -->
 
     <!-- GA4 -->
     <script
@@ -224,9 +224,6 @@
       });
     </script>
 
-    <!-- AdSense loader — injected by the ad-provider plugin when it is the
-         active provider and VITE_ADSENSE_AD_CLIENT is set. -->
-    <!-- ad-provider:adsense -->
   </head>
   <body>
     <div id="root"></div>

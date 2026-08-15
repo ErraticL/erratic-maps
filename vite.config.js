@@ -35,55 +35,59 @@ function getPackageName(id) {
 }
 
 /**
- * Selects which ad network's tags end up in index.html, so switching networks
- * is an env change rather than a code change.
+ * Wires up Mediavine: their loader script in index.html, and an ads.txt that
+ * 301s to their servers.
  *
- * VITE_AD_PROVIDER:
- *   "adsense"   (default) — AdSense only
- *   "mediavine"           — Mediavine only
- *   "both"                — both loaded, for Mediavine's pre-launch
- *                           verification while AdSense still earns
+ * The script tag is emitted from here rather than interpolated into the HTML
+ * so an unset site ID omits it entirely, instead of leaving a literal
+ * %VITE_…% placeholder that the browser would request and 404 on.
  *
- * A tag is emitted only when its network is selected *and* its ID is set.
- * Note that "both" is only valid while Mediavine is not yet serving ads —
- * once live, both networks require exclusivity.
+ * Mediavine keeps the partner list current on their own servers and asks
+ * publishers to redirect /ads.txt there, so we emit a redirect rather than
+ * copy a snapshot that would go stale between deploys.
  */
-function adProviderPlugin() {
-  const ADSENSE_MARKER = "<!-- ad-provider:adsense -->";
-  const MEDIAVINE_MARKER = "<!-- ad-provider:mediavine -->";
+function mediavinePlugin() {
+  const SCRIPT_MARKER = "<!-- mediavine-script -->";
 
-  let env;
+  let resolvedConfig;
+  const siteId = () =>
+    String(resolvedConfig.env.VITE_MEDIAVINE_SITE_ID ?? "").trim();
+
   return {
-    name: "ad-provider",
+    name: "mediavine",
     configResolved(config) {
-      env = config.env;
+      resolvedConfig = config;
     },
     transformIndexHtml(html) {
-      const provider = String(env.VITE_AD_PROVIDER ?? "adsense")
-        .trim()
-        .toLowerCase();
-      const adsenseClient = String(env.VITE_ADSENSE_AD_CLIENT ?? "").trim();
-      const mediavineSiteId = String(env.VITE_MEDIAVINE_SITE_ID ?? "").trim();
-
-      const wantsAdsense = provider === "adsense" || provider === "both";
-      const wantsMediavine = provider === "mediavine" || provider === "both";
-
-      // Both tags are emitted from here rather than interpolated in the HTML,
-      // so an unset ID omits the tag entirely instead of leaving a literal
-      // %VITE_…% placeholder that the browser would request and 404 on.
-      const adsenseTag =
-        wantsAdsense && adsenseClient
-          ? `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClient}" crossorigin="anonymous"></script>`
-          : "";
-
-      const mediavineTag =
-        wantsMediavine && mediavineSiteId
-          ? `<script type="text/javascript" async="async" data-noptimize="1" data-cfasync="false" src="//scripts.scriptwrapper.com/tags/${mediavineSiteId}.js"></script>`
-          : "";
-
-      return html
-        .replace(ADSENSE_MARKER, adsenseTag)
-        .replace(MEDIAVINE_MARKER, mediavineTag);
+      const id = siteId();
+      return html.replace(
+        SCRIPT_MARKER,
+        id
+          ? `<script type="text/javascript" async="async" data-noptimize="1" data-cfasync="false" src="//scripts.scriptwrapper.com/tags/${id}.js"></script>`
+          : "",
+      );
+    },
+    closeBundle() {
+      const id = siteId();
+      if (!id) {
+        console.warn(
+          "[mediavine] VITE_MEDIAVINE_SITE_ID is not set — skipping ads.txt redirect",
+        );
+        return;
+      }
+      const outDir = path.resolve(
+        resolvedConfig.root,
+        resolvedConfig.build.outDir,
+      );
+      // A static file takes precedence over a redirect rule on most hosts,
+      // so make sure nothing shadows it.
+      fs.rmSync(path.join(outDir, "ads.txt"), { force: true });
+      fs.writeFileSync(
+        path.join(outDir, "_redirects"),
+        `/ads.txt https://adstxt.journeymv.com/sites/${id}/ads.txt 301\n`,
+        "utf8",
+      );
+      console.log("[mediavine] wrote /ads.txt → 301 redirect");
     },
   };
 }
@@ -234,77 +238,8 @@ ${body}
   };
 }
 
-/**
- * Emits ads.txt for whichever network is actually selling the inventory.
- *
- * Mediavine keeps the partner list current on their own servers and asks
- * publishers to 301 /ads.txt there, so we emit a redirect rather than copy a
- * snapshot that would go stale between deploys. AdSense has a single stable
- * seller line, so that one is written directly.
- *
- * Under "both", AdSense is still the network serving ads (Mediavine's script
- * is only present for pre-launch verification), so its seller line has to
- * stay authorized — redirecting to Mediavine would deauthorize the inventory
- * that is currently earning.
- */
-function adsTxtPlugin() {
-  const MEDIAVINE_ADS_TXT = (siteId) =>
-    `https://adstxt.journeymv.com/sites/${siteId}/ads.txt`;
-
-  let resolvedConfig;
-  return {
-    name: "ads-txt",
-    configResolved(config) {
-      resolvedConfig = config;
-    },
-    closeBundle() {
-      const env = resolvedConfig.env;
-      const provider = String(env.VITE_AD_PROVIDER ?? "adsense")
-        .trim()
-        .toLowerCase();
-      const outDir = path.resolve(
-        resolvedConfig.root,
-        resolvedConfig.build.outDir,
-      );
-      const adsTxtPath = path.join(outDir, "ads.txt");
-
-      if (provider === "mediavine") {
-        const siteId = String(env.VITE_MEDIAVINE_SITE_ID ?? "").trim();
-        if (!siteId) {
-          console.warn(
-            "[ads-txt] VITE_MEDIAVINE_SITE_ID is not set — skipping ads.txt redirect",
-          );
-          return;
-        }
-        // A static file takes precedence over a redirect rule on most hosts,
-        // so make sure nothing shadows it.
-        fs.rmSync(adsTxtPath, { force: true });
-        fs.writeFileSync(
-          path.join(outDir, "_redirects"),
-          `/ads.txt ${MEDIAVINE_ADS_TXT(siteId)} 301\n`,
-          "utf8",
-        );
-        console.log("[ads-txt] wrote /ads.txt → Mediavine 301 redirect");
-        return;
-      }
-
-      const clientId = env.VITE_ADSENSE_PUBLISHER_ID;
-      if (!clientId) {
-        console.warn("[ads-txt] VITE_ADSENSE_PUBLISHER_ID is not set — skipping ads.txt generation");
-        return;
-      }
-      fs.writeFileSync(
-        adsTxtPath,
-        `google.com, ${clientId}, DIRECT, f08c47fec0942fa0\n`,
-        "utf8",
-      );
-      console.log("[ads-txt] wrote AdSense ads.txt");
-    },
-  };
-}
-
 export default defineConfig({
-  plugins: [react(), adProviderPlugin(), adsTxtPlugin(), legalPagesPlugin()],
+  plugins: [react(), mediavinePlugin(), legalPagesPlugin()],
   define: {
     "import.meta.env.VITE_APP_VERSION": JSON.stringify(appVersion),
   },
