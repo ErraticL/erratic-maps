@@ -35,6 +35,60 @@ function getPackageName(id) {
 }
 
 /**
+ * Selects which ad network's tags end up in index.html, so switching networks
+ * is an env change rather than a code change.
+ *
+ * VITE_AD_PROVIDER:
+ *   "adsense"   (default) — AdSense only
+ *   "mediavine"           — Mediavine only
+ *   "both"                — both loaded, for Mediavine's pre-launch
+ *                           verification while AdSense still earns
+ *
+ * A tag is emitted only when its network is selected *and* its ID is set.
+ * Note that "both" is only valid while Mediavine is not yet serving ads —
+ * once live, both networks require exclusivity.
+ */
+function adProviderPlugin() {
+  const ADSENSE_MARKER = "<!-- ad-provider:adsense -->";
+  const MEDIAVINE_MARKER = "<!-- ad-provider:mediavine -->";
+
+  let env;
+  return {
+    name: "ad-provider",
+    configResolved(config) {
+      env = config.env;
+    },
+    transformIndexHtml(html) {
+      const provider = String(env.VITE_AD_PROVIDER ?? "adsense")
+        .trim()
+        .toLowerCase();
+      const adsenseClient = String(env.VITE_ADSENSE_AD_CLIENT ?? "").trim();
+      const mediavineSiteId = String(env.VITE_MEDIAVINE_SITE_ID ?? "").trim();
+
+      const wantsAdsense = provider === "adsense" || provider === "both";
+      const wantsMediavine = provider === "mediavine" || provider === "both";
+
+      // Both tags are emitted from here rather than interpolated in the HTML,
+      // so an unset ID omits the tag entirely instead of leaving a literal
+      // %VITE_…% placeholder that the browser would request and 404 on.
+      const adsenseTag =
+        wantsAdsense && adsenseClient
+          ? `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClient}" crossorigin="anonymous"></script>`
+          : "";
+
+      const mediavineTag =
+        wantsMediavine && mediavineSiteId
+          ? `<script type="text/javascript" async="async" data-noptimize="1" data-cfasync="false" src="//scripts.scriptwrapper.com/tags/${mediavineSiteId}.js"></script>`
+          : "";
+
+      return html
+        .replace(ADSENSE_MARKER, adsenseTag)
+        .replace(MEDIAVINE_MARKER, mediavineTag);
+    },
+  };
+}
+
+/**
  * Renders the legal markdown docs from the meta repo into standalone HTML
  * pages at /privacy and /imprint (served from disk in builds, on demand in dev).
  *
@@ -204,7 +258,7 @@ function adsTxtPlugin() {
 }
 
 export default defineConfig({
-  plugins: [react(), adsTxtPlugin(), legalPagesPlugin()],
+  plugins: [react(), adProviderPlugin(), adsTxtPlugin(), legalPagesPlugin()],
   define: {
     "import.meta.env.VITE_APP_VERSION": JSON.stringify(appVersion),
   },
