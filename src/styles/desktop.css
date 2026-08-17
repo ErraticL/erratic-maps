@@ -796,7 +796,10 @@
     position: absolute;
     top: 14px;
     right: 14px;
-    width: 320px;
+    /* Ad networks require a 300px sidebar container excluding padding. Sized
+       so it still clears that if an ad lands inside the info card, whose
+       12px padding would otherwise leave only 296px. */
+    width: 344px;
     z-index: 16;
     display: flex;
     flex-direction: column;
