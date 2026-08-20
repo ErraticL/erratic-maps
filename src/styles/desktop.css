@@ -26,7 +26,6 @@
 .desktop-location-row-wrap,
 .desktop-settings-slide,
 .desktop-export-fab,
-.desktop-install-badge,
 .desktop-settings-deco,
 .desktop-left-panel {
   display: none;
@@ -1095,95 +1094,6 @@
     background: transparent;
     box-shadow: none;
     padding: 0;
-  }
-
-  /* ── Desktop Install Badge (floating, bottom-left, above settings deco) ── */
-
-  .desktop-install-badge {
-    display: flex;
-    position: fixed;
-    bottom: calc(62px + var(--ad-adhesion-height, 0px));
-    left: 18px;
-    z-index: 30;
-    align-items: center;
-    gap: 8px;
-    padding: 7px 10px 7px 12px;
-    background: rgba(9, 16, 24, 0.94);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(94, 174, 212, 0.3);
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.42);
-    animation: badge-slide-in var(--dur-medium) var(--ease-out);
-  }
-
-  @keyframes badge-slide-in {
-    from {
-      transform: translateY(8px);
-      opacity: 0;
-    }
-
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-
-  .desktop-install-badge-btn {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    padding: 0;
-    border: none;
-    background: transparent;
-    color: #b0cfe5;
-    font-size: 0.76rem;
-    font-weight: 600;
-    font-family: "Spline Sans Mono", monospace;
-    cursor: pointer;
-    transition: color var(--dur-press) var(--ease-out);
-    white-space: nowrap;
-  }
-
-  .desktop-install-badge-btn:hover {
-    transform: none;
-    filter: none;
-    color: #dff3ff;
-  }
-
-  .desktop-install-badge-icon {
-    width: 15px;
-    height: 15px;
-    opacity: 0.75;
-    flex-shrink: 0;
-  }
-
-  .desktop-install-badge-dismiss {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
-    flex-shrink: 0;
-    border: 1px solid rgba(146, 176, 200, 0.2);
-    border-radius: 6px;
-    background: transparent;
-    color: rgba(180, 205, 225, 0.48);
-    font-size: 0.75rem;
-    cursor: pointer;
-    padding: 0;
-    transition:
-      background var(--dur-press) var(--ease-out),
-      color var(--dur-press) var(--ease-out),
-      border-color var(--dur-press) var(--ease-out);
-  }
-
-  .desktop-install-badge-dismiss:hover {
-    transform: none;
-    filter: none;
-    background: rgba(255, 90, 70, 0.14);
-    color: #ff9985;
-    border-color: rgba(255, 90, 70, 0.38);
   }
 
   /* ── Desktop Export FAB (floating, bottom-right) ── */
