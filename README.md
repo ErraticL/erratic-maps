@@ -16,6 +16,10 @@ glacier carried far from its origin — this project is that boulder.
 - A **building height triad**: themes can color buildings in three
   tones by rendered height (low, mid, tall) instead of one blended
   color.
+- **Permalinks**: the URL hash always encodes location, distance,
+  theme, layout and the poster names, so the address bar is a
+  shareable link that restores the poster and skips the startup
+  dialog.
 
 ![Hanover in the Classic theme with height-triad buildings](./docs/images/showcase-classic-hanover.png)
 

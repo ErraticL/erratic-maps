@@ -21,6 +21,7 @@ import {
 } from "@/features/location/application/useRecentLocations";
 import LocationSuggestionsDropdown from "./LocationSuggestionsDropdown";
 import type { SearchResult } from "@/features/location/domain/types";
+import { readStartupPermalink } from "@/features/share/infrastructure/permalinkLocation";
 
 const CLOSE_ANIMATION_MS = 220;
 const DEFAULT_LOCATION_LABEL = "Hanover, Region Hannover, Lower Saxony, Germany";
@@ -42,7 +43,8 @@ export default function StartupLocationModal({
   onComplete,
 }: StartupLocationModalProps) {
   const { dispatch } = usePosterDispatch();
-  const [isOpen, setIsOpen] = useState(true);
+  // A permalink already answers the location question — skip the dialog.
+  const [isOpen, setIsOpen] = useState(() => readStartupPermalink() === null);
   const [isClosing, setIsClosing] = useState(false);
   const [locationInput, setLocationInput] = useState("");
   const [isInputFocused, setIsInputFocused] = useState(false);
