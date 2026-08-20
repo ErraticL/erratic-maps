@@ -323,8 +323,8 @@
   font-size: 0.78rem;
   cursor: pointer;
   transition:
-    background 0.15s,
-    border-color 0.15s;
+    background var(--dur-press) var(--ease-out),
+    border-color var(--dur-press) var(--ease-out);
 }
 
 .map-control-btn:hover:not(:disabled) {

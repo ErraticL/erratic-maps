@@ -35,7 +35,7 @@
 .updates-modal-progress-bar {
   height: 100%;
   background: linear-gradient(90deg, #56f8b3 0%, #7de3ff 100%);
-  transition: width 220ms ease;
+  transition: width var(--dur-short) var(--ease-in-out);
 }
 
 .updates-modal-close {

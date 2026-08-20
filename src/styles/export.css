@@ -123,7 +123,7 @@
 }
 
 .export-modal-option-icon.is-spinning {
-  animation: export-modal-spin 0.9s linear infinite;
+  animation: export-modal-spin var(--dur-spin) linear infinite;
 }
 
 @keyframes export-modal-spin {
@@ -219,7 +219,9 @@
   text-transform: uppercase;
   letter-spacing: 0.04em;
   cursor: pointer;
-  transition: background 0.18s ease, box-shadow 0.18s ease;
+  transition:
+    background var(--dur-short) var(--ease-out),
+    box-shadow var(--dur-short) var(--ease-out);
 }
 
 .export-fab-trigger-desktop:hover {

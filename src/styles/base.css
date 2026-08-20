@@ -12,6 +12,28 @@
   --item-bg: rgba(20, 38, 52, 0.94);
   --sheet-bg: rgba(11, 20, 30, 0.98);
   --overlay-bg: rgba(9, 16, 24, 0.97);
+
+  /* Motion vocabulary. Every transition and animation uses these tokens. */
+
+  /* An element that enters or exits uses this curve. It decelerates. */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  /* An element that moves or morphs on screen uses this curve. */
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  /* A drawer or a sheet uses this curve. It comes from iOS. */
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+
+  /* Press tier. Colour, border and small hover accents use this time. */
+  --dur-press: 160ms;
+  /* Short tier. A small panel enters or exits in this time. */
+  --dur-short: 200ms;
+  /* Medium tier. A modal, a drawer or an accordion uses this time. */
+  --dur-medium: 280ms;
+  /* One turn of a loading spinner. */
+  --dur-spin: 700ms;
+  /* One turn of a spinner when the user asks for reduced motion. */
+  --dur-spin-reduced: 1200ms;
+  /* The only time that motion takes when the user asks to reduce it. */
+  --dur-reduced: 120ms;
 }
 
 *,

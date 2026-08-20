@@ -163,8 +163,8 @@
     letter-spacing: 0.05em;
     cursor: pointer;
     transition:
-      background 0.15s ease,
-      color 0.15s ease;
+      background var(--dur-press) var(--ease-out),
+      color var(--dur-press) var(--ease-out);
     -webkit-tap-highlight-color: transparent;
     scroll-snap-align: start;
   }
@@ -228,11 +228,11 @@
     background: rgba(6, 12, 18, 0.42);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    animation: startup-location-fadein 0.25s ease;
+    animation: startup-location-fadein var(--dur-medium) var(--ease-out);
   }
 
   .startup-location-modal.is-closing {
-    animation: startup-location-fadeout 0.22s ease forwards;
+    animation: startup-location-fadeout var(--dur-short) var(--ease-out) forwards;
   }
 
   .startup-location-logo-wrap {
@@ -249,7 +249,7 @@
   .startup-location-logo {
     width: 98px;
     height: 98px;
-    animation: startup-location-logo-pop 1.05s cubic-bezier(0.24, 0.78, 0, 1);
+    animation: startup-location-logo-pop var(--dur-medium) var(--ease-out);
   }
 
   .startup-location-app-name {
@@ -314,8 +314,8 @@
     opacity: 0;
     transform: translateY(8px);
     transition:
-      opacity 0.2s ease,
-      transform 0.2s ease;
+      opacity var(--dur-short) var(--ease-out),
+      transform var(--dur-short) var(--ease-out);
   }
 
   .startup-location-card.is-visible {
@@ -406,18 +406,16 @@
     }
   }
 
+  /* The logo grows a small amount and fades in. It does not rotate.
+     It does not go past its final size. The motion stays short. */
   @keyframes startup-location-logo-pop {
-    0% {
+    from {
       opacity: 0;
-      transform: scale(0.78) rotate(-7deg);
+      transform: scale(0.94);
     }
-    60% {
+    to {
       opacity: 1;
-      transform: scale(1.06) rotate(2deg);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1) rotate(0deg);
+      transform: scale(1);
     }
   }
 
@@ -441,8 +439,8 @@
     opacity: 1;
     transform: translateY(0);
     transition:
-      opacity 0.22s ease,
-      transform 0.22s ease;
+      opacity var(--dur-short) var(--ease-out),
+      transform var(--dur-short) var(--ease-out);
   }
 
   .mobile-export-fab-trigger svg {
@@ -663,7 +661,7 @@
   }
 
   .mobile-export-option-icon.is-spinning {
-    animation: mobile-export-spin 0.9s linear infinite;
+    animation: mobile-export-spin var(--dur-spin) linear infinite;
   }
 
   @keyframes mobile-export-spin {
@@ -697,7 +695,7 @@
     -webkit-backdrop-filter: none;
     touch-action: none;
     opacity: 0;
-    transition: opacity 0.2s ease;
+    transition: opacity var(--dur-short) var(--ease-drawer);
   }
 
   .mobile-drawer[data-state="open"] .mobile-drawer-backdrop {
@@ -729,7 +727,7 @@
        A transition lets the drag take the sheet over while it arrives.
        The swipe hook sets and clears `transition` through an inline style. */
     transform: translateY(100%);
-    transition: transform 0.28s cubic-bezier(0.32, 0.72, 0, 1);
+    transition: transform var(--dur-medium) var(--ease-drawer);
   }
 
   .mobile-drawer[data-state="open"] .mobile-drawer-sheet {
@@ -739,7 +737,7 @@
   /* The exit is faster than the entry. */
   .mobile-drawer[data-state="closing"] .mobile-drawer-sheet {
     transform: translateY(100%);
-    transition-duration: 0.2s;
+    transition-duration: var(--dur-short);
   }
 
   /* The height changes in one step. The component animates the growth with a
@@ -748,16 +746,8 @@
     height: calc(100dvh - 64px);
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .mobile-drawer-backdrop,
-    .mobile-drawer-sheet {
-      transition-duration: 0.01ms;
-    }
-
-    .mobile-drawer[data-state="closing"] .mobile-drawer-sheet {
-      transition-duration: 0.01ms;
-    }
-  }
+  /* The drawer needs no reduced-motion rule of its own any more.
+     The global block in motion.css removes the slide and keeps the fade. */
 
   .mobile-drawer-handle {
     flex-shrink: 0;
@@ -1127,7 +1117,7 @@
     .dsk-loc-bar
     .location-row-icon-btn.is-locating
     .location-current-icon {
-    animation: mobile-location-spin 0.9s linear infinite;
+    animation: mobile-location-spin var(--dur-spin) linear infinite;
   }
 
   .mobile-location-row-wrap .dsk-loc-bar .location-suggestions {
@@ -1481,7 +1471,7 @@
   /* ── Mobile section animations ── */
 
   .mobile-section {
-    animation: mobile-section-fadein 0.18s ease;
+    animation: mobile-section-fadein var(--dur-short) var(--ease-out);
   }
 
   @keyframes mobile-section-fadein {

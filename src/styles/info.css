@@ -72,9 +72,9 @@
   font-weight: 600;
   line-height: 1;
   transition:
-    border-color 0.16s ease,
-    background-color 0.16s ease,
-    color 0.16s ease;
+    border-color var(--dur-press) var(--ease-out),
+    background-color var(--dur-press) var(--ease-out),
+    color var(--dur-press) var(--ease-out);
 }
 
 .github-badge:hover,
@@ -122,9 +122,9 @@
   font-weight: 600;
   line-height: 1;
   transition:
-    border-color 0.16s ease,
-    background-color 0.16s ease,
-    color 0.16s ease;
+    border-color var(--dur-press) var(--ease-out),
+    background-color var(--dur-press) var(--ease-out),
+    color var(--dur-press) var(--ease-out);
 }
 
 .footer-link:hover,
@@ -217,10 +217,10 @@
   text-decoration: none;
   flex: 0 0 auto;
   transition:
-    border-color 0.16s ease,
-    background-color 0.16s ease,
-    color 0.16s ease,
-    transform 0.12s ease;
+    border-color var(--dur-press) var(--ease-out),
+    background-color var(--dur-press) var(--ease-out),
+    color var(--dur-press) var(--ease-out),
+    transform var(--dur-press) var(--ease-out);
 }
 
 a.social-badge:hover,

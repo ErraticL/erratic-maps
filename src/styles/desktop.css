@@ -149,9 +149,9 @@
     justify-content: center;
     text-decoration: none;
     transition:
-      background 0.15s,
-      border-color 0.15s,
-      color 0.15s;
+      background var(--dur-press) var(--ease-out),
+      border-color var(--dur-press) var(--ease-out),
+      color var(--dur-press) var(--ease-out);
   }
 
   .general-header-social-btn svg {
@@ -194,9 +194,9 @@
 
   .general-header-text-btn {
     transition:
-      background 0.15s,
-      border-color 0.15s,
-      color 0.15s;
+      background var(--dur-press) var(--ease-out),
+      border-color var(--dur-press) var(--ease-out),
+      color var(--dur-press) var(--ease-out);
   }
 
   .general-header-text-btn:hover:not(:disabled) {
@@ -256,8 +256,8 @@
     letter-spacing: 0.04em;
     cursor: pointer;
     transition:
-      background 0.15s,
-      color 0.15s;
+      background var(--dur-press) var(--ease-out),
+      color var(--dur-press) var(--ease-out);
     -webkit-tap-highlight-color: transparent;
   }
 
@@ -437,9 +437,9 @@
     align-items: center;
     justify-content: center;
     transition:
-      background 0.15s,
-      border-color 0.15s,
-      color 0.15s;
+      background var(--dur-press) var(--ease-out),
+      border-color var(--dur-press) var(--ease-out),
+      color var(--dur-press) var(--ease-out);
   }
 
   .dsk-loc-bar button.location-row-icon-btn svg {
@@ -468,7 +468,7 @@
   }
 
   .dsk-loc-bar .location-row-icon-btn.is-locating .location-current-icon {
-    animation: desktop-location-spin 0.9s linear infinite;
+    animation: desktop-location-spin var(--dur-spin) linear infinite;
   }
 
   @keyframes desktop-location-spin {
@@ -968,7 +968,7 @@
     border-radius: 16px;
     box-shadow: 0 32px 64px rgba(0, 0, 0, 0.6);
     padding: 24px;
-    animation: about-modal-in 0.28s cubic-bezier(0.32, 0.72, 0, 1);
+    animation: about-modal-in var(--dur-medium) var(--ease-out);
   }
 
   .attribution-modal-title {
@@ -1017,7 +1017,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    animation: backdrop-fadein 0.2s ease;
+    animation: backdrop-fadein var(--dur-short) var(--ease-out);
   }
 
   .about-modal {
@@ -1030,7 +1030,7 @@
     border-radius: 20px;
     box-shadow: 0 32px 64px rgba(0, 0, 0, 0.6);
     padding: 32px;
-    animation: about-modal-in 0.28s cubic-bezier(0.32, 0.72, 0, 1);
+    animation: about-modal-in var(--dur-medium) var(--ease-out);
   }
 
   @keyframes about-modal-in {
@@ -1062,9 +1062,9 @@
     cursor: pointer;
     padding: 0;
     transition:
-      background 0.15s,
-      color 0.15s,
-      border-color 0.15s;
+      background var(--dur-press) var(--ease-out),
+      color var(--dur-press) var(--ease-out),
+      border-color var(--dur-press) var(--ease-out);
   }
 
   .about-modal-close:hover {
@@ -1105,7 +1105,7 @@
     border: 1px solid rgba(94, 174, 212, 0.3);
     border-radius: 12px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.42);
-    animation: badge-slide-in 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+    animation: badge-slide-in var(--dur-medium) var(--ease-out);
   }
 
   @keyframes badge-slide-in {
@@ -1132,7 +1132,7 @@
     font-weight: 600;
     font-family: "Spline Sans Mono", monospace;
     cursor: pointer;
-    transition: color 0.15s;
+    transition: color var(--dur-press) var(--ease-out);
     white-space: nowrap;
   }
 
@@ -1164,9 +1164,9 @@
     cursor: pointer;
     padding: 0;
     transition:
-      background 0.15s,
-      color 0.15s,
-      border-color 0.15s;
+      background var(--dur-press) var(--ease-out),
+      color var(--dur-press) var(--ease-out),
+      border-color var(--dur-press) var(--ease-out);
   }
 
   .desktop-install-badge-dismiss:hover {
@@ -1201,9 +1201,9 @@
     pointer-events: none;
     transform: translateY(6px);
     transition:
-      max-height 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-      opacity 0.2s ease,
-      transform 0.2s ease;
+      max-height var(--dur-medium) var(--ease-in-out),
+      opacity var(--dur-short) var(--ease-out),
+      transform var(--dur-short) var(--ease-out);
   }
 
   .desktop-export-fab:hover .desktop-export-flyout,
@@ -1233,9 +1233,9 @@
     white-space: nowrap;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
     transition:
-      background 0.15s,
-      border-color 0.15s,
-      color 0.15s;
+      background var(--dur-press) var(--ease-out),
+      border-color var(--dur-press) var(--ease-out),
+      color var(--dur-press) var(--ease-out);
   }
 
   .desktop-export-btn:disabled {
@@ -1320,7 +1320,7 @@
   }
 
   .is-spinning {
-    animation: spin 0.9s linear infinite;
+    animation: spin var(--dur-spin) linear infinite;
   }
 
   @keyframes spin {

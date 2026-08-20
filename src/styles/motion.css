@@ -1,0 +1,56 @@
+/* Global reduced-motion rules.
+   This file is the last import, so these rules win the cascade.
+   Reduced motion means gentle motion. It does not mean no motion.
+   The rules remove travel across the screen. They keep the fades and the
+   colour changes, because those changes tell the user what happened. */
+
+/* A short fade replaces every animation that moves an element. */
+@keyframes motion-reduced-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* No transition moves an element any more. The list of properties keeps
+     opacity, colour and shadow. It drops transform, size and position. */
+  *,
+  *::before,
+  *::after {
+    transition-property:
+      opacity, color, background, background-color, border-color, box-shadow,
+      fill, stroke !important;
+    transition-duration: var(--dur-reduced) !important;
+    transition-timing-function: var(--ease-out) !important;
+  }
+
+  /* Each animation below moves, scales or slides an element.
+     Each one becomes a short fade in place. */
+  .startup-location-logo,
+  .attribution-modal,
+  .about-modal,
+  .desktop-install-badge,
+  .mobile-section,
+  .location-suggestions,
+  .startup-location-suggestions {
+    animation-name: motion-reduced-fade !important;
+    animation-duration: var(--dur-reduced) !important;
+    animation-timing-function: var(--ease-out) !important;
+  }
+
+  /* Each animation below only changes opacity. It stays, but it gets short. */
+  .startup-location-modal,
+  .about-modal-backdrop {
+    animation-duration: var(--dur-reduced) !important;
+  }
+
+  /* A spinner must keep turning. The turn is the only sign that the app
+     still works. The spinner turns more slowly instead. */
+  .is-spinning,
+  .location-current-icon {
+    animation-duration: var(--dur-spin-reduced) !important;
+  }
+}
