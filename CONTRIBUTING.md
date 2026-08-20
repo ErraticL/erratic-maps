@@ -1,4 +1,4 @@
-# Contributing to Terraink
+# Contributing to Erratic Maps
 
 Thanks for your interest in contributing. This guide explains the required workflow and the engineering standards used in this repository.
 
@@ -9,8 +9,8 @@ These requirements exist to keep the codebase coherent, extensible, and maintain
 ### 1. Clone and install
 
 ```bash
-git clone https://github.com/yousifamanuel/terraink.git
-cd terraink
+git clone https://github.com/ErraticL/erratic-maps.git
+cd erratic-maps
 bun install
 ```
 
