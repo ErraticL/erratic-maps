@@ -17,6 +17,11 @@ glacier carried far from its origin — this project is that boulder.
   tones by rendered height (low, mid, tall) instead of one blended
   color.
 
+![Hanover in the Classic theme with height-triad buildings](./docs/images/showcase-classic-hanover.png)
+
+The poster above is Hanover in the Classic theme: yellow buildings are
+low, orange buildings are mid-rise, red buildings are tall.
+
 ## Features (from upstream)
 
 - **Custom city map posters** for any location in the world, powered by real OpenStreetMap data

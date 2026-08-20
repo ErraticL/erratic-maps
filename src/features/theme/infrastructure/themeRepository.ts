@@ -337,7 +337,9 @@ export const themeOptions: ThemeOption[] = themeNames.map((name) => ({
   palette: getThemePalette(themesByName[name]),
 }));
 
-const preferredDefaultThemeName = "midnight_blue";
+// Erratic Maps opens with its own exclusive theme instead of the
+// upstream default "midnight_blue".
+const preferredDefaultThemeName = "classic";
 
 export const defaultThemeName = themeNames.includes(preferredDefaultThemeName)
   ? preferredDefaultThemeName

@@ -67,7 +67,9 @@ export const DEFAULT_FORM: PosterForm = {
   showPosterText: true,
   includeCredits: true,
   includeLandcover: true,
-  includeBuildings: false,
+  // Erratic Maps default: ON, so the height-triad themes show their
+  // three-tone buildings without a trip to the Layers panel.
+  includeBuildings: true,
   includeWater: true,
   includeParks: true,
   includeAeroway: true,
