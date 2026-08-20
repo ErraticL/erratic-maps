@@ -41,6 +41,20 @@ const DesktopLocationBar = lazy(() => import("@/shared/ui/DesktopLocationBar"));
 /** The exit transition of the sheet, in milliseconds. It matches mobile.css. */
 const DRAWER_EXIT_MS = 200;
 
+/**
+ * The viewport test for the mobile layout. It matches the media query at the
+ * top of mobile.css exactly. Keep the two the same. A difference would render
+ * one panel while the stylesheet shows the other.
+ */
+const MOBILE_VIEWPORT_QUERY =
+  "(max-width: 768px), (hover: none) and (pointer: coarse)";
+
+/** Reports whether the mobile layout applies now. */
+function matchesMobileViewport() {
+  if (typeof window === "undefined" || !window.matchMedia) return false;
+  return window.matchMedia(MOBILE_VIEWPORT_QUERY).matches;
+}
+
 /** Returns true when the user asks the system for less motion. */
 function prefersReducedMotion() {
   if (typeof window === "undefined" || !window.matchMedia) return false;
@@ -190,7 +204,9 @@ export default function AppShell() {
   const [mobileDrawerMounted, setMobileDrawerMounted] = useState(false);
   const [mobileLocationRowVisible, setMobileLocationRowVisible] =
     useState(true);
-  const [isMobileViewport, setIsMobileViewport] = useState(false);
+  // Read the viewport before the first render. A false start would mount the
+  // desktop panel on a phone for one frame, and then throw it away.
+  const [isMobileViewport, setIsMobileViewport] = useState(matchesMobileViewport);
 
   // Desktop state
   const [desktopTab, setDesktopTab] = useState<MobileTab>("theme");
@@ -232,9 +248,7 @@ export default function AppShell() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const mediaQuery = window.matchMedia(
-      "(max-width: 768px), (hover: none) and (pointer: coarse)",
-    );
+    const mediaQuery = window.matchMedia(MOBILE_VIEWPORT_QUERY);
     const syncViewport = () => setIsMobileViewport(mediaQuery.matches);
     syncViewport();
     mediaQuery.addEventListener("change", syncViewport);
@@ -377,15 +391,20 @@ export default function AppShell() {
         </div>
       ) : null}
 
-      <div className="desktop-left-panel">
-        <div
-          className={`desktop-settings-slide${desktopPanelOpen ? " is-open" : ""}`}
-        >
-          <Suspense fallback={null}>
-            <SettingsPanel />
-          </Suspense>
+      {/* The mobile drawer holds its own settings panel. Mount this one only
+          when the desktop layout applies. A hidden panel still runs every
+          hook and redraws on every change to the poster. */}
+      {isMobileViewport ? null : (
+        <div className="desktop-left-panel">
+          <div
+            className={`desktop-settings-slide${desktopPanelOpen ? " is-open" : ""}`}
+          >
+            <Suspense fallback={null}>
+              <SettingsPanel />
+            </Suspense>
+          </div>
         </div>
-      </div>
+      )}
 
       <PreviewPanel />
 
