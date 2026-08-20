@@ -1,5 +1,59 @@
 {
   "themes": {
+    "classic": {
+      "name": "Classic",
+      "description": "Warm cream with ink roads and height-graded amber buildings",
+      "ui": {
+        "bg": "#F2F0E4",
+        "text": "#2F3737"
+      },
+      "map": {
+        "land": "#F2F0E4",
+        "landcover": "#E5E2D0",
+        "water": "#A1E3FF",
+        "waterway": "#A1E3FF",
+        "parks": "#C4D6A4",
+        "buildings": "#E9724C",
+        "buildings_triad": ["#FFC857", "#E9724C", "#C5283D"],
+        "aeroway": "#E2EDE9",
+        "rail": "#2F3737",
+        "roads": {
+          "major": "#2F3737",
+          "minor_high": "#2F3737",
+          "minor_mid": "#2F3737",
+          "minor_low": "#2F3737",
+          "path": "#2F3737",
+          "outline": "#F2F0E4"
+        }
+      }
+    },
+    "candy": {
+      "name": "Candy",
+      "description": "Soft pastels with height-graded sugar-tone buildings",
+      "ui": {
+        "bg": "#FDF6F0",
+        "text": "#5D576B"
+      },
+      "map": {
+        "land": "#FDF6F0",
+        "landcover": "#F4ECE2",
+        "water": "#A8D8EA",
+        "waterway": "#A8D8EA",
+        "parks": "#B8E0D2",
+        "buildings": "#F38181",
+        "buildings_triad": ["#FCE38A", "#F38181", "#C76B98"],
+        "aeroway": "#ECF0EF",
+        "rail": "#5D576B",
+        "roads": {
+          "major": "#5D576B",
+          "minor_high": "#5D576B",
+          "minor_mid": "#5D576B",
+          "minor_low": "#5D576B",
+          "path": "#5D576B",
+          "outline": "#FDF6F0"
+        }
+      }
+    },
     "carrara": {
       "name": "Carrara",
       "description": "White marble — pale stone with soft charcoal veining",

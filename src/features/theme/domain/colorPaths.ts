@@ -65,5 +65,10 @@ export function applyThemeColorOverrides(
     setThemeColorByPath(nextTheme as unknown as Record<string, unknown>, keyPath, color);
   }
 
+  // A user-picked building color wins over the theme's height triad.
+  if (typeof overrides["map.buildings"] === "string") {
+    delete nextTheme.map.buildingsTriad;
+  }
+
   return nextTheme;
 }

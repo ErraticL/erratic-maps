@@ -210,6 +210,30 @@ export function generateMapStyle(
       BUILDING_BLEND_FACTOR,
     );
 
+  // Opt-in three-tone building fill keyed on render_height. Height is used
+  // instead of feature id because low-zoom tiles aggregate whole blocks into
+  // per-tile blobs: id-based colors paint tile-shaped zones and split
+  // buildings at tile seams, while height is identical on both sides of a
+  // seam. Aggregated blobs carry no render_height and fall back to the mid
+  // tone.
+  const buildingTriad = theme.map.buildingsTriad;
+  const buildingFillColor: any = buildingTriad
+    ? [
+        "case",
+        ["!", ["has", "render_height"]],
+        buildingTriad[1],
+        [
+          "step",
+          ["get", "render_height"],
+          buildingTriad[0], // under 10 m
+          10,
+          buildingTriad[1], // 10 to 24 m
+          24,
+          buildingTriad[2], // 24 m and taller
+        ],
+      ]
+    : buildingFill;
+
   const includeLandcover = options?.includeLandcover ?? true;
   const includeBuildings = options?.includeBuildings ?? true;
   const includeWater = options?.includeWater ?? true;
@@ -365,7 +389,7 @@ export function generateMapStyle(
         minzoom: buildingMinZoom,
         layout: { visibility: includeBuildings ? ("visible" as const) : ("none" as const) },
         paint: {
-          "fill-color": buildingFill,
+          "fill-color": buildingFillColor,
           "fill-opacity": BUILDING_FILL_OPACITY,
         },
       },

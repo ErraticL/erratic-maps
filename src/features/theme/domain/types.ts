@@ -19,6 +19,14 @@ export interface ThemeMapColors {
   waterway: string;
   parks: string;
   buildings: string;
+  /**
+   * Optional three-tone building fill keyed on rendered height:
+   * [low (< 10 m), mid (10–24 m), tall (>= 24 m)]. When present, the map
+   * colors buildings by height; `buildings` stays the single mid tone for
+   * palettes, the editor, and fallbacks. Themes opt in via a
+   * `buildings_triad` array in themes.json.
+   */
+  buildingsTriad?: [string, string, string];
   aeroway: string;
   rail: string;
   roads: ThemeRoadColors;

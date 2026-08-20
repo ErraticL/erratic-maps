@@ -108,6 +108,8 @@ const referenceAliases: Record<string, string> = {
 };
 
 const preferredThemeOrder = [
+  "classic",
+  "candy",
   "carrara",
   "blush",
   "sandstone",
@@ -183,6 +185,21 @@ function resolveByCandidates(theme: ThemeObject, candidates: string[]): string {
   return "";
 }
 
+/**
+ * Reads the opt-in `map.buildings_triad` array ([low, mid, tall]). Anything
+ * other than three plain CSS colors is ignored, so a malformed theme falls
+ * back to the single `buildings` color.
+ */
+function readBuildingsTriad(
+  theme: ThemeObject,
+): [string, string, string] | undefined {
+  const raw = getPathValue(theme, "map.buildings_triad");
+  if (!Array.isArray(raw) || raw.length !== 3) return undefined;
+  const colors = raw.map((value) => String(value ?? "").trim());
+  if (!colors.every((color) => isCssColor(color))) return undefined;
+  return [colors[0], colors[1], colors[2]];
+}
+
 function normalizeTheme(themeInput: unknown): ResolvedTheme {
   const theme = isObject(themeInput) ? themeInput : {};
 
@@ -231,8 +248,10 @@ function normalizeTheme(themeInput: unknown): ResolvedTheme {
     resolveByCandidates(theme, themeColorLookup["map.roads.outline"]) ||
     blendHex(land, uiText, 0.12);
 
+  const buildingsTriad = readBuildingsTriad(theme);
   const buildings =
     resolveByCandidates(theme, themeColorLookup["map.buildings"]) ||
+    buildingsTriad?.[1] ||
     blendHex(land, uiText, 0.14);
   const aeroway =
     resolveByCandidates(theme, themeColorLookup["map.aeroway"]) ||
@@ -261,6 +280,7 @@ function normalizeTheme(themeInput: unknown): ResolvedTheme {
       waterway,
       parks,
       buildings,
+      ...(buildingsTriad ? { buildingsTriad } : {}),
       aeroway,
       rail,
       roads: {
