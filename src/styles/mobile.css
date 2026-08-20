@@ -169,9 +169,11 @@
     scroll-snap-align: start;
   }
 
-  .mobile-nav-tab:not(:disabled):hover {
-    transform: none;
-    filter: none;
+  @media (hover: hover) and (pointer: fine) {
+    .mobile-nav-tab:not(:disabled):hover {
+      transform: none;
+      filter: none;
+    }
   }
 
   .mobile-nav-tab.is-active {

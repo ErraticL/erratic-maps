@@ -271,9 +271,11 @@ pre.install-help-modal-text {
   background: rgb(10 20 31 / 92%);
 }
 
-.accordion-header:hover {
-  color: #dff0ff;
-  background: rgba(94, 174, 212, 0.07);
+@media (hover: hover) and (pointer: fine) {
+  .accordion-header:hover {
+    color: #dff0ff;
+    background: rgba(94, 174, 212, 0.07);
+  }
 }
 
 .accordion-header.is-open {
@@ -440,11 +442,13 @@ button.install-prompt-btn {
     box-shadow var(--dur-press) var(--ease-out);
 }
 
-button.install-prompt-btn:hover {
-  transform: none;
-  filter: none;
-  border-color: rgba(130, 200, 240, 0.85);
-  box-shadow: 0 0 18px rgba(94, 174, 212, 0.4);
+@media (hover: hover) and (pointer: fine) {
+  button.install-prompt-btn:hover {
+    transform: none;
+    filter: none;
+    border-color: rgba(130, 200, 240, 0.85);
+    box-shadow: 0 0 18px rgba(94, 174, 212, 0.4);
+  }
 }
 
 button.install-prompt-dismiss {
@@ -470,12 +474,14 @@ button.install-prompt-dismiss {
     background var(--dur-press) var(--ease-out);
 }
 
-button.install-prompt-dismiss:hover {
-  transform: none;
-  filter: none;
-  color: #a8cfe5;
-  border-color: rgba(94, 174, 212, 0.45);
-  background: rgba(94, 174, 212, 0.025);
+@media (hover: hover) and (pointer: fine) {
+  button.install-prompt-dismiss:hover {
+    transform: none;
+    filter: none;
+    color: #a8cfe5;
+    border-color: rgba(94, 174, 212, 0.45);
+    background: rgba(94, 174, 212, 0.025);
+  }
 }
 
 .install-prompt-share-icon {

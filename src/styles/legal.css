@@ -24,10 +24,16 @@ button.legal-modal__close {
   cursor: pointer;
 }
 
-button.legal-modal__close:hover,
 button.legal-modal__close:focus-visible {
   background: rgba(151, 183, 207, 0.16);
   color: #fff;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button.legal-modal__close:hover {
+    background: rgba(151, 183, 207, 0.16);
+    color: #fff;
+  }
 }
 
 .legal-modal__body {
@@ -99,8 +105,10 @@ button.legal-modal__close:focus-visible {
   word-break: break-word;
 }
 
-.legal-modal__content a:hover {
-  text-decoration: underline;
+@media (hover: hover) and (pointer: fine) {
+  .legal-modal__content a:hover {
+    text-decoration: underline;
+  }
 }
 
 .legal-modal__content hr {

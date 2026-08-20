@@ -64,9 +64,14 @@
   cursor: pointer;
 }
 
-.source-link:hover,
 .source-link:focus-visible {
   color: #ecf8ff;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .source-link:hover {
+    color: #ecf8ff;
+  }
 }
 
 .made-note {

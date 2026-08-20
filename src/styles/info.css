@@ -77,11 +77,18 @@
     color var(--dur-press) var(--ease-out);
 }
 
-.github-badge:hover,
 .github-badge:focus-visible {
   border-color: rgba(120, 179, 214, 0.75);
   background: rgba(20, 39, 54, 0.95);
   color: #ecf8ff;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .github-badge:hover {
+    border-color: rgba(120, 179, 214, 0.75);
+    background: rgba(20, 39, 54, 0.95);
+    color: #ecf8ff;
+  }
 }
 
 .stars-badge {
@@ -89,11 +96,18 @@
   border-color: rgba(255, 208, 105, 0.38);
 }
 
-.stars-badge:hover,
 .stars-badge:focus-visible {
   color: #ffe7b1;
   border-color: rgba(255, 220, 138, 0.78);
   background: rgba(47, 35, 16, 0.9);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .stars-badge:hover {
+    color: #ffe7b1;
+    border-color: rgba(255, 220, 138, 0.78);
+    background: rgba(47, 35, 16, 0.9);
+  }
 }
 
 .badge-icon {
@@ -127,11 +141,18 @@
     color var(--dur-press) var(--ease-out);
 }
 
-.footer-link:hover,
 .footer-link:focus-visible {
   border-color: rgba(120, 179, 214, 0.75);
   background: rgba(20, 39, 54, 0.95);
   color: #ecf8ff;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .footer-link:hover {
+    border-color: rgba(120, 179, 214, 0.75);
+    background: rgba(20, 39, 54, 0.95);
+    color: #ecf8ff;
+  }
 }
 
 .footer-links-note {
@@ -223,12 +244,20 @@
     transform var(--dur-press) var(--ease-out);
 }
 
-a.social-badge:hover,
 a.social-badge:focus-visible {
   border-color: rgba(120, 179, 214, 0.75);
   background: rgba(20, 39, 54, 0.95);
   color: #ecf8ff;
   transform: translateY(-1px);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  a.social-badge:hover {
+    border-color: rgba(120, 179, 214, 0.75);
+    background: rgba(20, 39, 54, 0.95);
+    color: #ecf8ff;
+    transform: translateY(-1px);
+  }
 }
 
 .social-badge--inactive {

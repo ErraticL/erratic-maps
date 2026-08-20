@@ -362,12 +362,20 @@ button.location-current-btn {
   height: 22px;
 }
 
-button.location-current-btn:not(:disabled):hover,
 button.location-current-btn:focus-visible {
   transform: none;
   filter: none;
   border-color: rgba(112, 184, 222, 0.8);
   background: rgba(47, 79, 102, 0.95);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button.location-current-btn:not(:disabled):hover {
+    transform: none;
+    filter: none;
+    border-color: rgba(112, 184, 222, 0.8);
+    background: rgba(47, 79, 102, 0.95);
+  }
 }
 
 .location-permission-message {
@@ -422,14 +430,21 @@ button.location-current-btn:focus-visible {
   font-weight: 500;
 }
 
-.location-suggestion:hover,
 .location-suggestion:focus-visible {
   background: rgba(69, 133, 169, 0.2);
 }
 
-.location-suggestion:not(:disabled):hover {
-  transform: none;
-  filter: none;
+@media (hover: hover) and (pointer: fine) {
+  .location-suggestion:hover {
+    background: rgba(69, 133, 169, 0.2);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .location-suggestion:not(:disabled):hover {
+    transform: none;
+    filter: none;
+  }
 }
 
 .location-suggestion-status {
@@ -479,12 +494,20 @@ button.location-recent-remove {
   color: #8fb0c6;
 }
 
-button.location-recent-remove:not(:disabled):hover,
 button.location-recent-remove:focus-visible {
   background: rgba(69, 133, 169, 0.2);
   color: #dfebf6;
   transform: none;
   filter: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button.location-recent-remove:not(:disabled):hover {
+    background: rgba(69, 133, 169, 0.2);
+    color: #dfebf6;
+    transform: none;
+    filter: none;
+  }
 }
 
 .location-suggestions-action {
@@ -499,11 +522,18 @@ button.location-recent-remove:focus-visible {
   font-weight: 600;
 }
 
-.location-suggestions-action:not(:disabled):hover,
 .location-suggestions-action:focus-visible {
   background: rgba(69, 133, 169, 0.2);
   transform: none;
   filter: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .location-suggestions-action:not(:disabled):hover {
+    background: rgba(69, 133, 169, 0.2);
+    transform: none;
+    filter: none;
+  }
 }
 
 .location-suggestions-action--danger {
@@ -703,12 +733,20 @@ button.theme-customize-btn {
   flex: 0 0 auto;
 }
 
-button.theme-customize-btn:not(:disabled):hover,
 button.theme-customize-btn:focus-visible {
   transform: none;
   filter: none;
   border-color: rgba(112, 184, 222, 0.8);
   background: rgba(47, 79, 102, 0.95);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button.theme-customize-btn:not(:disabled):hover {
+    transform: none;
+    filter: none;
+    border-color: rgba(112, 184, 222, 0.8);
+    background: rgba(47, 79, 102, 0.95);
+  }
 }
 
 .marker-add-btn {
@@ -744,12 +782,20 @@ button.theme-edit-done-btn {
   font-weight: 700;
 }
 
-button.theme-edit-done-btn:not(:disabled):hover,
 button.theme-edit-done-btn:focus-visible {
   transform: none;
   filter: none;
   border-color: var(--focus-ring);
   background: rgba(44, 78, 102, 0.98);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button.theme-edit-done-btn:not(:disabled):hover {
+    transform: none;
+    filter: none;
+    border-color: var(--focus-ring);
+    background: rgba(44, 78, 102, 0.98);
+  }
 }
 
 button.theme-reset-all-btn {
@@ -764,12 +810,20 @@ button.theme-reset-all-btn {
   font-weight: 700;
 }
 
-button.theme-reset-all-btn:not(:disabled):hover,
 button.theme-reset-all-btn:focus-visible {
   transform: none;
   filter: none;
   border-color: rgba(255, 177, 142, 0.85);
   background: rgba(96, 58, 43, 0.92);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button.theme-reset-all-btn:not(:disabled):hover {
+    transform: none;
+    filter: none;
+    border-color: rgba(255, 177, 142, 0.85);
+    background: rgba(96, 58, 43, 0.92);
+  }
 }
 
 .color-editor-screen {
@@ -808,12 +862,20 @@ button.color-editor-target.is-active {
   box-shadow: 0 0 0 2px rgba(75, 149, 186, 0.24);
 }
 
-button.color-editor-target:not(:disabled):hover,
 button.color-editor-target:focus-visible {
   transform: none;
   filter: none;
   border-color: var(--focus-ring);
   background: var(--item-bg);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button.color-editor-target:not(:disabled):hover {
+    transform: none;
+    filter: none;
+    border-color: var(--focus-ring);
+    background: var(--item-bg);
+  }
 }
 
 .color-editor-target-swatch {
@@ -940,13 +1002,22 @@ button.color-editor-target:focus-visible {
   box-shadow: 0 0 0 2px rgba(75, 149, 186, 0.22);
 }
 
-.theme-card:hover,
 .theme-card:focus-within {
   transform: none;
   filter: none;
   border-color: rgba(112, 184, 222, 0.8);
   box-shadow: 0 0 0 2px rgba(75, 149, 186, 0.22);
   background: rgba(9, 18, 27, 0.86);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .theme-card:hover {
+    transform: none;
+    filter: none;
+    border-color: rgba(112, 184, 222, 0.8);
+    box-shadow: 0 0 0 2px rgba(75, 149, 186, 0.22);
+    background: rgba(9, 18, 27, 0.86);
+  }
 }
 
 .theme-card-name {
@@ -979,9 +1050,14 @@ button.color-editor-target:focus-visible {
 }
 
 .theme-card.is-selected .theme-card-palette,
-.theme-card:hover .theme-card-palette,
 .theme-card:focus-within .theme-card-palette {
   filter: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .theme-card:hover .theme-card-palette {
+    filter: none;
+  }
 }
 
 .theme-card-swatch {
@@ -1048,12 +1124,20 @@ button.color-editor-target:focus-visible {
   background: var(--item-bg);
 }
 
-.layout-card:not(.is-selected):not(:disabled):hover,
 .layout-card:not(.is-selected):focus-visible {
   transform: none;
   filter: none;
   border-color: rgba(151, 183, 207, 0.5);
   background: rgba(13, 25, 36, 0.9);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .layout-card:not(.is-selected):not(:disabled):hover {
+    transform: none;
+    filter: none;
+    border-color: rgba(151, 183, 207, 0.5);
+    background: rgba(13, 25, 36, 0.9);
+  }
 }
 
 .layout-card-copy {
@@ -1159,11 +1243,18 @@ button.picker-modal-close {
   justify-content: center;
 }
 
-button.picker-modal-close:not(:disabled):hover,
 button.picker-modal-close:focus-visible {
   transform: none;
   filter: none;
   background: rgba(47, 79, 102, 0.95);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button.picker-modal-close:not(:disabled):hover {
+    transform: none;
+    filter: none;
+    background: rgba(47, 79, 102, 0.95);
+  }
 }
 
 .picker-modal-body {
@@ -1215,11 +1306,18 @@ button.picker-modal-done {
   padding: 8px 12px;
 }
 
-button.picker-modal-done:not(:disabled):hover,
 button.picker-modal-done:focus-visible {
   transform: none;
   filter: none;
   background: rgba(47, 79, 102, 0.95);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button.picker-modal-done:not(:disabled):hover {
+    transform: none;
+    filter: none;
+    background: rgba(47, 79, 102, 0.95);
+  }
 }
 
 .palette-editor-grid {
@@ -1248,12 +1346,20 @@ button.palette-color-item.is-active {
   box-shadow: 0 0 0 2px rgba(75, 149, 186, 0.22);
 }
 
-button.palette-color-item:not(:disabled):hover,
 button.palette-color-item:focus-visible {
   transform: none;
   filter: none;
   border-color: rgba(112, 184, 222, 0.78);
   background: var(--item-bg);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button.palette-color-item:not(:disabled):hover {
+    transform: none;
+    filter: none;
+    border-color: rgba(112, 184, 222, 0.78);
+    background: var(--item-bg);
+  }
 }
 
 .palette-color-swatch {
@@ -1316,11 +1422,18 @@ button.color-preset-cell.is-active {
   box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.35);
 }
 
-button.color-preset-cell:not(:disabled):hover,
 button.color-preset-cell:focus-visible {
   transform: scale(1.08);
   filter: none;
   border-color: rgba(214, 233, 247, 0.8);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button.color-preset-cell:not(:disabled):hover {
+    transform: scale(1.08);
+    filter: none;
+    border-color: rgba(214, 233, 247, 0.8);
+  }
 }
 
 button.color-grid-action {
@@ -1346,12 +1459,20 @@ button.color-grid-action.is-active {
   background: rgba(45, 78, 102, 0.98);
 }
 
-button.color-grid-action:not(:disabled):hover,
 button.color-grid-action:focus-visible {
   transform: none;
   filter: none;
   border-color: var(--focus-ring);
   background: rgba(45, 78, 102, 0.98);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button.color-grid-action:not(:disabled):hover {
+    transform: none;
+    filter: none;
+    border-color: var(--focus-ring);
+    background: rgba(45, 78, 102, 0.98);
+  }
 }
 
 button.color-grid-reset {
@@ -1513,12 +1634,20 @@ button.marker-info-btn {
   color: #b6cfe0;
 }
 
-button.marker-info-btn:not(:disabled):hover,
 button.marker-info-btn:focus-visible {
   transform: none;
   filter: none;
   border-color: rgba(112, 184, 222, 0.72);
   background: rgba(36, 62, 80, 0.94);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button.marker-info-btn:not(:disabled):hover {
+    transform: none;
+    filter: none;
+    border-color: rgba(112, 184, 222, 0.72);
+    background: rgba(36, 62, 80, 0.94);
+  }
 }
 
 .marker-info-btn svg {
@@ -1544,9 +1673,14 @@ button.marker-info-btn:focus-visible {
   transition: opacity var(--dur-press) var(--ease-out);
 }
 
-.marker-info-wrap:hover .marker-info-popover,
 .marker-info-wrap:focus-within .marker-info-popover {
   opacity: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .marker-info-wrap:hover .marker-info-popover {
+    opacity: 1;
+  }
 }
 
 .markers-section__list {
@@ -1611,11 +1745,18 @@ button.marker-mobile-card__select {
   gap: 7px;
 }
 
-button.marker-mobile-card__select:not(:disabled):hover,
 button.marker-mobile-card__select:focus-visible {
   transform: none;
   filter: none;
   background: rgba(20, 39, 54, 0.94);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button.marker-mobile-card__select:not(:disabled):hover {
+    transform: none;
+    filter: none;
+    background: rgba(20, 39, 54, 0.94);
+  }
 }
 
 .marker-mobile-card__label {
@@ -1653,12 +1794,20 @@ button.marker-mobile-card__delete svg {
   height: 15px;
 }
 
-button.marker-mobile-card__delete:not(:disabled):hover,
 button.marker-mobile-card__delete:focus-visible {
   transform: translate(35%, -35%);
   filter: none;
   border-color: rgba(255, 152, 129, 0.72);
   background: rgba(97, 53, 44, 0.94);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button.marker-mobile-card__delete:not(:disabled):hover {
+    transform: translate(35%, -35%);
+    filter: none;
+    border-color: rgba(255, 152, 129, 0.72);
+    background: rgba(97, 53, 44, 0.94);
+  }
 }
 
 .markers-section__actions {
@@ -1688,12 +1837,20 @@ button.marker-delete-all-btn {
   gap: 8px;
 }
 
-button.marker-delete-all-btn:not(:disabled):hover,
 button.marker-delete-all-btn:focus-visible {
   transform: none;
   filter: none;
   border-color: rgba(255, 152, 129, 0.72);
   background: rgba(97, 53, 44, 0.92);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button.marker-delete-all-btn:not(:disabled):hover {
+    transform: none;
+    filter: none;
+    border-color: rgba(255, 152, 129, 0.72);
+    background: rgba(97, 53, 44, 0.92);
+  }
 }
 
 .marker-delete-confirm-modal {
@@ -1738,12 +1895,20 @@ button.marker-delete-modal__cancel {
   color: #e8f3fb;
 }
 
-button.marker-delete-modal__cancel:not(:disabled):hover,
 button.marker-delete-modal__cancel:focus-visible {
   transform: none;
   filter: none;
   border-color: var(--focus-ring);
   background: rgba(44, 78, 102, 0.98);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button.marker-delete-modal__cancel:not(:disabled):hover {
+    transform: none;
+    filter: none;
+    border-color: var(--focus-ring);
+    background: rgba(44, 78, 102, 0.98);
+  }
 }
 
 button.marker-delete-modal__confirm {
@@ -1759,12 +1924,20 @@ button.marker-delete-modal__confirm {
   gap: 8px;
 }
 
-button.marker-delete-modal__confirm:not(:disabled):hover,
 button.marker-delete-modal__confirm:focus-visible {
   transform: none;
   filter: none;
   border-color: rgba(255, 152, 129, 0.72);
   background: rgba(97, 53, 44, 0.92);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button.marker-delete-modal__confirm:not(:disabled):hover {
+    transform: none;
+    filter: none;
+    border-color: rgba(255, 152, 129, 0.72);
+    background: rgba(97, 53, 44, 0.92);
+  }
 }
 
 .marker-settings-card,
@@ -1817,12 +1990,20 @@ button.marker-settings-card__reset-btn {
   color: #ffd7c2;
 }
 
-.marker-editor-toolbar-btn--danger:not(:disabled):hover,
 .marker-editor-toolbar-btn--danger:focus-visible {
   transform: none;
   filter: none;
   border-color: rgba(255, 177, 142, 0.85);
   background: rgba(96, 58, 43, 0.92);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .marker-editor-toolbar-btn--danger:not(:disabled):hover {
+    transform: none;
+    filter: none;
+    border-color: rgba(255, 177, 142, 0.85);
+    background: rgba(96, 58, 43, 0.92);
+  }
 }
 
 .marker-settings-card__theme-color {
@@ -2071,10 +2252,16 @@ button.marker-color-display-btn {
   gap: 8px;
 }
 
-button.marker-color-display-btn:not(:disabled):hover,
 button.marker-color-display-btn:focus-visible {
   transform: none;
   filter: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button.marker-color-display-btn:not(:disabled):hover {
+    transform: none;
+    filter: none;
+  }
 }
 
 button.marker-color-edit-btn {
@@ -2089,12 +2276,20 @@ button.marker-color-edit-btn {
   font-weight: 700;
 }
 
-button.marker-color-edit-btn:not(:disabled):hover,
 button.marker-color-edit-btn:focus-visible {
   transform: none;
   filter: none;
   border-color: var(--focus-ring);
   background: rgba(42, 72, 93, 0.95);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button.marker-color-edit-btn:not(:disabled):hover {
+    transform: none;
+    filter: none;
+    border-color: var(--focus-ring);
+    background: rgba(42, 72, 93, 0.95);
+  }
 }
 
 .marker-editor-card__color-value {
@@ -2178,12 +2373,20 @@ button.marker-picker__option.is-selected {
   box-shadow: 0 0 0 2px rgba(75, 149, 186, 0.22);
 }
 
-button.marker-picker__option:not(:disabled):hover,
 button.marker-picker__option:focus-visible {
   transform: none;
   filter: none;
   border-color: rgba(112, 184, 222, 0.8);
   background: rgba(22, 42, 58, 0.96);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button.marker-picker__option:not(:disabled):hover {
+    transform: none;
+    filter: none;
+    border-color: rgba(112, 184, 222, 0.8);
+    background: rgba(22, 42, 58, 0.96);
+  }
 }
 
 .marker-picker__label {
@@ -2241,10 +2444,16 @@ button.marker-picker__option:focus-visible {
   justify-content: center;
 }
 
-.marker-picker__remove-uploaded:hover,
 .marker-picker__remove-uploaded:focus-visible {
   border-color: rgba(255, 152, 129, 0.72);
   background: rgba(97, 53, 44, 0.95);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .marker-picker__remove-uploaded:hover {
+    border-color: rgba(255, 152, 129, 0.72);
+    background: rgba(97, 53, 44, 0.95);
+  }
 }
 
 .marker-picker__actions {
@@ -2388,7 +2597,6 @@ button.export-map-btn {
   color: #effff5;
 }
 
-button.export-map-btn:not(:disabled):hover,
 button.export-map-btn:focus-visible {
   border-color: rgba(147, 235, 183, 0.88);
   background: linear-gradient(
@@ -2396,6 +2604,17 @@ button.export-map-btn:focus-visible {
     rgba(50, 141, 89, 0.98),
     rgba(34, 117, 73, 0.98)
   );
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button.export-map-btn:not(:disabled):hover {
+    border-color: rgba(147, 235, 183, 0.88);
+    background: linear-gradient(
+      135deg,
+      rgba(50, 141, 89, 0.98),
+      rgba(34, 117, 73, 0.98)
+    );
+  }
 }
 
 .download-btn-icon {
@@ -2448,15 +2667,23 @@ button.icon-only-btn {
   justify-content: center;
 }
 
-button:not(:disabled):hover {
-  transform: translateY(-1px);
-  filter: brightness(1.05);
+@media (hover: hover) and (pointer: fine) {
+  button:not(:disabled):hover {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+  }
 }
 
-button.theme-card:not(:disabled):hover,
 button.theme-card:focus-visible {
   transform: none;
   filter: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button.theme-card:not(:disabled):hover {
+    transform: none;
+    filter: none;
+  }
 }
 
 .picker-option-list--themes {
@@ -2501,11 +2728,18 @@ button.location-clear-btn {
   justify-content: center;
 }
 
-button.location-clear-btn:not(:disabled):hover,
 button.location-clear-btn:focus-visible {
   transform: translateY(-50%);
   filter: none;
   background: rgba(47, 79, 102, 0.95);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button.location-clear-btn:not(:disabled):hover {
+    transform: translateY(-50%);
+    filter: none;
+    background: rgba(47, 79, 102, 0.95);
+  }
 }
 
 .ghost {
@@ -2726,16 +2960,26 @@ button.location-clear-btn:focus-visible {
     display: block;
   }
 
-  .picker-option-list--themes .theme-card:hover .theme-card-swatch,
   .picker-option-list--themes .theme-card:focus-visible .theme-card-swatch {
     margin-left: 4px;
   }
 
-  .picker-option-list--themes .theme-card:hover .theme-card-swatch:first-child,
+  @media (hover: hover) and (pointer: fine) {
+    .picker-option-list--themes .theme-card:hover .theme-card-swatch {
+      margin-left: 4px;
+    }
+  }
+
   .picker-option-list--themes
     .theme-card:focus-visible
     .theme-card-swatch:first-child {
     margin-left: 0;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .picker-option-list--themes .theme-card:hover .theme-card-swatch:first-child {
+      margin-left: 0;
+    }
   }
 }
 
@@ -2836,11 +3080,18 @@ button.route-card__summary {
   text-align: left;
 }
 
-button.route-card__summary:not(:disabled):hover,
 button.route-card__summary:focus-visible {
   transform: none;
   filter: none;
   background: rgba(255, 255, 255, 0.04);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button.route-card__summary:not(:disabled):hover {
+    transform: none;
+    filter: none;
+    background: rgba(255, 255, 255, 0.04);
+  }
 }
 
 .route-card__swatch {
@@ -2915,12 +3166,20 @@ button.route-card__delete svg {
   height: 15px;
 }
 
-button.route-card__delete:not(:disabled):hover,
 button.route-card__delete:focus-visible {
   transform: translate(35%, -35%);
   filter: none;
   border-color: rgba(255, 152, 129, 0.72);
   background: rgba(97, 53, 44, 0.94);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button.route-card__delete:not(:disabled):hover {
+    transform: translate(35%, -35%);
+    filter: none;
+    border-color: rgba(255, 152, 129, 0.72);
+    background: rgba(97, 53, 44, 0.94);
+  }
 }
 
 .route-card__body {
@@ -2973,9 +3232,11 @@ button.route-card__delete:focus-visible {
     transform var(--dur-press) var(--ease-out);
 }
 
-.route-card__color-toggle:hover {
-  border-color: rgba(255, 255, 255, 0.55);
-  transform: scale(1.05);
+@media (hover: hover) and (pointer: fine) {
+  .route-card__color-toggle:hover {
+    border-color: rgba(255, 255, 255, 0.55);
+    transform: scale(1.05);
+  }
 }
 
 .route-card__style-toggle {
@@ -3004,8 +3265,10 @@ button.route-card__delete:focus-visible {
     color var(--dur-press) var(--ease-out);
 }
 
-.route-card__style-btn:hover {
-  color: #e7f2fb;
+@media (hover: hover) and (pointer: fine) {
+  .route-card__style-btn:hover {
+    color: #e7f2fb;
+  }
 }
 
 .route-card__style-preview {
@@ -3043,12 +3306,20 @@ button.route-card__done svg {
   height: 15px;
 }
 
-button.route-card__done:not(:disabled):hover,
 button.route-card__done:focus-visible {
   transform: translate(35%, -35%);
   filter: none;
   border-color: rgba(143, 215, 176, 0.8);
   background: rgba(46, 84, 66, 0.96);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button.route-card__done:not(:disabled):hover {
+    transform: translate(35%, -35%);
+    filter: none;
+    border-color: rgba(143, 215, 176, 0.8);
+    background: rgba(46, 84, 66, 0.96);
+  }
 }
 
 .route-card__endpoint-rows {
@@ -3072,10 +3343,16 @@ button.route-card__endpoint-row {
     border-color var(--dur-press) var(--ease-out);
 }
 
-button.route-card__endpoint-row:not(:disabled):hover,
 button.route-card__endpoint-row:focus-visible {
   background: rgba(255, 255, 255, 0.08);
   border-color: rgba(255, 255, 255, 0.3);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button.route-card__endpoint-row:not(:disabled):hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
 }
 
 .route-card__endpoint-row-icon {
@@ -3116,10 +3393,16 @@ button.route-card__endpoint-row:focus-visible {
     background var(--dur-press) var(--ease-out);
 }
 
-.route-card__endpoint-toggle:hover,
 .route-card__endpoint-toggle[aria-expanded="true"] {
   border-color: rgba(255, 255, 255, 0.55);
   background: rgba(255, 255, 255, 0.08);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .route-card__endpoint-toggle:hover {
+    border-color: rgba(255, 255, 255, 0.55);
+    background: rgba(255, 255, 255, 0.08);
+  }
 }
 
 .route-card__endpoint-picker {
@@ -3149,12 +3432,20 @@ button.route-card__endpoint-option {
     border-color var(--dur-press) var(--ease-out);
 }
 
-button.route-card__endpoint-option:not(:disabled):hover,
 button.route-card__endpoint-option:focus-visible {
   transform: none;
   filter: none;
   background: rgba(255, 255, 255, 0.08);
   border-color: rgba(255, 255, 255, 0.18);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button.route-card__endpoint-option:not(:disabled):hover {
+    transform: none;
+    filter: none;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.18);
+  }
 }
 
 button.route-card__endpoint-option.is-selected {
