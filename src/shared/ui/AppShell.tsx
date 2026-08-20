@@ -14,11 +14,6 @@ import { useSwipeDown } from "@/shared/hooks/useSwipeDown";
 import { useAdhesionOffset } from "@/shared/hooks/useAdhesionOffset";
 import StartupLocationModal from "@/features/location/ui/StartupLocationModal";
 import { CheckIcon } from "@/shared/ui/Icons";
-import SupportModal from "@/features/export/ui/SupportModal";
-import {
-  SUPPORT_PROMPT_EVENT,
-  type SupportPromptState,
-} from "@/features/export/application/useExport";
 import { useSessionAnalytics } from "@/features/export/application/useSessionAnalytics";
 import {
   LEGAL_DOC_EVENT,
@@ -99,16 +94,7 @@ export default function AppShell() {
   const [desktopLocationRowVisible, setDesktopLocationRowVisible] =
     useState(true);
   const [aboutOpen, setAboutOpen] = useState(false);
-  const [supportPrompt, setSupportPrompt] = useState<SupportPromptState | null>(null);
   const [legalDoc, setLegalDoc] = useState<LegalDocType | null>(null);
-
-  useEffect(() => {
-    const handler = (e: Event) => {
-      setSupportPrompt((e as CustomEvent<SupportPromptState>).detail);
-    };
-    window.addEventListener(SUPPORT_PROMPT_EVENT, handler);
-    return () => window.removeEventListener(SUPPORT_PROMPT_EVENT, handler);
-  }, []);
 
   useEffect(() => {
     const handler = (e: Event) => {
@@ -326,12 +312,6 @@ export default function AppShell() {
         <Suspense fallback={null}>
           <AboutModal onClose={() => setAboutOpen(false)} />
         </Suspense>
-      ) : null}
-      {supportPrompt ? (
-        <SupportModal
-          posterNumber={supportPrompt.posterNumber}
-          onClose={() => setSupportPrompt(null)}
-        />
       ) : null}
       {legalDoc ? (
         <Suspense fallback={null}>

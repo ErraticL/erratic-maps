@@ -23,15 +23,6 @@ import { trackEvent, setUserProperty } from "@/core/services";
 
 const EXPORT_COUNT_STORAGE_KEY = "erratic-maps.poster.count";
 
-export type SupportPromptVariant = "follow";
-
-export interface SupportPromptState {
-  posterNumber: number;
-  variant: SupportPromptVariant;
-}
-
-export const SUPPORT_PROMPT_EVENT = "erratic-maps:support-prompt";
-
 // Use a 1-year TTL so the export count persists across sessions.
 const EXPORT_COUNT_TTL_MS = 365 * 24 * 60 * 60 * 1000;
 
@@ -103,24 +94,6 @@ export function useExport() {
     [form.showRoutes, state.routes],
   );
   const hasVisibleOverlays = hasVisibleMarkers || visibleRoutes.length > 0;
-
-  const registerSuccessfulExport = useCallback((nextCount: number) => {
-    writePosterExportCount(nextCount);
-
-    // Prompt cadence: follow on the first download and every 5th after → 1, 6, 11, …
-    // Donate lives in the header; ad interstitials are handled by Google's
-    // vignette/Offerwall, not a custom modal.
-    let variant: SupportPromptVariant | null = null;
-    if ((nextCount - 1) % 5 === 0) variant = "follow";
-
-    if (variant) {
-      window.dispatchEvent(
-        new CustomEvent(SUPPORT_PROMPT_EVENT, {
-          detail: { posterNumber: nextCount, variant },
-        }),
-      );
-    }
-  }, []);
 
   const exportPoster = useCallback(
     async (format: ExportFormat) => {
@@ -197,7 +170,7 @@ export function useExport() {
           );
           await triggerDownloadBlob(svgBlob, svgFilename);
           reportExportSuccess(nextCount, exportParams);
-          registerSuccessfulExport(nextCount);
+          writePosterExportCount(nextCount);
           dispatch({ type: "SET_EXPORT_STATUS", exporting: false });
           return;
         }
@@ -253,7 +226,7 @@ export function useExport() {
         }
 
         reportExportSuccess(nextCount, exportParams);
-        registerSuccessfulExport(nextCount);
+        writePosterExportCount(nextCount);
         dispatch({ type: "SET_EXPORT_STATUS", exporting: false });
       } catch (err) {
         const message = err instanceof Error ? err.message : "Export failed.";
@@ -269,7 +242,6 @@ export function useExport() {
       hasVisibleMarkers,
       hasVisibleOverlays,
       visibleRoutes,
-      registerSuccessfulExport,
       state.markers,
       state.customMarkerIcons,
     ],
