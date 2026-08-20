@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 import { CUSTOM_LAYOUT_ID } from "@/features/layout/domain/types";
-import { writePermalink } from "@/features/share/infrastructure/permalinkLocation";
+import type { PermalinkData } from "@/features/share/domain/permalink";
+import {
+  readCurrentPermalink,
+  writePermalink,
+} from "@/features/share/infrastructure/permalinkLocation";
 
 interface PermalinkFormSlice {
   latitude: string;
@@ -18,9 +22,16 @@ const WRITE_DEBOUNCE_MS = 400;
 
 /**
  * Mirrors the shareable poster state into the URL hash (debounced),
- * so the address bar is always a working permalink.
+ * so the address bar is always a working permalink — and applies a
+ * permalink that arrives while the app is open (pasted URL, or
+ * back/forward across hash entries). The two directions cannot loop:
+ * our own writes go through history.replaceState, which never fires
+ * hashchange; only external hash changes fire it.
  */
-export function usePermalinkSync(form: PermalinkFormSlice): void {
+export function usePermalinkSync(
+  form: PermalinkFormSlice,
+  onExternalPermalink: (data: PermalinkData) => void,
+): void {
   const {
     latitude,
     longitude,
@@ -63,4 +74,13 @@ export function usePermalinkSync(form: PermalinkFormSlice): void {
     displayCity,
     displayCountry,
   ]);
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const data = readCurrentPermalink();
+      if (data) onExternalPermalink(data);
+    };
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, [onExternalPermalink]);
 }

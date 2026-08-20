@@ -82,6 +82,11 @@ export type PosterAction =
       fields: Partial<PosterForm>;
       resetDisplayNameOverrides?: boolean;
     }
+  | {
+      type: "APPLY_PERMALINK";
+      fields: Partial<PosterForm>;
+      displayNameOverrides: { city: boolean; country: boolean };
+    }
   | { type: "SET_THEME"; themeId: string }
   | { type: "SET_LAYOUT"; layoutId: string; widthCm: string; heightCm: string }
   | { type: "SET_COLOR"; key: string; value: string }
@@ -166,6 +171,20 @@ export function posterReducer(
         displayNameOverrides: action.resetDisplayNameOverrides
           ? { city: false, country: false }
           : state.displayNameOverrides,
+      };
+
+    // A permalink pasted into the open app: apply the fields
+    // atomically, drop the stale selected location, and mark names
+    // that the link carries as explicit (same rule as a user rename).
+    case "APPLY_PERMALINK":
+      return {
+        ...state,
+        form: { ...state.form, ...action.fields },
+        selectedLocation: null,
+        displayNameOverrides: {
+          city: Boolean(action.displayNameOverrides.city),
+          country: Boolean(action.displayNameOverrides.country),
+        },
       };
 
     case "SET_THEME":

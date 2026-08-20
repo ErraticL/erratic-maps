@@ -1,5 +1,6 @@
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useReducer,
@@ -31,26 +32,19 @@ import { createDefaultRouteSettings } from "@/features/routes/infrastructure/hel
 import {
   defaultLayoutId,
   getLayoutOption,
-  layoutOptions,
 } from "@/features/layout/infrastructure/layoutRepository";
-import {
-  defaultThemeName,
-  themeNames,
-} from "@/features/theme/infrastructure/themeRepository";
+import { defaultThemeName } from "@/features/theme/infrastructure/themeRepository";
 import {
   DEFAULT_POSTER_WIDTH_CM,
   DEFAULT_POSTER_HEIGHT_CM,
   DEFAULT_DISTANCE_METERS,
   DEFAULT_LAT,
   DEFAULT_LON,
-  MIN_DISTANCE_METERS,
-  MAX_DISTANCE_METERS,
-  MIN_POSTER_CM,
-  MAX_POSTER_CM,
 } from "@/core/config";
-import { CUSTOM_LAYOUT_ID } from "@/features/layout/domain/types";
 import { readStartupPermalink } from "@/features/share/infrastructure/permalinkLocation";
 import { usePermalinkSync } from "@/features/share/application/usePermalinkSync";
+import { permalinkFormFields } from "@/features/share/application/permalinkForm";
+import type { PermalinkData } from "@/features/share/domain/permalink";
 
 const defaultLayoutOption = getLayoutOption(defaultLayoutId);
 const defaultLayoutWidthCm = Number(
@@ -100,53 +94,10 @@ export const DEFAULT_FORM: PosterForm = {
  */
 const startupPermalink = readStartupPermalink();
 
-function hydrateFormFromPermalink(base: PosterForm): PosterForm {
-  const permalink = startupPermalink;
-  if (!permalink) return base;
-
-  const form: PosterForm = { ...base };
-  form.latitude = permalink.lat.toFixed(6);
-  form.longitude = permalink.lon.toFixed(6);
-
-  const distance = Number(permalink.distanceMeters);
-  if (Number.isFinite(distance)) {
-    form.distance = String(
-      Math.min(MAX_DISTANCE_METERS, Math.max(MIN_DISTANCE_METERS, distance)),
-    );
-  }
-
-  if (permalink.themeId && themeNames.includes(permalink.themeId)) {
-    form.theme = permalink.themeId;
-  }
-
-  if (permalink.layoutId === CUSTOM_LAYOUT_ID) {
-    const clampCm = (value: number | undefined, fallback: string) =>
-      Number.isFinite(Number(value))
-        ? String(Math.min(MAX_POSTER_CM, Math.max(MIN_POSTER_CM, Number(value))))
-        : fallback;
-    form.layout = CUSTOM_LAYOUT_ID;
-    form.width = clampCm(permalink.widthCm, form.width);
-    form.height = clampCm(permalink.heightCm, form.height);
-  } else if (permalink.layoutId) {
-    const option = layoutOptions.find((o) => o.id === permalink.layoutId);
-    if (option) {
-      form.layout = option.id;
-      form.width = String(option.widthCm);
-      form.height = String(option.heightCm);
-    }
-  }
-
-  form.displayCity = permalink.city ?? "";
-  form.displayCountry = permalink.country ?? "";
-  form.location = [permalink.city, permalink.country]
-    .filter(Boolean)
-    .join(", ") || `${form.latitude}, ${form.longitude}`;
-
-  return form;
-}
-
 const INITIAL_STATE: PosterState = {
-  form: hydrateFormFromPermalink(DEFAULT_FORM),
+  form: startupPermalink
+    ? { ...DEFAULT_FORM, ...permalinkFormFields(startupPermalink) }
+    : DEFAULT_FORM,
   customColors: {},
   markers: [],
   customMarkerIcons: [],
@@ -199,8 +150,19 @@ export function PosterProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(posterReducer, INITIAL_STATE);
   const mapRef = useRef(null) as MapInstanceRef;
 
-  // Keep the URL hash a working permalink for the current poster.
-  usePermalinkSync(state.form);
+  // Keep the URL hash a working permalink for the current poster, and
+  // apply a permalink that arrives while the app is open.
+  const handleExternalPermalink = useCallback((data: PermalinkData) => {
+    dispatch({
+      type: "APPLY_PERMALINK",
+      fields: permalinkFormFields(data),
+      displayNameOverrides: {
+        city: Boolean(data.city),
+        country: Boolean(data.country),
+      },
+    });
+  }, []);
+  usePermalinkSync(state.form, handleExternalPermalink);
   const lastSyncedMarkerThemeColorRef = useRef<string | null>(null);
   const lastSyncedRouteThemeColorRef = useRef<string | null>(null);
   const hasLoadedCustomIconsRef = useRef(false);

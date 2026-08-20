@@ -23,6 +23,12 @@ export function readStartupPermalink(): PermalinkData | null {
   return startupSnapshot;
 }
 
+/** Parses whatever the address bar holds right now (for hashchange). */
+export function readCurrentPermalink(): PermalinkData | null {
+  if (typeof window === "undefined") return null;
+  return parsePermalinkHash(window.location.hash);
+}
+
 export function writePermalink(data: PermalinkData): void {
   if (typeof window === "undefined") return;
   if (!Number.isFinite(data.lat) || !Number.isFinite(data.lon)) return;
