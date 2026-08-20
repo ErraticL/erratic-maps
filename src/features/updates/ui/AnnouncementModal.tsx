@@ -1,6 +1,22 @@
 ﻿import { useEffect, useMemo, useState } from "react";
+import type { ComponentType, SVGProps } from "react";
 import { IoClose } from "react-icons/io5";
 import { APP_VERSION, UPDATES_URL } from "@/core/config";
+import {
+  CommunityIcon,
+  CoreIcon,
+  DocsIcon,
+  FixedIcon,
+  ImprovedIcon,
+  InfoIcon,
+  MajorIcon,
+  NewIcon,
+  PerformanceIcon,
+  RemovedIcon,
+  RoadmapIcon,
+  SecurityIcon,
+  WarningIcon,
+} from "@/shared/ui/Icons";
 
 type UpdateCategory =
   | "new"
@@ -46,8 +62,9 @@ interface UpdateVersion {
   steps: UpdateStep[];
 }
 
+// The icon is a component. The render site draws it as a vector glyph.
 interface CategoryMeta {
-  icon: string;
+  icon: ComponentType<SVGProps<SVGSVGElement>>;
   label: string;
 }
 
@@ -55,19 +72,19 @@ const LAST_SEEN_VERSION = "last_seen_version";
 const CURRENT_VERSION = APP_VERSION;
 
 const categoryConfig: Record<UpdateCategory, CategoryMeta> = {
-  new: { icon: "✨", label: "New" },
-  fixed: { icon: "🛠️", label: "Fixed" },
-  improved: { icon: "🚀", label: "Improved" },
-  info: { icon: "ℹ️", label: "Info" },
-  community: { icon: "👥", label: "Community" },
-  docs: { icon: "📚", label: "Docs" },
-  roadmap: { icon: "🎯", label: "Roadmap" },
-  removed: { icon: "🗑️", label: "Removed" },
-  security: { icon: "🔒", label: "Security" },
-  breaking: { icon: "⚠️", label: "Breaking" },
-  major: { icon: "👑", label: "Major" },
-  perf: { icon: "⚡", label: "Performance" },
-  core: { icon: "🧭", label: "Core" },
+  new: { icon: NewIcon, label: "New" },
+  fixed: { icon: FixedIcon, label: "Fixed" },
+  improved: { icon: ImprovedIcon, label: "Improved" },
+  info: { icon: InfoIcon, label: "Info" },
+  community: { icon: CommunityIcon, label: "Community" },
+  docs: { icon: DocsIcon, label: "Docs" },
+  roadmap: { icon: RoadmapIcon, label: "Roadmap" },
+  removed: { icon: RemovedIcon, label: "Removed" },
+  security: { icon: SecurityIcon, label: "Security" },
+  breaking: { icon: WarningIcon, label: "Breaking" },
+  major: { icon: MajorIcon, label: "Major" },
+  perf: { icon: PerformanceIcon, label: "Performance" },
+  core: { icon: CoreIcon, label: "Core" },
 };
 
 function compareVersions(a: string, b: string): number {
@@ -323,6 +340,7 @@ export default function AnnouncementModal() {
             {(isDetailsMode && activeStep ? activeStep.points : summaryPoints).map(
               (point, index) => {
               const category = categoryConfig[point.type] ?? categoryConfig.improved;
+              const CategoryIcon = category.icon;
 
               return (
                 <li
@@ -330,7 +348,7 @@ export default function AnnouncementModal() {
                   className={`updates-point updates-point--${point.type}`}
                 >
                   <span className="updates-point-icon" aria-hidden="true">
-                    {category.icon}
+                    <CategoryIcon />
                   </span>
                   <div className="updates-point-text">
                     <span className="updates-point-label">{category.label}</span>

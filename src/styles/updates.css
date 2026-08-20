@@ -126,8 +126,13 @@
   background: rgba(14, 27, 39, 0.62);
 }
 
+/* The icon is an SVG glyph. The box keeps the height of the first text line. */
 .updates-point-icon {
-  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.53rem;
+  font-size: 1.15rem;
   line-height: 1.45;
 }
 
