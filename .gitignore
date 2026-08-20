@@ -41,3 +41,4 @@ updates.json
 
 # ignore agent setting files
 .claude/
+CLAUDE.md
