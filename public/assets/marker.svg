@@ -1,15 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Erratic Maps logo">
-  <!-- Interim Erratic Maps mark: a faceted glacial-erratic boulder that
-       rests above a strata line. Replaces the upstream Terraink logo. -->
-  <g stroke="#0a1824" stroke-width="6" stroke-linejoin="round">
-    <polygon points="116,150 256,72 230,238" fill="#f7d074" />
-    <polygon points="256,72 402,150 324,272 230,238" fill="#eeb94c" />
-    <polygon points="402,150 440,306 324,272" fill="#d99a2b" />
-    <polygon points="440,306 338,432 324,272" fill="#b97f22" />
-    <polygon points="338,432 160,436 230,238 324,272" fill="#a06a1c" />
-    <polygon points="160,436 76,300 230,238" fill="#c28a24" />
-    <polygon points="76,300 116,150 230,238" fill="#e0a83c" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Erratic Maps logo">
+  <!-- Erratic Maps mark: a map pin whose head holds a faceted
+       glacial-erratic boulder. Flat colors, works on navy and white,
+       legible at 16 px. scripts/make-icons.mjs generates every icon
+       and the OG banner from this file. -->
+  <path d="M50 4 C68.5 4 84 19 84 37.5 C84 62 50 96 50 96 C50 96 16 62 16 37.5 C16 19 31.5 4 50 4 Z" fill="#4d7ea8"/>
+  <g transform="translate(18.6,8.1) scale(0.64)">
+    <g stroke="#0a1824" stroke-width="2.6" stroke-linejoin="round">
+      <polygon points="50,14 74,28 66,52 44,48" fill="#f2c14e"/>
+      <polygon points="74,28 80,58 66,52" fill="#d99a2b"/>
+      <polygon points="80,58 62,78 66,52" fill="#b97f22"/>
+      <polygon points="62,78 32,76 44,48 66,52" fill="#a06a1c"/>
+      <polygon points="32,76 22,44 44,48" fill="#c28a24"/>
+      <polygon points="22,44 50,14 44,48" fill="#e0a83c"/>
+    </g>
   </g>
-  <rect x="110" y="466" width="292" height="16" rx="8" fill="#4d7ea8" />
-  <rect x="170" y="494" width="172" height="12" rx="6" fill="#35608a" />
 </svg>

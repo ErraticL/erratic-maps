@@ -71,7 +71,7 @@ Terraink name or logo as its brand. The in-app footer carries the
 credit "Based on Terraink source code". See
 [TRADEMARK.md](./TRADEMARK.md) for the upstream trademark policy.
 
-The Erratic Maps name and the interim boulder mark are not affiliated
+The Erratic Maps name and the pin-and-boulder mark are not affiliated
 with Terraink.
 
 ## Attribution
