@@ -1,0 +1,35 @@
+# Builds and deploys Erratic Maps to Cloudflare Pages on every push
+# to main. Build config comes from the committed .env.production.
+# The only secret is CLOUDFLARE_API_TOKEN (a Pages:Edit token);
+# the account ID is not a secret.
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Build
+        run: bun run build
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: e90c2db4df943dd307123eb0a11e3ebe
+          command: pages deploy dist --project-name=erraticl-maps --branch=main

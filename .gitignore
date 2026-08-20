@@ -27,6 +27,9 @@ coverage/
 .env
 .env.*
 !.env.example
+# Committed on purpose: public production config, used by CI and
+# local builds alike.
+!.env.production
 
 # Editor and OS files
 .DS_Store
