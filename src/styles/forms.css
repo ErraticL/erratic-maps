@@ -2674,6 +2674,25 @@ button.icon-only-btn {
   }
 }
 
+/* Press feedback. The button answers the press immediately.
+   This rule comes after the hover lift, so a press replaces the lift.
+   The rule stays outside the hover query, because a touch user presses too. */
+button:not(:disabled):active {
+  transform: scale(0.97);
+}
+
+/* These four buttons use transform for position. A plain scale would move
+   them. Each rule keeps the position and adds the press scale. */
+button.location-clear-btn:not(:disabled):active {
+  transform: translateY(-50%) scale(0.97);
+}
+
+button.marker-mobile-card__delete:not(:disabled):active,
+button.route-card__delete:not(:disabled):active,
+button.route-card__done:not(:disabled):active {
+  transform: translate(35%, -35%) scale(0.97);
+}
+
 button.theme-card:focus-visible {
   transform: none;
   filter: none;
