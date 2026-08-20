@@ -193,6 +193,9 @@
   right: 0;
   margin: 0;
   font-family: "Spline Sans Mono", monospace;
+  /* Every digit gets the same width. The line stays still while the user
+     pans the map. */
+  font-variant-numeric: tabular-nums;
   font-weight: 400;
   font-size: 1.6cqh;
   text-align: center;
@@ -443,10 +446,13 @@
   color: rgba(156, 195, 218, 0.72);
 }
 
+/* This list shows the coordinates and the poster size. Both values change
+   while the user pans the map. Tabular digits keep the column steady. */
 .settings-info-row dd {
   margin: 0;
   font-size: 0.86rem;
   color: #e1eff9;
+  font-variant-numeric: tabular-nums;
 }
 
 @media (max-width: 700px) {

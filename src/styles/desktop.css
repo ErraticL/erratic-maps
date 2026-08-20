@@ -548,6 +548,8 @@
     color: rgba(188, 219, 238, 0.78);
   }
 
+  /* These fields hold the latitude and the longitude. Both change while
+     the user pans the map. */
   .dsk-loc-bar .dsk-loc-coords input {
     margin-top: 5px;
     min-height: 36px;
@@ -556,6 +558,7 @@
     border-color: rgba(157, 189, 214, 0.3);
     border-radius: 9px;
     font-family: "Spline Sans Mono", monospace;
+    font-variant-numeric: tabular-nums;
     font-size: 0.76rem;
     color: #def2ff;
   }

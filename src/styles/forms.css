@@ -62,8 +62,10 @@ label {
   gap: 10px;
 }
 
+/* This value changes while the user drags the slider. */
 .distance-slider-value {
   font-family: "Spline Sans Mono", monospace;
+  font-variant-numeric: tabular-nums;
   letter-spacing: 0.02em;
   color: #dff0fb;
 }
@@ -1071,9 +1073,11 @@ button.color-editor-target:focus-visible {
   color: #e7f2fb;
 }
 
+/* This line shows the poster size, for example "21 x 29.7 cm". */
 .layout-card-meta {
   margin: 3px 0 0;
   font-family: "Spline Sans Mono", monospace;
+  font-variant-numeric: tabular-nums;
   font-size: 0.64rem;
   letter-spacing: 0.03em;
   color: #9fbcd0;
@@ -1101,7 +1105,7 @@ button.color-editor-target:focus-visible {
 .picker-modal-backdrop {
   position: fixed;
   inset: 0;
-  z-index: 9999;
+  z-index: var(--z-modal);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -2019,8 +2023,10 @@ button.marker-row__icon-btn--danger {
   );
 }
 
+/* The marker size changes while the user drags the slider. */
 .marker-editor-card__size-input {
   width: 88px;
+  font-variant-numeric: tabular-nums;
 }
 
 .marker-editor-card__color-input {
