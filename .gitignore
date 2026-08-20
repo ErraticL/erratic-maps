@@ -39,9 +39,6 @@ Thumbs.db
 !.vscode/settings.json
 !.vscode/commit-instructions.md
 
-# Local updates announcement file for development
-updates.json
-
 # ignore agent setting files
 .claude/
 CLAUDE.md

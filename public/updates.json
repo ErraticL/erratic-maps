@@ -1,0 +1,361 @@
+[
+  {
+    "version": "0.4.2",
+    "date": "2026-08-20",
+    "labels": {
+      "summaryTitle": "Welcome to Erratic Maps",
+      "detailsTitle": "Release details"
+    },
+    "summary": {
+      "title": "The short version",
+      "points": [
+        {
+          "type": "major",
+          "text": "New name: Terraink becomes Erratic Maps, with a new logo and a new home at maps.erraticl.uk."
+        },
+        {
+          "type": "new",
+          "text": "Two new themes: Classic and Candy join the theme list, and the buildings take three tones by height."
+        },
+        {
+          "type": "new",
+          "text": "Permalinks: the address bar always holds a link to the poster that you see."
+        },
+        {
+          "type": "removed",
+          "text": "No popup after an export: the download ends, and nothing asks you to follow an account."
+        },
+        {
+          "type": "security",
+          "text": "No trackers: this deployment runs no analytics and no ads."
+        }
+      ]
+    },
+    "steps": [
+      {
+        "title": "A new name and a new mark",
+        "image": null,
+        "points": [
+          {
+            "type": "major",
+            "text": "New name: the fork of Terraink becomes Erratic Maps at maps.erraticl.uk."
+          },
+          {
+            "type": "new",
+            "text": "New logo: a slate map pin holds a faceted glacial-erratic boulder. Every icon, the map marker and the social banner come from that one drawing."
+          },
+          {
+            "type": "info",
+            "text": "Credit: the footer names Terraink as the source of the code, as the upstream trademark policy asks."
+          },
+          {
+            "type": "breaking",
+            "text": "Saved settings: the new name changed the storage keys, so the app opens with the default settings one time."
+          }
+        ]
+      },
+      {
+        "title": "Two themes and a new building fill",
+        "image": null,
+        "points": [
+          {
+            "type": "new",
+            "text": "Classic and Candy: two themes come from the retired predecessor app."
+          },
+          {
+            "type": "new",
+            "text": "Height triad: a theme can paint the buildings in three tones. The map selects the tone from the building height: under 10 m, 10 m to 24 m, and 24 m or taller."
+          },
+          {
+            "type": "info",
+            "text": "Why the height: a tile at a low zoom joins a block into one shape. The height is equal on both sides of a tile seam, so a color does not split a building."
+          },
+          {
+            "type": "improved",
+            "text": "New defaults: the poster opens with the Classic theme, and the buildings layer starts visible."
+          },
+          {
+            "type": "info",
+            "text": "Your color wins: if you select a building color yourself, the app uses that one color and stops the three tones."
+          }
+        ]
+      },
+      {
+        "title": "Share a poster with a link",
+        "image": null,
+        "points": [
+          {
+            "type": "new",
+            "text": "Permalinks: the URL holds the location, the distance, the theme, the layout, the custom size and the display names."
+          },
+          {
+            "type": "improved",
+            "text": "Clean history: the app replaces the URL instead of adding a new entry, so the back button still leaves the app."
+          },
+          {
+            "type": "fixed",
+            "text": "Pasted links: a permalink that you paste into a running app now applies immediately. Before this fix it needed a manual refresh."
+          }
+        ]
+      },
+      {
+        "title": "Fewer interruptions",
+        "image": null,
+        "points": [
+          {
+            "type": "removed",
+            "text": "Follow popup: the window that asked you to follow an account after a download is gone."
+          },
+          {
+            "type": "fixed",
+            "text": "Blank page after a deploy: the app reloads itself one time when a new deploy hides a code file. A flag stops a reload loop."
+          },
+          {
+            "type": "improved",
+            "text": "Vector icons: the icons in this window are vector drawings instead of emoji."
+          }
+        ]
+      },
+      {
+        "title": "Privacy and hosting",
+        "image": null,
+        "points": [
+          {
+            "type": "security",
+            "text": "No analytics: this deployment removes the analytics scripts and the consent banner, because it collects nothing."
+          },
+          {
+            "type": "docs",
+            "text": "Privacy policy: the policy is live, and it describes the real behavior of the site."
+          },
+          {
+            "type": "core",
+            "text": "Automatic deploy: a GitHub Action builds the site and publishes it on every push to the main branch."
+          },
+          {
+            "type": "roadmap",
+            "text": "Legal notice: the German imprint waits for a postal address. It goes live after that."
+          }
+        ]
+      },
+      {
+        "title": "Carried over from the Terraink base",
+        "image": null,
+        "points": [
+          {
+            "type": "info",
+            "text": "Shared base: Erratic Maps builds on the Terraink source code, under the AGPL-3.0 license."
+          },
+          {
+            "type": "new",
+            "text": "GPX routes: you can upload a track, draw it on the poster, and set a start marker and a finish marker."
+          },
+          {
+            "type": "perf",
+            "text": "Faster map: the map no longer requests the same tile more than one time."
+          },
+          {
+            "type": "improved",
+            "text": "Local typefaces: the fonts ship with the site instead of coming from a font service."
+          },
+          {
+            "type": "security",
+            "text": "Response headers: the site sends X-Frame-Options, X-Content-Type-Options, Referrer-Policy and Permissions-Policy."
+          },
+          {
+            "type": "community",
+            "text": "Contributors: the Terraink community added the font style in the dropdown, and the keyboard keys that move a marker."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.4.1",
+    "date": "2026-03-19",
+    "steps": [
+      {
+        "title": "Markers, layouts and installation",
+        "image": null,
+        "points": [
+          {
+            "type": "info",
+            "text": "Terraink release: this version comes from the Terraink project, before the fork."
+          },
+          {
+            "type": "improved",
+            "text": "Marker editing: the marker controls are easier to use."
+          },
+          {
+            "type": "new",
+            "text": "Xteink X4: the layout list gets the format of that e-ink display."
+          },
+          {
+            "type": "new",
+            "text": "Location retry: the app tries again when the first request for your position fails."
+          },
+          {
+            "type": "perf",
+            "text": "Lazy loading: the app loads the large parts only when you open them."
+          },
+          {
+            "type": "fixed",
+            "text": "Install prompt: the prompt and the service worker work correctly, and the text is clearer."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.4.0",
+    "date": "2026-03-17",
+    "steps": [
+      {
+        "title": "A new interface and Android install",
+        "image": null,
+        "points": [
+          {
+            "type": "info",
+            "text": "Terraink release: this version comes from the Terraink project, before the fork."
+          },
+          {
+            "type": "new",
+            "text": "Android install: you can install the app on an Android device."
+          },
+          {
+            "type": "new",
+            "text": "Startup location: a dialog asks for the location when the app opens."
+          },
+          {
+            "type": "new",
+            "text": "Marker size: you can change the marker size with two fingers, with the mouse, or with the minus and plus keys."
+          },
+          {
+            "type": "improved",
+            "text": "New panels: the theme, layout and marker sections get a new design, and the mobile view matches the desktop view."
+          },
+          {
+            "type": "security",
+            "text": "Docker image: the nginx base image moves to 1.29-alpine and closes 45 known vulnerabilities."
+          },
+          {
+            "type": "docs",
+            "text": "Legal documents: the project adds a trademark policy and a contributor license agreement."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.3.0",
+    "date": "2026-03-07",
+    "steps": [
+      {
+        "title": "Markers, SVG export and this window",
+        "image": null,
+        "points": [
+          {
+            "type": "info",
+            "text": "Terraink release: this version comes from the Terraink project, before the fork."
+          },
+          {
+            "type": "new",
+            "text": "Markers: you can put markers on the map, move them, and change their style."
+          },
+          {
+            "type": "new",
+            "text": "SVG export: the poster exports as an SVG file with layers."
+          },
+          {
+            "type": "new",
+            "text": "Map layers: you can switch single map layers on and off."
+          },
+          {
+            "type": "new",
+            "text": "My location: one button moves the map to your position."
+          },
+          {
+            "type": "new",
+            "text": "Announcements: this window appears after an update, and it lists the changes."
+          },
+          {
+            "type": "improved",
+            "text": "Print quality: the export uses 300 dots per inch, and the color picker is easier to use."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.2.0",
+    "date": "2026-03-03",
+    "steps": [
+      {
+        "title": "An interactive map preview",
+        "image": null,
+        "points": [
+          {
+            "type": "info",
+            "text": "Terraink release: this version comes from the Terraink project, before the fork."
+          },
+          {
+            "type": "major",
+            "text": "Live preview: the poster preview becomes an interactive MapLibre map. You can move it and zoom it directly."
+          },
+          {
+            "type": "new",
+            "text": "PDF export: the poster exports as a PDF file."
+          },
+          {
+            "type": "new",
+            "text": "Install prompt: you can install the app on your device as a progressive web app."
+          },
+          {
+            "type": "new",
+            "text": "Rotation: a slider turns the map, and you can set the location from coordinates."
+          },
+          {
+            "type": "fixed",
+            "text": "Equal result: the export matches the preview that you see."
+          },
+          {
+            "type": "core",
+            "text": "New structure: the code moves to TypeScript and to a feature-based architecture."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.1.0",
+    "date": "2026-02-10",
+    "steps": [
+      {
+        "title": "The first release",
+        "image": null,
+        "points": [
+          {
+            "type": "info",
+            "text": "Terraink release: this is the first version of the project that Erratic Maps forks."
+          },
+          {
+            "type": "major",
+            "text": "Map posters: the app turns OpenStreetMap data into a poster that you can print."
+          },
+          {
+            "type": "new",
+            "text": "Themes: the first version ships ten themes, among them Midnight Blue, Blueprint, Forest and Japanese Ink."
+          },
+          {
+            "type": "new",
+            "text": "PNG export: the app draws the poster on a canvas and saves it as an image."
+          },
+          {
+            "type": "community",
+            "text": "Origin: the project is a JavaScript reimplementation. The MapToPoster project of Ankur Gupta is its model."
+          }
+        ]
+      }
+    ]
+  }
+]
