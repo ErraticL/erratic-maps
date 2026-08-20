@@ -59,6 +59,16 @@ export default function StartupLocationModal({
     useLocationAutocomplete(locationInput, isInputFocused);
   const { recent, removeRecent, clearRecent } = useRecentLocations();
 
+  // A permalink can answer the location question before the first paint. The
+  // dialog then never opens, and it must still report that it is finished.
+  // Without this report the next dialog waits for an event that never comes.
+  useEffect(() => {
+    if (!isOpen) {
+      onComplete?.();
+    }
+    // This effect runs once. A later close reports through closeModal.
+  }, []);
+
   const closeModal = () => {
     setIsClosing(true);
     window.setTimeout(() => {

@@ -187,6 +187,10 @@ export default function AppShell() {
     useState(true);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [legalDoc, setLegalDoc] = useState<LegalDocType | null>(null);
+  // Two blocking dialogs must not share the screen. The location dialog comes
+  // first, because the app cannot draw a poster without a location. The
+  // release notes wait for this flag.
+  const [isStartupLocationDone, setIsStartupLocationDone] = useState(false);
 
   useEffect(() => {
     const handler = (e: Event) => {
@@ -306,7 +310,9 @@ export default function AppShell() {
     >
       <GeneralHeader onAboutOpen={() => setAboutOpen(true)} />
       <InstallPrompt />
-      <StartupLocationModal />
+      <StartupLocationModal
+        onComplete={() => setIsStartupLocationDone(true)}
+      />
 
       <DesktopNavBar
         activeTab={desktopTab}
@@ -406,9 +412,11 @@ export default function AppShell() {
       </Suspense>
 
       <FooterNote />
-      <Suspense fallback={null}>
-        <AnnouncementModal />
-      </Suspense>
+      {isStartupLocationDone ? (
+        <Suspense fallback={null}>
+          <AnnouncementModal />
+        </Suspense>
+      ) : null}
       {aboutOpen ? (
         <Suspense fallback={null}>
           <AboutModal onClose={() => setAboutOpen(false)} />
