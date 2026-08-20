@@ -788,6 +788,36 @@
     -webkit-overflow-scrolling: touch;
   }
 
+  /* The settings panel arrives as a separate chunk. This placeholder fills
+     the sheet until the chunk arrives. It holds the shape of a title, a
+     line of text and a card. It shows no motion, because it appears for a
+     very short time and motion would draw the eye to a wait. */
+  .mobile-drawer-skeleton {
+    display: grid;
+    gap: 12px;
+    padding-top: 8px;
+  }
+
+  .mobile-drawer-skeleton span {
+    display: block;
+    height: 14px;
+    border-radius: 7px;
+    background: var(--line);
+  }
+
+  .mobile-drawer-skeleton span:first-child {
+    width: 45%;
+  }
+
+  .mobile-drawer-skeleton span:nth-child(2) {
+    width: 80%;
+  }
+
+  .mobile-drawer-skeleton span:last-child {
+    height: 96px;
+    border-radius: 12px;
+  }
+
   /* Info panel strip inside drawer */
   .mobile-drawer-content .info-panel {
     display: block;

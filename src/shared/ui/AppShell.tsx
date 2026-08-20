@@ -151,7 +151,19 @@ function SettingsDrawer({
           {...handleProps}
         />
         <div className="mobile-drawer-content">
-          <SettingsPanel mobileTab={mobileTab} />
+          {/* The settings panel loads as its own chunk. Without this boundary
+              React throws when the chunk suspends during a tap. */}
+          <Suspense
+            fallback={
+              <div className="mobile-drawer-skeleton" aria-hidden="true">
+                <span />
+                <span />
+                <span />
+              </div>
+            }
+          >
+            <SettingsPanel mobileTab={mobileTab} />
+          </Suspense>
         </div>
       </div>
     </div>
