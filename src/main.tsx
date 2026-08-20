@@ -26,6 +26,28 @@ import "@fontsource/ibm-plex-mono/700.css";
 
 import "./styles/index.css";
 
+// After a deploy, the Pages edge can serve the new index.html up to
+// about a minute before every hashed chunk propagates. A visitor in
+// that window gets a failed dynamic import and a blank app. Vite fires
+// "vite:preloadError" for exactly this case; one reload fetches a
+// consistent deployment. The sessionStorage flag stops a reload loop
+// when the chunk stays missing; it resets after the next good load.
+const PRELOAD_RELOAD_FLAG = "erratic-maps:preload-reloaded";
+window.addEventListener("vite:preloadError", (event) => {
+  if (sessionStorage.getItem(PRELOAD_RELOAD_FLAG)) {
+    return; // Already reloaded once; let the error surface.
+  }
+  sessionStorage.setItem(PRELOAD_RELOAD_FLAG, "1");
+  event.preventDefault();
+  window.location.reload();
+});
+// Clear the flag only after the app survives a while: a reload that
+// fails again does so within seconds, and clearing on "load" would
+// re-arm the guard too early and allow a reload loop.
+window.setTimeout(() => {
+  sessionStorage.removeItem(PRELOAD_RELOAD_FLAG);
+}, 15_000);
+
 const syncDisplayMode = () => {
   const isStandalone =
     isNativePlatform() ||
