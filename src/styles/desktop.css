@@ -261,7 +261,10 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  .desktop-nav-tab:hover {
+  /* This rule turns off the global lift on button:not(:disabled):hover.
+     It names the element and the disabled test, so it stays stronger than
+     the lift whatever the order of the files. */
+  button.desktop-nav-tab:not(:disabled):hover {
     transform: none;
     filter: none;
     background: rgba(94, 174, 212, 0.1);
@@ -1070,7 +1073,10 @@
       border-color var(--dur-press) var(--ease-out);
   }
 
-  .about-modal-close:hover {
+  /* This rule turns off the global lift on button:not(:disabled):hover.
+     It names the element and the disabled test, so it stays stronger than
+     the lift whatever the order of the files. */
+  button.about-modal-close:not(:disabled):hover {
     transform: none;
     filter: none;
     background: rgba(94, 174, 212, 0.1);

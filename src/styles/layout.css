@@ -443,7 +443,10 @@ button.install-prompt-btn {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  button.install-prompt-btn:hover {
+  /* This rule turns off the global lift on button:not(:disabled):hover.
+     layout.css loads before forms.css, so equal strength loses on order.
+     The disabled test adds the strength that keeps this rule in front. */
+  button.install-prompt-btn:not(:disabled):hover {
     transform: none;
     filter: none;
     border-color: rgba(130, 200, 240, 0.85);
@@ -475,7 +478,10 @@ button.install-prompt-dismiss {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  button.install-prompt-dismiss:hover {
+  /* This rule turns off the global lift on button:not(:disabled):hover.
+     layout.css loads before forms.css, so equal strength loses on order.
+     The disabled test adds the strength that keeps this rule in front. */
+  button.install-prompt-dismiss:not(:disabled):hover {
     transform: none;
     filter: none;
     color: #a8cfe5;

@@ -1011,7 +1011,10 @@ button.color-editor-target:focus-visible {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .theme-card:hover {
+  /* This rule turns off the global lift on button:not(:disabled):hover.
+     It names the element and the disabled test, so it stays stronger than
+     the lift whatever the order of the files. */
+  button.theme-card:not(:disabled):hover {
     transform: none;
     filter: none;
     border-color: rgba(112, 184, 222, 0.8);
