@@ -1,6 +1,6 @@
 export type LegalDocType = "privacy" | "imprint";
 
-export const LEGAL_DOC_EVENT = "terraink:legal-doc";
+export const LEGAL_DOC_EVENT = "erratic-maps:legal-doc";
 
 /**
  * Static pages generated at build time by the `legal-pages` Vite plugin.

@@ -1,6 +1,6 @@
 import type { MarkerIconDefinition } from "@/features/markers/domain/types";
 
-const DB_NAME = "terraink-markers";
+const DB_NAME = "erratic-maps-markers";
 const STORE_NAME = "custom-icons";
 const DB_VERSION = 1;
 const STORAGE_KEY = "icons";

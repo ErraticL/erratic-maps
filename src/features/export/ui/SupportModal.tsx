@@ -42,7 +42,7 @@ export default function SupportModal({
             ✨ Your poster is ready!
           </p>
           <p className="support-modal__text">
-            Follow Terraink on Instagram for fresh map ideas, design tips, and the
+            Follow Erratic Maps on Instagram for fresh map ideas, design tips, and the
             latest features — and show off the posters you make.
           </p>
           <div className="support-modal__actions">

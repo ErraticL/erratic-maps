@@ -3,7 +3,7 @@ import type { IRecentLocationsStore } from "../domain/ports";
 
 // Deliberately NOT prefixed with APP_VERSION (unlike localStorageCache):
 // search history must survive app upgrades.
-const STORAGE_KEY = "terraink:recent-locations";
+const STORAGE_KEY = "erratic-maps:recent-locations";
 const PAYLOAD_VERSION = 1;
 const MAX_ENTRIES = 20;
 

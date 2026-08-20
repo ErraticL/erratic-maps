@@ -12,10 +12,10 @@ export default function GeneralHeader({ onAboutOpen }: GeneralHeaderProps) {
         <img
           className="desktop-brand-logo brand-logo"
           src="/assets/logo.svg"
-          alt="Terraink logo"
+          alt="Erratic Maps logo"
         />
         <div className="desktop-brand-copy brand-copy">
-          <h1 className="desktop-brand-title">Terraink</h1>
+          <h1 className="desktop-brand-title">Erratic Maps</h1>
           <p className="desktop-brand-kicker app-kicker">
             Free Map Poster & Wallpaper Creator
           </p>

@@ -10,7 +10,7 @@ import {
 
 declare global {
   interface Window {
-    __terrainkDeferredInstallPrompt?: Event;
+    __erraticMapsDeferredInstallPrompt?: Event;
   }
 }
 
@@ -50,7 +50,7 @@ export default function useInstallPrompt() {
   useEffect(() => {
     if (isNativePlatform()) return;
 
-    setBeforeInstallPromptFired(Boolean(window.__terrainkDeferredInstallPrompt));
+    setBeforeInstallPromptFired(Boolean(window.__erraticMapsDeferredInstallPrompt));
     setSwControlled(Boolean(navigator.serviceWorker?.controller));
     if (navigator.serviceWorker?.ready) {
       void navigator.serviceWorker.ready
@@ -70,9 +70,9 @@ export default function useInstallPrompt() {
       return;
     }
 
-    if (window.__terrainkDeferredInstallPrompt) {
+    if (window.__erraticMapsDeferredInstallPrompt) {
       setDeferredPrompt(
-        window.__terrainkDeferredInstallPrompt as BeforeInstallPromptEvent,
+        window.__erraticMapsDeferredInstallPrompt as BeforeInstallPromptEvent,
       );
     }
 
@@ -81,12 +81,12 @@ export default function useInstallPrompt() {
       setDeferredPrompt(e as BeforeInstallPromptEvent);
       setBeforeInstallPromptFired(true);
       setShowAndroidHint(false);
-      window.__terrainkDeferredInstallPrompt = e;
+      window.__erraticMapsDeferredInstallPrompt = e;
     };
     window.addEventListener("beforeinstallprompt", handler);
 
     const fallbackTimer = window.setTimeout(() => {
-      if (isAndroid() && !window.__terrainkDeferredInstallPrompt) {
+      if (isAndroid() && !window.__erraticMapsDeferredInstallPrompt) {
         setShowAndroidHint(true);
       }
     }, 4000);
@@ -140,7 +140,7 @@ export default function useInstallPrompt() {
     isAndroid: isAndroid(),
     isStandaloneMode: isInStandaloneMode(),
     deferredPromptAvailable: Boolean(deferredPrompt),
-    deferredPromptCached: Boolean(window.__terrainkDeferredInstallPrompt),
+    deferredPromptCached: Boolean(window.__erraticMapsDeferredInstallPrompt),
     beforeInstallPromptFired,
     promptOutcome,
     swControlled,

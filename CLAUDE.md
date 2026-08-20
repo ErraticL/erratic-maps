@@ -1,12 +1,63 @@
-# Terraink — Claude Code Guide
+# Erratic Maps
+
+A fork of Terraink (AGPL-3.0), rebranded and extended, deployed at
+https://maps.erraticl.uk. Owner: Marcel (GitHub: ErraticL).
+
+## Read first
+
+- The full decision record, pre-fork survey, and seven execution
+  phases: `C:\Users\marce\Desktop\brainstorm\PROJECT.md` — section
+  "DECIDED 2026-08-20 (grilled): fork Terraink as Erratic Maps".
+- Reference clones and per-repo license rules:
+  `C:\Users\marce\Desktop\brainstorm\reference\README.md`. The
+  Terraink clone (full history + `mit-era` branch) is at
+  `C:\Users\marce\Desktop\brainstorm\reference\terraink`.
+- The retired hand-built app (source of the themes and the building
+  triad): `C:\Users\marce\Desktop\brainstorm\proto\`.
+
+## Hard constraints
+
+- AGPL-3.0: the fork's source must be published (public GitHub repo
+  `erratic-maps`); keep license and copyright notices.
+- Trademark (their TRADEMARK.md): do not use the Terraink name or
+  logo; the footer credit "Based on Terraink source code" is allowed
+  and required by our own honesty.
+- Deployment: build `dist/` and deploy into the EXISTING Cloudflare
+  Pages project `erraticl-maps` (wrangler; the custom domain stays
+  attached). Command shape:
+  `npx wrangler pages deploy dist --project-name=erraticl-maps --branch=main`
+- Upstream strategy: deliberate merges. Remote `upstream` points at
+  https://github.com/yousifamanuel/terraink.git. Keep divergence from
+  upstream small so merges stay easy.
+
+## Working rules (paid for in blood in the previous sessions)
+
+- Read the reference code before designing; for compositions, read the
+  RENDERER, not just the constants.
+- After any visual change, export or screenshot the result and look at
+  it with your own eyes before claiming it works.
+- Verify each phase in the browser pane before starting the next.
+- Browsers cache aggressively; hard-refresh or cache-bust after edits.
+
+## Open items (ask Marcel when relevant)
+
+- Logo/wordmark design (the current boulder mark is an interim design;
+  regenerate icons with `node scripts/make-icons.mjs` after replacing
+  `public/assets/logo.svg`).
+- Impressum / privacy documents (legal modal reads them from env URLs;
+  launched with them empty).
+
+---
+
+# Upstream developer guide (Terraink architecture, still accurate)
 
 ## Commands
 
 ```bash
-bun install          # install dependencies
-bun run dev          # start dev server (http://localhost:5173)
-bun run build        # production build
-bun run typecheck    # type-check without emitting
+npm install          # install dependencies (upstream uses bun; both work)
+npx vite             # start dev server (http://localhost:5173)
+npx vite build       # production build
+npx tsc --noEmit     # type-check without emitting
 ```
 
 ## Architecture: Feature-based + Hexagonal/Clean
@@ -101,16 +152,9 @@ One logical change per commit. Subject: lowercase, imperative, no trailing perio
 
 ## Branch Strategy
 
-```text
-feature/fix branch → dev → beta → main
-```
-
-All PRs target `dev`. Never open PRs against `main` or `beta`.
-
-**Do not create a new branch for features/fixes unless the user explicitly
-demands it.** By default, commit directly to the current branch. The
-`feature/fix → dev → beta → main` flow above describes the user's own
-workflow — it is not a cue for Claude to auto-branch.
+This fork commits directly to `main`. The upstream
+`feature/fix → dev → beta → main` flow applies only to PRs against
+upstream. **Do not create a new branch unless the user demands it.**
 
 ## Do Not
 
@@ -121,4 +165,3 @@ workflow — it is not a cue for Claude to auto-branch.
 - Add a CSS class without a matching rule in `src/styles/`
 - Prop-drill state more than one level — use `usePosterContext()`
 - Read any file's exports from memory — always verify the actual source first
-- Edit `bun.lock` manually — run `bun install`

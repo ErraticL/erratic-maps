@@ -72,7 +72,7 @@ function HelpUsGrowSection({
     <section className="info-panel-section">
       <h3>Help Us Grow</h3>
       <p className="hug-copy">
-        Terraink is 100% client-side and open-source. Help us build the future
+        Erratic Maps is 100% client-side and open-source. Help us build the future
         of map art by contributing to our roadmap!
       </p>
 
@@ -87,7 +87,7 @@ function HelpUsGrowSection({
                 href={repoUrl}
                 target="_blank"
                 rel="noreferrer"
-                aria-label="Open Terraink repository on GitHub"
+                aria-label="Open Erratic Maps repository on GitHub"
                 onClick={() => trackEvent("github_click")}
               >
                 <GitHubIcon className="badge-icon" />
@@ -105,7 +105,7 @@ function HelpUsGrowSection({
                 href={`${repoUrl}/stargazers`}
                 target="_blank"
                 rel="noreferrer"
-                aria-label="Star Terraink on GitHub"
+                aria-label="Star Erratic Maps on GitHub"
               >
                 <StarIcon className="badge-icon" />
                 <span>{starsText !== null ? starsText : "Star"}</span>
@@ -125,8 +125,8 @@ function HelpUsGrowSection({
                 href={kofiUrl}
                 target="_blank"
                 rel="noreferrer"
-                aria-label="Support Terraink and donate to keep it free"
-                title="Support Terraink and donate to keep it free"
+                aria-label="Support Erratic Maps and donate to keep it free"
+                title="Support Erratic Maps and donate to keep it free"
                 onClick={() => trackEvent("donate_click")}
               >
                 <span>Donate</span>
@@ -151,7 +151,7 @@ function HelpUsGrowSection({
                   href={href}
                   target="_blank"
                   rel="noreferrer"
-                  aria-label={`Follow Terraink on ${label}`}
+                  aria-label={`Follow Erratic Maps on ${label}`}
                   title={label}
                 >
                   <Icon className="social-icon" />

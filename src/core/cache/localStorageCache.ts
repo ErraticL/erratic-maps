@@ -1,7 +1,7 @@
 import type { ICache } from "./ports";
 import { APP_VERSION } from "@/core/config";
 
-const CACHE_PREFIX = `terraink:${APP_VERSION}:`;
+const CACHE_PREFIX = `erratic-maps:${APP_VERSION}:`;
 const DEFAULT_MAX_AGE_MS = 6 * 60 * 60 * 1000;
 
 export const localStorageCache: ICache = {

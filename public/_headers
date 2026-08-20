@@ -2,7 +2,7 @@
 #
 # Production is served by Pages, not by nginx.conf — that file only applies to
 # the self-hosted Docker image, so any header set there has to be repeated here
-# to actually reach terraink.app.
+# to actually reach maps.erraticl.uk.
 #
 # Note: when several rules match one request, Pages joins duplicate header
 # values with a comma instead of overriding them. Keep the blocks below from

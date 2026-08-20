@@ -82,9 +82,21 @@ export default function FooterNote() {
       </div>
 
       <div className="desktop-footer-middle">
+        {/* One span: .made-note is a flex container on desktop, and flex
+            drops the whitespace between JSX children. */}
         <p className="made-note">
-          Terraink™ v{appVersion} | © 2026 | Made with{" "}
-          <span className="heart">❤︎</span> in Hannover, Germany
+          <span>
+            Erratic Maps v{appVersion} | © 2026 | Based on{" "}
+            <a
+              className="source-link"
+              href="https://github.com/yousifamanuel/terraink"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Terraink
+            </a>{" "}
+            source code
+          </span>
         </p>
       </div>
 

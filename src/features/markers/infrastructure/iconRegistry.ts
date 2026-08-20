@@ -53,7 +53,7 @@ function createImageIcon(id: string, label: string, sourcePath: string) {
 }
 
 export const predefinedMarkerIcons: MarkerIconDefinition[] = [
-  createImageIcon("app-marker", "Terraink", "/assets/marker.svg"),
+  createImageIcon("app-marker", "Erratic Maps", "/assets/marker.svg"),
   createSvgIcon("pin", "Pin", FaLocationDot),
   createSvgIcon("heart", "Heart", FaHeart),
   createSvgIcon("home", "Home", FaHouse),

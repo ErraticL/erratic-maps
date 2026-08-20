@@ -10,7 +10,7 @@ import type { Location, RecentLocation } from "../domain/types";
 
 // Keeps every mounted search field in sync — DesktopLocationBar is mounted
 // twice (desktop + mobile wrappers) and LocationSection is a third instance.
-export const RECENT_LOCATIONS_CHANGED_EVENT = "terraink:recent-locations-changed";
+export const RECENT_LOCATIONS_CHANGED_EVENT = "erratic-maps:recent-locations-changed";
 
 function notifyChanged(): void {
   if (typeof window === "undefined") return;
