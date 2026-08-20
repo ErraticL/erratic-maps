@@ -1,4 +1,12 @@
-import { lazy, Suspense, useCallback, useEffect, useState } from "react";
+import {
+  lazy,
+  Suspense,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { usePosterContext } from "@/features/poster/ui/PosterContext";
 import {
   MAX_MARKER_SIZE,
@@ -30,20 +38,102 @@ const AnnouncementModal = lazy(
 const ExportFab = lazy(() => import("@/features/export/ui/ExportFab"));
 const DesktopLocationBar = lazy(() => import("@/shared/ui/DesktopLocationBar"));
 
+/** The exit transition of the sheet, in milliseconds. It matches mobile.css. */
+const DRAWER_EXIT_MS = 200;
+
+/** Returns true when the user asks the system for less motion. */
+function prefersReducedMotion() {
+  if (typeof window === "undefined" || !window.matchMedia) return false;
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
 function SettingsDrawer({
   mobileTab,
+  open,
   onClose,
+  onExited,
 }: {
   mobileTab: MobileTab;
+  /** The drawer must be visible. A false value starts the exit. */
+  open: boolean;
+  /** The drawer asks the shell to close it. */
   onClose: () => void;
+  /** The exit is complete. The shell removes the drawer from the DOM. */
+  onExited: () => void;
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
+  // "closed" is the position before the entry. "closing" runs the exit.
+  const [phase, setPhase] = useState<"closed" | "open" | "closing">("closed");
+  const collapsedHeight = useRef(0);
+  const expandOffset = useRef(0);
+
   const { sheetRef, handleRef, handleProps } = useSwipeDown(onClose, 80, {
-    onExpand: () => setIsExpanded(true),
+    onExpand: (offsetY) => {
+      expandOffset.current = offsetY;
+      setIsExpanded(true);
+    },
   });
 
+  // Drive the entry and the exit. The reflow makes the browser accept the
+  // present position first, so the new state attribute starts a transition.
+  useLayoutEffect(() => {
+    const sheet = sheetRef.current;
+    if (!sheet) return;
+    if (!open) {
+      setPhase("closing");
+      return;
+    }
+    if (collapsedHeight.current === 0) {
+      collapsedHeight.current = sheet.offsetHeight;
+    }
+    void sheet.offsetHeight;
+    setPhase("open");
+  }, [open, sheetRef]);
+
+  // The sheet grows when it expands. Animate the growth with a transform, so
+  // the browser does not lay out the panel on every frame.
+  useLayoutEffect(() => {
+    const sheet = sheetRef.current;
+    if (!isExpanded || !sheet) return;
+
+    const offset = expandOffset.current;
+    expandOffset.current = 0;
+    const growth = sheet.offsetHeight - collapsedHeight.current;
+    const from = growth + offset;
+    if (prefersReducedMotion() || from === 0) return;
+
+    sheet.style.transition = "none";
+    sheet.style.transform = `translateY(${from}px)`;
+    void sheet.offsetHeight;
+    sheet.style.transition = "";
+    sheet.style.transform = "";
+  }, [isExpanded, sheetRef]);
+
+  // Keep the sheet in the DOM until the exit ends.
+  useEffect(() => {
+    if (phase !== "closing") return;
+    const sheet = sheetRef.current;
+
+    const timer = window.setTimeout(onExited, DRAWER_EXIT_MS + 60);
+    const onTransitionEnd = (event: TransitionEvent) => {
+      if (event.target !== sheet || event.propertyName !== "transform") return;
+      onExited();
+    };
+
+    sheet?.addEventListener("transitionend", onTransitionEnd);
+    return () => {
+      window.clearTimeout(timer);
+      sheet?.removeEventListener("transitionend", onTransitionEnd);
+    };
+  }, [phase, onExited, sheetRef]);
+
   return (
-    <div className="mobile-drawer" role="dialog" aria-label="Settings">
+    <div
+      className="mobile-drawer"
+      role="dialog"
+      aria-label="Settings"
+      data-state={phase}
+    >
       <div
         className="mobile-drawer-backdrop"
         onClick={onClose}
@@ -84,6 +174,8 @@ export default function AppShell() {
   // Mobile state
   const [mobileTab, setMobileTab] = useState<MobileTab>("theme");
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
+  // The drawer stays in the DOM until its exit transition ends.
+  const [mobileDrawerMounted, setMobileDrawerMounted] = useState(false);
   const [mobileLocationRowVisible, setMobileLocationRowVisible] =
     useState(true);
   const [isMobileViewport, setIsMobileViewport] = useState(false);
@@ -157,6 +249,12 @@ export default function AppShell() {
     };
   }, [mobileDrawerOpen]);
 
+  const closeMobileDrawer = useCallback(() => setMobileDrawerOpen(false), []);
+  const unmountMobileDrawer = useCallback(
+    () => setMobileDrawerMounted(false),
+    [],
+  );
+
   const handleMobileTabChange = (tab: MobileTab) => {
     if (tab === "location") {
       setMobileLocationRowVisible((isVisible) => !isVisible);
@@ -168,6 +266,7 @@ export default function AppShell() {
       setMobileDrawerOpen(false);
     } else {
       setMobileTab(tab);
+      setMobileDrawerMounted(true);
       setMobileDrawerOpen(true);
     }
   };
@@ -272,10 +371,12 @@ export default function AppShell() {
 
       <PreviewPanel />
 
-      {mobileDrawerOpen ? (
+      {mobileDrawerMounted ? (
         <SettingsDrawer
           mobileTab={mobileTab}
-          onClose={() => setMobileDrawerOpen(false)}
+          open={mobileDrawerOpen}
+          onClose={closeMobileDrawer}
+          onExited={unmountMobileDrawer}
         />
       ) : null}
 

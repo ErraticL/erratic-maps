@@ -696,7 +696,12 @@
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     touch-action: none;
-    animation: backdrop-fadein 0.2s ease;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .mobile-drawer[data-state="open"] .mobile-drawer-backdrop {
+    opacity: 1;
   }
 
   @keyframes backdrop-fadein {
@@ -715,27 +720,42 @@
     border-top: 1px solid rgba(146, 176, 200, 0.16);
     border-radius: 24px 24px 0 0;
     padding-bottom: env(safe-area-inset-bottom, 0px);
-    height: min(38vh, 360px);
-    max-height: 84vh;
+    height: min(38dvh, 360px);
+    max-height: 84dvh;
     display: flex;
     flex-direction: column;
-    animation: sheet-slidein 0.28s cubic-bezier(0.32, 0.72, 0, 1);
-    /* transition is set/unset by swipe hook via inline style */
-    transition:
-      transform 0.28s cubic-bezier(0.32, 0.72, 0, 1),
-      height 0.24s cubic-bezier(0.32, 0.72, 0, 1);
+    will-change: transform;
+    /* The entry and the exit use a transition, not a keyframe animation.
+       A transition lets the drag take the sheet over while it arrives.
+       The swipe hook sets and clears `transition` through an inline style. */
+    transform: translateY(100%);
+    transition: transform 0.28s cubic-bezier(0.32, 0.72, 0, 1);
   }
 
+  .mobile-drawer[data-state="open"] .mobile-drawer-sheet {
+    transform: translateY(0);
+  }
+
+  /* The exit is faster than the entry. */
+  .mobile-drawer[data-state="closing"] .mobile-drawer-sheet {
+    transform: translateY(100%);
+    transition-duration: 0.2s;
+  }
+
+  /* The height changes in one step. The component animates the growth with a
+     transform, so the browser does not lay out the panel on every frame. */
   .mobile-drawer-sheet.is-expanded {
-    height: calc(100vh - 64px);
+    height: calc(100dvh - 64px);
   }
 
-  @keyframes sheet-slidein {
-    from {
-      transform: translateY(100%);
+  @media (prefers-reduced-motion: reduce) {
+    .mobile-drawer-backdrop,
+    .mobile-drawer-sheet {
+      transition-duration: 0.01ms;
     }
-    to {
-      transform: translateY(0);
+
+    .mobile-drawer[data-state="closing"] .mobile-drawer-sheet {
+      transition-duration: 0.01ms;
     }
   }
 
