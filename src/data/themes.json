@@ -54,6 +54,222 @@
         }
       }
     },
+    "catppuccin_mocha": {
+      "name": "Catppuccin Mocha",
+      "description": "Catppuccin Mocha - lavender roads and height-graded mauve buildings on a soft dark base",
+      "ui": {
+        "bg": "#1E1E2E",
+        "text": "#CDD6F4"
+      },
+      "map": {
+        "land": "#1E1E2E",
+        "landcover": "#242435",
+        "water": "#181825",
+        "waterway": "#181825",
+        "parks": "#2E363C",
+        "buildings": "#8E76B1",
+        "buildings_triad": ["#5B4E74", "#8E76B1", "#CBA6F7"],
+        "aeroway": "#293141",
+        "rail": "#585B70",
+        "roads": {
+          "major": "#B4BEFE",
+          "minor_high": "#8086B5",
+          "minor_mid": "#6C7086",
+          "minor_low": "#45475A",
+          "path": "#45475A",
+          "outline": "#1E1E2E"
+        }
+      }
+    },
+    "nord": {
+      "name": "Nord",
+      "description": "Nord - snow roads and height-graded frost buildings on a polar night base",
+      "ui": {
+        "bg": "#2E3440",
+        "text": "#ECEFF4"
+      },
+      "map": {
+        "land": "#2E3440",
+        "landcover": "#353B49",
+        "water": "#3B4252",
+        "waterway": "#3B4252",
+        "parks": "#3C4549",
+        "buildings": "#5E81AC",
+        "buildings_triad": ["#4C566A", "#5E81AC", "#88C0D0"],
+        "aeroway": "#37424E",
+        "rail": "#4C566A",
+        "roads": {
+          "major": "#D8DEE9",
+          "minor_high": "#949AA5",
+          "minor_mid": "#6A707B",
+          "minor_low": "#4C566A",
+          "path": "#4C566A",
+          "outline": "#2E3440"
+        }
+      }
+    },
+    "dracula": {
+      "name": "Dracula",
+      "description": "Dracula - pink roads and height-graded purple buildings on a dark slate base",
+      "ui": {
+        "bg": "#282A36",
+        "text": "#F8F8F2"
+      },
+      "map": {
+        "land": "#282A36",
+        "landcover": "#303341",
+        "water": "#20222B",
+        "waterway": "#20222B",
+        "parks": "#2C3F3D",
+        "buildings": "#896EB5",
+        "buildings_triad": ["#5C4F7A", "#896EB5", "#BD93F9"],
+        "aeroway": "#303946",
+        "rail": "#6272A4",
+        "roads": {
+          "major": "#FF79C6",
+          "minor_high": "#A9598C",
+          "minor_mid": "#6272A4",
+          "minor_low": "#44475A",
+          "path": "#44475A",
+          "outline": "#282A36"
+        }
+      }
+    },
+    "gruvbox": {
+      "name": "Gruvbox",
+      "description": "Gruvbox - retro cream roads and height-graded orange buildings on a warm dark base",
+      "ui": {
+        "bg": "#282828",
+        "text": "#EBDBB2"
+      },
+      "map": {
+        "land": "#282828",
+        "landcover": "#32302F",
+        "water": "#1D2021",
+        "waterway": "#1D2021",
+        "parks": "#353526",
+        "buildings": "#B3611E",
+        "buildings_triad": ["#734723", "#B3611E", "#FE8019"],
+        "aeroway": "#353331",
+        "rail": "#665C54",
+        "roads": {
+          "major": "#EBDBB2",
+          "minor_high": "#A89984",
+          "minor_mid": "#7C6F64",
+          "minor_low": "#504945",
+          "path": "#504945",
+          "outline": "#282828"
+        }
+      }
+    },
+    "tokyo_night": {
+      "name": "Tokyo Night",
+      "description": "Tokyo Night - violet roads and height-graded blue buildings on a night base",
+      "ui": {
+        "bg": "#1A1B26",
+        "text": "#C0CAF5"
+      },
+      "map": {
+        "land": "#1A1B26",
+        "landcover": "#242738",
+        "water": "#16161E",
+        "waterway": "#16161E",
+        "parks": "#272D2D",
+        "buildings": "#7AA2F7",
+        "buildings_triad": ["#3D59A1", "#7AA2F7", "#B4F9F8"],
+        "aeroway": "#24293B",
+        "rail": "#565F89",
+        "roads": {
+          "major": "#BB9AF7",
+          "minor_high": "#7B67A3",
+          "minor_mid": "#565F89",
+          "minor_low": "#3B4261",
+          "path": "#3B4261",
+          "outline": "#1A1B26"
+        }
+      }
+    },
+    "iris": {
+      "name": "Iris",
+      "description": "Cool paper with graphite roads and height-graded lilac-to-indigo buildings",
+      "ui": {
+        "bg": "#F5F3F9",
+        "text": "#2E2A3D"
+      },
+      "map": {
+        "land": "#F5F3F9",
+        "landcover": "#ECE9F2",
+        "water": "#D3DCEA",
+        "waterway": "#D3DCEA",
+        "parks": "#DDE5DA",
+        "buildings": "#8D78D6",
+        "buildings_triad": ["#D9CFF2", "#8D78D6", "#3F2C8A"],
+        "aeroway": "#E6E3EC",
+        "rail": "#2E2A3D",
+        "roads": {
+          "major": "#2E2A3D",
+          "minor_high": "#5A5570",
+          "minor_mid": "#8C8799",
+          "minor_low": "#BAB6C4",
+          "path": "#CBC8D3",
+          "outline": "#F5F3F9"
+        }
+      }
+    },
+    "glacier": {
+      "name": "Glacier",
+      "description": "Cool paper with slate roads and height-graded ice-to-navy buildings",
+      "ui": {
+        "bg": "#F3F6F8",
+        "text": "#2B3A4A"
+      },
+      "map": {
+        "land": "#F3F6F8",
+        "landcover": "#E9EEF2",
+        "water": "#CFE0EA",
+        "waterway": "#CFE0EA",
+        "parks": "#DCE7E3",
+        "buildings": "#6FA3C7",
+        "buildings_triad": ["#CFE3F0", "#6FA3C7", "#1F4E79"],
+        "aeroway": "#E4EAEE",
+        "rail": "#2B3A4A",
+        "roads": {
+          "major": "#2B3A4A",
+          "minor_high": "#5B6B7A",
+          "minor_mid": "#8A98A5",
+          "minor_low": "#B9C3CC",
+          "path": "#C9D1D8",
+          "outline": "#F3F6F8"
+        }
+      }
+    },
+    "bauhaus": {
+      "name": "Bauhaus",
+      "description": "Off-white paper with black roads and primary-color buildings graded by height",
+      "ui": {
+        "bg": "#F4EFE6",
+        "text": "#1A1A1A"
+      },
+      "map": {
+        "land": "#F4EFE6",
+        "landcover": "#ECE6DA",
+        "water": "#BFD7E8",
+        "waterway": "#BFD7E8",
+        "parks": "#D8DCC8",
+        "buildings": "#D83A2B",
+        "buildings_triad": ["#F2C330", "#D83A2B", "#1F4BA6"],
+        "aeroway": "#E6E0D6",
+        "rail": "#1A1A1A",
+        "roads": {
+          "major": "#1A1A1A",
+          "minor_high": "#1A1A1A",
+          "minor_mid": "#1A1A1A",
+          "minor_low": "#1A1A1A",
+          "path": "#1A1A1A",
+          "outline": "#F4EFE6"
+        }
+      }
+    },
     "carrara": {
       "name": "Carrara",
       "description": "White marble — pale stone with soft charcoal veining",
