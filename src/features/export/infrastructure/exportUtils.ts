@@ -297,6 +297,12 @@ export interface ExportRenderParams {
   renderWidth: number;
   renderHeight: number;
   pixelRatio: number;
+  /**
+   * The padding of the preview map, scaled to the export container. It
+   * holds the location at the center of the map hole, exactly as the
+   * preview does.
+   */
+  padding: { top: number; right: number; bottom: number; left: number };
   markerProjection: MarkerProjectionInput;
   markerScaleX: number;
   markerScaleY: number;
@@ -346,6 +352,26 @@ export function resolveExportRenderParams(
   const renderHeight = Math.max(1, Math.round(previewHeight * actualOverzoomScale));
   const pixelRatio = Math.max(basePixelRatio / actualOverzoomScale, 1);
 
+  // The export map has the same container size as the preview map, up
+  // to a rounding step, so the padding transfers with one scale factor
+  // per axis. Without it the export map would frame the sheet center
+  // while the preview frames the center of the hole.
+  const previewPadding = map.getPadding();
+  const paddingScaleX =
+    internalMapContainer.clientWidth > 0
+      ? renderWidth / internalMapContainer.clientWidth
+      : 1;
+  const paddingScaleY =
+    internalMapContainer.clientHeight > 0
+      ? renderHeight / internalMapContainer.clientHeight
+      : 1;
+  const padding = {
+    top: (previewPadding.top ?? 0) * paddingScaleY,
+    right: (previewPadding.right ?? 0) * paddingScaleX,
+    bottom: (previewPadding.bottom ?? 0) * paddingScaleY,
+    left: (previewPadding.left ?? 0) * paddingScaleX,
+  };
+
   const markerProjection: MarkerProjectionInput = {
     centerLat: center.lat,
     centerLon: center.lng,
@@ -353,6 +379,8 @@ export function resolveExportRenderParams(
     bearingDeg: bearing,
     canvasWidth: renderWidth,
     canvasHeight: renderHeight,
+    centerOffsetX: (padding.left - padding.right) / 2,
+    centerOffsetY: (padding.top - padding.bottom) / 2,
   };
 
   return {
@@ -366,6 +394,7 @@ export function resolveExportRenderParams(
     renderWidth,
     renderHeight,
     pixelRatio,
+    padding,
     markerProjection,
     markerScaleX: exportWidth / renderWidth,
     markerScaleY: exportHeight / renderHeight,

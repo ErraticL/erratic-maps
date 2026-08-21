@@ -5,6 +5,7 @@ import type {
   MarkerProjectionInput,
 } from "@/features/markers/domain/types";
 import type { Route } from "@/features/routes/domain/types";
+import type { Sheet } from "./sheet";
 
 export interface CanvasSize {
   width: number;
@@ -38,6 +39,8 @@ export interface ExportOptions {
   markerScaleY?: number;
   markerSizeScale?: number;
   routes?: Route[];
+  /** The composition. Without it the compositor takes the default sheet. */
+  sheet?: Sheet;
 }
 
 export interface Typography {

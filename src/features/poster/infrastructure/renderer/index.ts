@@ -1,17 +1,22 @@
-import { applyFades } from "./layers";
+import { applyFades, applyMat } from "./layers";
 import { drawPosterText } from "./typography";
 import { drawMarkersOnCanvas } from "@/features/markers/infrastructure/rendering";
 import { drawRoutesOnCanvas } from "@/features/routes/infrastructure/rendering";
 import { routeEndpointMarkerItems } from "@/features/routes/infrastructure/helpers";
 import { MEMORY_LIMIT_MESSAGE } from "@/features/export/domain/resolution";
+import {
+  computeSheetGeometry,
+  DEFAULT_SHEET,
+} from "@/features/poster/domain/sheet";
 import type { ExportOptions, CanvasSize } from "../../domain/types";
 
 /**
  * Composites a final poster from a MapLibre snapshot canvas.
  *
  * 1. Draws the captured map image.
- * 2. Applies gradient fades (top + bottom).
- * 3. Draws poster text (city, country, coords, attribution).
+ * 2. Applies the gradient fades that the sheet asks for.
+ * 3. Paints the mat of the sheet over the map.
+ * 4. Draws poster text (city, country, coords, attribution).
  *
  * Returns the composited canvas + its size metadata.
  */
@@ -38,6 +43,7 @@ export async function compositeExport(
     markerScaleY = 1,
     markerSizeScale = 1,
     routes = [],
+    sheet = DEFAULT_SHEET,
   } = options;
 
   const width = mapCanvas.width;
@@ -55,12 +61,17 @@ export async function compositeExport(
     throw new Error(MEMORY_LIMIT_MESSAGE);
   }
 
+  // The sheet decides the map hole, the mat, the fades and the box of
+  // the text block. The DOM preview reads the same model at the size of
+  // the poster frame, so the file repeats what the visitor saw.
+  const geometry = computeSheetGeometry(width, height, sheet);
+
   // 1. Draw map snapshot
   ctx.drawImage(mapCanvas, 0, 0);
 
   // 2. Gradient fades
   if (showOverlay) {
-    applyFades(ctx, width, height, theme.ui.bg);
+    applyFades(ctx, geometry, theme.ui.bg);
   }
 
   // 3. Routes (below markers)
@@ -104,7 +115,12 @@ export async function compositeExport(
     );
   }
 
-  // 6. Poster text
+  // 6. The mat covers everything outside the map hole, markers
+  // included: a marker belongs to the map, and the map ends at the
+  // hole.
+  applyMat(ctx, geometry, theme.ui.bg);
+
+  // 7. Poster text
   drawPosterText(
     ctx,
     width,
@@ -118,6 +134,7 @@ export async function compositeExport(
     showOverlay,
     includeCredits,
     showTerrainCredit,
+    geometry.text,
   );
 
   const size: CanvasSize = {
@@ -133,5 +150,5 @@ export async function compositeExport(
 }
 
 export { resolveCanvasSize, STANDARD_LIMITS } from "./canvas";
-export { applyFades } from "./layers";
+export { applyFades, applyMat } from "./layers";
 export { drawPosterText } from "./typography";

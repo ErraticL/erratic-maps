@@ -88,7 +88,8 @@ function writePosterExportCount(nextCount: number): void {
  * 5. Download.
  */
 export function useExport() {
-  const { state, dispatch, effectiveTheme, mapRef } = usePosterContext();
+  const { state, dispatch, effectiveTheme, sheet, mapRef } =
+    usePosterContext();
   const { form } = state;
   // The resolution the visitor chose in the download dialog. The same
   // numbers drive the readout there, so the file always matches it.
@@ -185,6 +186,7 @@ export function useExport() {
               ? getAllMarkerIcons(state.customMarkerIcons)
               : [],
             routes: visibleRoutes,
+            sheet,
             onPhase: reportPhase,
             maxCanvasSide,
           });
@@ -237,6 +239,7 @@ export function useExport() {
           markerScaleY: hasVisibleOverlays ? markerScaleY : undefined,
           markerSizeScale: hasVisibleOverlays ? markerSizeScale : undefined,
           routes: visibleRoutes,
+          sheet,
         });
 
         // 3. Download
@@ -275,6 +278,7 @@ export function useExport() {
       hasVisibleOverlays,
       showTerrainCredit,
       visibleRoutes,
+      sheet,
       sizeInput,
       selectedTier,
       state.markers,

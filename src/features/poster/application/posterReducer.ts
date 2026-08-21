@@ -51,6 +51,11 @@ export interface PosterForm {
   plateWeight: string;
   plateFills: string;
   plateCasings: boolean;
+  // The sheet: the composition. See features/poster/domain/sheet.ts.
+  // sheetMat holds a percentage of the short side, as a string.
+  sheetMat: string;
+  sheetText: string;
+  sheetMask: string;
   // Relief: the terrain content. See features/map/domain/relief.ts.
   reliefContours: boolean;
   reliefInterval: string;

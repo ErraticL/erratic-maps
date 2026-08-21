@@ -36,8 +36,11 @@ export function projectMarkerToCanvas(
   const rotatedX = dx * cosAngle - dy * sinAngle;
   const rotatedY = dx * sinAngle + dy * cosAngle;
 
+  // MapLibre draws the map center at the center of the PADDED box, not
+  // at the center of the canvas. A sheet with a mat therefore moves
+  // every point by the same offset, and the marker follows it.
   return {
-    x: input.canvasWidth / 2 + rotatedX,
-    y: input.canvasHeight / 2 + rotatedY,
+    x: input.canvasWidth / 2 + (input.centerOffsetX ?? 0) + rotatedX,
+    y: input.canvasHeight / 2 + (input.centerOffsetY ?? 0) + rotatedY,
   };
 }

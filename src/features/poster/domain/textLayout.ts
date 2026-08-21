@@ -5,10 +5,18 @@
 import { parseHex } from "@/shared/utils/color";
 export const TEXT_DIMENSION_REFERENCE_PX = 3600;
 
-export const TEXT_CITY_Y_RATIO = 0.845;
-export const TEXT_DIVIDER_Y_RATIO = 0.875;
-export const TEXT_COUNTRY_Y_RATIO = 0.9;
-export const TEXT_COORDS_Y_RATIO = 0.93;
+/**
+ * Where each line sits INSIDE the text block of the sheet. The sheet
+ * model gives the block its own box, and these four ratios place the
+ * lines in it. At the default sheet the block covers the lowest
+ * quarter of the poster, and the four ratios then reproduce the
+ * positions of release 0.7 exactly: 0.845, 0.875, 0.9 and 0.93 of the
+ * poster height.
+ */
+export const TEXT_BLOCK_CITY_RATIO = 0.38;
+export const TEXT_BLOCK_DIVIDER_RATIO = 0.5;
+export const TEXT_BLOCK_COUNTRY_RATIO = 0.6;
+export const TEXT_BLOCK_COORDS_RATIO = 0.72;
 
 /** Margin from the edges for attribution/credits. */
 export const TEXT_EDGE_MARGIN_RATIO = 0.02;

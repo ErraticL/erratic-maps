@@ -9,6 +9,11 @@ import type { Route } from "@/features/routes/domain/types";
 import { drawRoutesOnCanvas } from "@/features/routes/infrastructure/rendering";
 import { routeEndpointMarkerItems } from "@/features/routes/infrastructure/helpers";
 import { applyFades } from "@/features/poster/infrastructure/renderer/layers";
+import {
+  computeSheetGeometry,
+  DEFAULT_SHEET,
+  type Sheet,
+} from "@/features/poster/domain/sheet";
 import { drawPosterText } from "@/features/poster/infrastructure/renderer/typography";
 import type { ResolvedTheme } from "@/features/theme/domain/types";
 import { reliefSourceIdsInStyle } from "@/features/map/infrastructure/reliefSource";
@@ -41,6 +46,7 @@ interface LayeredSvgOptions {
   markers: MarkerItem[];
   markerIcons: MarkerIconDefinition[];
   routes?: Route[];
+  sheet?: Sheet;
   onPhase?: ExportPhaseReporter;
   maxCanvasSide?: number;
 }
@@ -90,10 +96,14 @@ export async function createLayeredSvgBlobFromMap({
   markers,
   markerIcons,
   routes = [],
+  sheet = DEFAULT_SHEET,
   onPhase,
   maxCanvasSide = 4096,
 }: LayeredSvgOptions): Promise<Blob> {
   await waitForMapIdle(map);
+
+  // The SVG reads the same sheet model as the preview and the PNG.
+  const geometry = computeSheetGeometry(exportWidth, exportHeight, sheet);
 
   const {
     center: mapCenter,
@@ -104,6 +114,7 @@ export async function createLayeredSvgBlobFromMap({
     renderWidth,
     renderHeight,
     pixelRatio,
+    padding,
     markerProjection,
     markerScaleX,
     markerScaleY,
@@ -129,6 +140,11 @@ export async function createLayeredSvgBlobFromMap({
     maxCanvasSize: [maxCanvasSide, maxCanvasSide],
     canvasContextAttributes: { preserveDrawingBuffer: true },
   });
+
+  // The MapLibre constructor takes no padding, so the export map gets
+  // it here. It is the padding of the preview map, which holds the
+  // chosen location at the center of the map hole of the sheet.
+  exportMap.setPadding(padding);
 
   // The SVG export draws one layer at a time. A failed tile would leave
   // a hole in one group, so the same rule applies here as for the PNG.
@@ -185,11 +201,13 @@ export async function createLayeredSvgBlobFromMap({
 
     const overlayLayers: { id: string; dataUrl: string }[] = [];
 
-    if (showOverlay) {
+    // A sheet whose text sits on the mat carries no fade, and an empty
+    // group would only add a full size transparent image to the file.
+    if (showOverlay && (geometry.fades.top > 0 || geometry.fades.bottom > 0)) {
       overlayLayers.push({
         id: "fades",
         dataUrl: canvasToDataUrl(exportWidth, exportHeight, (ctx) => {
-          applyFades(ctx, exportWidth, exportHeight, theme.ui.bg);
+          applyFades(ctx, geometry, theme.ui.bg);
         }),
       });
     }
@@ -263,6 +281,14 @@ export async function createLayeredSvgBlobFromMap({
       }
     }
 
+    // The mat is a shape, not a picture. The SVG carries it as one
+    // path, so it stays crisp at any size and an editor can recolor it.
+    // It sits below the text and above the map, the fades and the
+    // markers, exactly as it does on the canvas.
+    const matPath = geometry.hasMat
+      ? `<path d="M 0 0 L ${exportWidth} 0 L ${exportWidth} ${exportHeight} L 0 ${exportHeight} Z ${geometry.holePath}" fill="${theme.ui.bg}" fill-rule="evenodd" />`
+      : "";
+
     overlayLayers.push({
       id: "text",
       dataUrl: canvasToDataUrl(exportWidth, exportHeight, (ctx) => {
@@ -279,6 +305,7 @@ export async function createLayeredSvgBlobFromMap({
           showOverlay,
           includeCredits,
           showTerrainCredit,
+          geometry.text,
         );
       }),
     });
@@ -292,11 +319,18 @@ export async function createLayeredSvgBlobFromMap({
       .join("\n");
 
     const overlayGroups = overlayLayers
-      .map(
-        (layer) => `<g id="overlay-layer-${sanitizeLayerId(layer.id)}">
+      .map((layer) => {
+        const matBefore =
+          layer.id === "text" && matPath
+            ? `<g id="overlay-layer-mat">
+  ${matPath}
+</g>
+`
+            : "";
+        return `${matBefore}<g id="overlay-layer-${sanitizeLayerId(layer.id)}">
   <image href="${layer.dataUrl}" width="${exportWidth}" height="${exportHeight}" preserveAspectRatio="none" />
-</g>`,
-      )
+</g>`;
+      })
       .join("\n");
 
     const svg = `<?xml version="1.0" encoding="UTF-8"?>

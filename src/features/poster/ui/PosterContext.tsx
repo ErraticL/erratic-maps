@@ -32,6 +32,13 @@ import {
   DEFAULT_RELIEF,
   type Relief,
 } from "@/features/map/domain/relief";
+import {
+  clampMat,
+  isSheetMask,
+  isTextPosition,
+  DEFAULT_SHEET,
+  type Sheet,
+} from "@/features/poster/domain/sheet";
 import type { StyleSpecification } from "maplibre-gl";
 import type { MapInstanceRef } from "@/features/map/domain/types";
 import { createDefaultMarkerSettings } from "@/features/markers/infrastructure/helpers";
@@ -101,6 +108,9 @@ export const DEFAULT_FORM: PosterForm = {
   plateWeight: String(DEFAULT_PLATE.weight),
   plateFills: DEFAULT_PLATE.fills,
   plateCasings: DEFAULT_PLATE.casings,
+  sheetMat: String(Math.round(DEFAULT_SHEET.mat * 100)),
+  sheetText: DEFAULT_SHEET.textPosition,
+  sheetMask: DEFAULT_SHEET.mask,
   reliefContours: DEFAULT_RELIEF.contours,
   reliefInterval: DEFAULT_RELIEF.contourInterval,
   reliefHillshade: DEFAULT_RELIEF.hillshade,
@@ -165,6 +175,8 @@ interface PosterContextValue {
   selectedTheme: ResolvedTheme;
   effectiveTheme: ResolvedTheme;
   mapStyle: StyleSpecification;
+  /** The composition. See features/poster/domain/sheet.ts. */
+  sheet: Sheet;
   mapRef: MapInstanceRef;
 }
 
@@ -303,6 +315,22 @@ export function PosterProvider({ children }: { children: ReactNode }) {
     ],
   );
 
+  // The sheet holds the composition. The DOM preview, the MapLibre
+  // padding, the canvas compositor and the SVG exporter all read the
+  // geometry that features/poster/domain/sheet.ts builds from it.
+  const sheet = useMemo<Sheet>(
+    () => ({
+      mat: clampMat(Number(state.form.sheetMat) / 100),
+      textPosition: isTextPosition(state.form.sheetText)
+        ? state.form.sheetText
+        : DEFAULT_SHEET.textPosition,
+      mask: isSheetMask(state.form.sheetMask)
+        ? state.form.sheetMask
+        : DEFAULT_SHEET.mask,
+    }),
+    [state.form.sheetMat, state.form.sheetText, state.form.sheetMask],
+  );
+
   const mapStyle = useMemo(
     () =>
       applyPlate(
@@ -356,9 +384,10 @@ export function PosterProvider({ children }: { children: ReactNode }) {
       selectedTheme,
       effectiveTheme,
       mapStyle,
+      sheet,
       mapRef,
     }),
-    [state, selectedTheme, effectiveTheme, mapStyle],
+    [state, selectedTheme, effectiveTheme, mapStyle, sheet],
   );
 
   return (

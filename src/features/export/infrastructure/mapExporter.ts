@@ -50,6 +50,7 @@ export async function captureMapAsCanvas(
     renderWidth,
     renderHeight,
     pixelRatio,
+    padding,
     markerProjection,
     markerScaleX,
     markerScaleY,
@@ -73,6 +74,11 @@ export async function captureMapAsCanvas(
     maxCanvasSize: [maxCanvasSide, maxCanvasSide],
     canvasContextAttributes: { preserveDrawingBuffer: true },
   });
+
+  // The MapLibre constructor takes no padding, so the export map gets
+  // it here. It is the padding of the preview map, which holds the
+  // chosen location at the center of the map hole of the sheet.
+  exportMap.setPadding(padding);
 
   // A failed tile leaves a hole in the poster, and MapLibre still
   // reports the map as loaded. The export counts the failures and

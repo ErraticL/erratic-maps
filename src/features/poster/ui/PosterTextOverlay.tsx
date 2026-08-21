@@ -2,10 +2,10 @@ import { formatCoordinates } from "@/shared/geo/posterBounds";
 import { APP_CREDIT_URL } from "@/core/config";
 import {
   TEXT_DIMENSION_REFERENCE_PX,
-  TEXT_CITY_Y_RATIO,
-  TEXT_DIVIDER_Y_RATIO,
-  TEXT_COUNTRY_Y_RATIO,
-  TEXT_COORDS_Y_RATIO,
+  TEXT_BLOCK_CITY_RATIO,
+  TEXT_BLOCK_DIVIDER_RATIO,
+  TEXT_BLOCK_COUNTRY_RATIO,
+  TEXT_BLOCK_COORDS_RATIO,
   TEXT_EDGE_MARGIN_RATIO,
   CITY_FONT_BASE_PX,
   COUNTRY_FONT_BASE_PX,
@@ -17,6 +17,7 @@ import {
   computeCityFontScale,
   computeAttributionColor,
 } from "@/features/poster/domain/textLayout";
+import type { SheetGeometry } from "@/features/poster/domain/sheet";
 
 interface PosterTextOverlayProps {
   city: string;
@@ -30,6 +31,8 @@ interface PosterTextOverlayProps {
   includeCredits: boolean;
   showTerrainCredit: boolean;
   showOverlay: boolean;
+  /** The geometry of the sheet, which holds the text block. */
+  geometry: SheetGeometry;
 }
 
 /**
@@ -49,8 +52,17 @@ export default function PosterTextOverlay({
   includeCredits,
   showTerrainCredit,
   showOverlay,
+  geometry,
 }: PosterTextOverlayProps) {
   const toCqMin = (px: number) => (px / TEXT_DIMENSION_REFERENCE_PX) * 100;
+  const textBlock = geometry.text;
+  // The sheet places the text block. These four numbers turn a ratio
+  // inside the block into a percentage of the poster height, which is
+  // what the CSS `top` of each line takes.
+  const linePercent = (ratio: number) =>
+    textBlock
+      ? ((textBlock.y + textBlock.height * ratio) / geometry.height) * 100
+      : 0;
 
   const titleFont = fontFamily
     ? `"${fontFamily}", "Space Grotesk", sans-serif`
@@ -69,13 +81,13 @@ export default function PosterTextOverlay({
 
   return (
     <div className="poster-text-overlay" style={{ color: textColor }}>
-      {showPosterText && (
+      {showPosterText && textBlock && (
         <>
           <p
             className="poster-city"
             style={{
               fontFamily: titleFont,
-              top: `${TEXT_CITY_Y_RATIO * 100}%`,
+              top: `${linePercent(TEXT_BLOCK_CITY_RATIO)}%`,
               fontSize: cityFontSize,
             }}
           >
@@ -85,14 +97,14 @@ export default function PosterTextOverlay({
             className="poster-divider"
             style={{
               borderColor: textColor,
-              top: `${TEXT_DIVIDER_Y_RATIO * 100}%`,
+              top: `${linePercent(TEXT_BLOCK_DIVIDER_RATIO)}%`,
             }}
           />
           <p
             className="poster-country"
             style={{
               fontFamily: titleFont,
-              top: `${TEXT_COUNTRY_Y_RATIO * 100}%`,
+              top: `${linePercent(TEXT_BLOCK_COUNTRY_RATIO)}%`,
               fontSize: countryFontSize,
             }}
           >
@@ -102,7 +114,7 @@ export default function PosterTextOverlay({
             className="poster-coords"
             style={{
               fontFamily: bodyFont,
-              top: `${TEXT_COORDS_Y_RATIO * 100}%`,
+              top: `${linePercent(TEXT_BLOCK_COORDS_RATIO)}%`,
               fontSize: coordsFontSize,
             }}
           >

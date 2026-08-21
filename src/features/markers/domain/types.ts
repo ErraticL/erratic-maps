@@ -35,4 +35,12 @@ export interface MarkerProjectionInput {
   bearingDeg: number;
   canvasWidth: number;
   canvasHeight: number;
+  /**
+   * How far MapLibre draws the map center away from the center of the
+   * canvas, in canvas pixels. A sheet with a mat gives the map a
+   * padding, and MapLibre then draws the center of the map at the
+   * center of the padded box. Zero without a padding.
+   */
+  centerOffsetX?: number;
+  centerOffsetY?: number;
 }

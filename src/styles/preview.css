@@ -70,21 +70,22 @@
 
 /* ── Gradient fades ── */
 
+/* The sheet model sets the position and the size of each fade. */
 .poster-fade {
   position: absolute;
-  left: 0;
-  right: 0;
-  height: 25%;
   pointer-events: none;
   z-index: 2;
 }
 
-.poster-fade--top {
-  top: 0;
-}
+/* ── The mat of the sheet ── */
 
-.poster-fade--bottom {
-  bottom: 0;
+.poster-mat {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 4;
 }
 
 /* ── Text overlay ── */
@@ -93,7 +94,7 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  z-index: 4;
+  z-index: 5;
   container-type: size;
 }
 

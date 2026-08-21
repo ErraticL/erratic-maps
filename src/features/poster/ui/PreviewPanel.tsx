@@ -1,6 +1,7 @@
 import {
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
   type CSSProperties,
@@ -13,6 +14,7 @@ import RouteOverlay from "@/features/routes/ui/RouteOverlay";
 import RouteEndpointsOverlay from "@/features/routes/ui/RouteEndpointsOverlay";
 import GradientFades from "./GradientFades";
 import PosterTextOverlay from "./PosterTextOverlay";
+import SheetMat from "./SheetMat";
 import SettingsInfo from "./SettingsInfo";
 import MapPrimaryControls from "./MapPrimaryControls";
 import {
@@ -41,6 +43,7 @@ import {
   formatLayoutDimensions,
   getLayoutOption,
 } from "@/features/layout/infrastructure/layoutRepository";
+import { computeSheetGeometry } from "@/features/poster/domain/sheet";
 
 const LOCKED_HINT = "Map is locked to prevent unintended movement.";
 const UNLOCK_HINT = `${LOCKED_HINT}\nClick to unlock map editing.`;
@@ -49,9 +52,11 @@ const COUNTRY_VIEW_ZOOM_LEVEL = 10;
 const CONTINENT_VIEW_ZOOM_LEVEL = 6;
 const DEFAULT_LOCATION_LABEL =
   "Hanover, Region Hannover, Lower Saxony, Germany";
+/** The unit width that the preview gives the sheet model. */
+const SHEET_UNIT_WIDTH = 1000;
 
 export default function PreviewPanel() {
-  const { state, dispatch, effectiveTheme, mapStyle, mapRef } =
+  const { state, dispatch, effectiveTheme, mapStyle, sheet, mapRef } =
     usePosterContext();
   const {
     form,
@@ -166,6 +171,13 @@ export default function PreviewPanel() {
   const widthCm = Number(form.width) || DEFAULT_POSTER_WIDTH_CM;
   const heightCm = Number(form.height) || DEFAULT_POSTER_HEIGHT_CM;
   const aspect = widthCm / heightCm;
+  // The sheet model runs in a unit space. Only the aspect matters, so
+  // the preview asks for the geometry of a 1000 pixel wide sheet and
+  // turns the answer into percentages of its own frame.
+  const sheetGeometry = useMemo(
+    () => computeSheetGeometry(SHEET_UNIT_WIDTH, SHEET_UNIT_WIDTH / aspect, sheet),
+    [aspect, sheet],
+  );
   const formLat = Number(form.latitude) || 0;
   const formLon = Number(form.longitude) || 0;
   const layoutOption =
@@ -410,9 +422,13 @@ export default function PreviewPanel() {
             overzoomScale={overzoomScale}
             onMove={handleMove}
             onMoveEnd={handleMoveEnd}
+            paddingRatio={sheetGeometry.padding}
           />
           {form.showMarkers ? (
-            <GradientFades color={effectiveTheme.ui.bg} />
+            <GradientFades
+              color={effectiveTheme.ui.bg}
+              geometry={sheetGeometry}
+            />
           ) : null}
           <RouteOverlay
             routes={state.routes}
@@ -440,6 +456,7 @@ export default function PreviewPanel() {
               overzoomScale={overzoomScale}
             />
           ) : null}
+          <SheetMat geometry={sheetGeometry} color={effectiveTheme.ui.bg} />
           <PosterTextOverlay
             city={cityLabel}
             country={countryLabel}
@@ -454,6 +471,7 @@ export default function PreviewPanel() {
               form.reliefContours || form.reliefHillshade,
             )}
             showOverlay={form.showMarkers}
+            geometry={sheetGeometry}
           />
 
           <div className="map-controls" aria-label="Map controls">

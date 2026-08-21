@@ -98,7 +98,15 @@ interface MapPreviewProps {
   onMove?: (center: [number, number], zoom: number) => void;
   containerStyle?: CSSProperties;
   overzoomScale?: number;
+  /**
+   * The map padding as a fraction of the sheet: left and right of the
+   * width, top and bottom of the height. It holds the chosen location
+   * at the center of the map hole of the sheet.
+   */
+  paddingRatio?: { top: number; right: number; bottom: number; left: number };
 }
+
+const NO_PADDING = { top: 0, right: 0, bottom: 0, left: 0 };
 
 /**
  * MapLibre preview wrapper.
@@ -120,8 +128,26 @@ export default function MapPreview({
   onMove,
   containerStyle,
   overzoomScale = 1,
+  paddingRatio = NO_PADDING,
 }: MapPreviewProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const paddingRatioRef = useRef(paddingRatio);
+  paddingRatioRef.current = paddingRatio;
+  const applyPadding = useRef(() => {
+    const map = mapRef.current;
+    const element = containerRef.current;
+    if (!map || !element) return;
+    const width = element.clientWidth;
+    const height = element.clientHeight;
+    if (width <= 0 || height <= 0) return;
+    const ratio = paddingRatioRef.current;
+    map.setPadding({
+      top: ratio.top * height,
+      right: ratio.right * width,
+      bottom: ratio.bottom * height,
+      left: ratio.left * width,
+    });
+  });
   const isSyncing = useRef(false);
   const hasMountedStyleRef = useRef(false);
   const prevStyleRef = useRef<StyleSpecification | null>(null);
@@ -163,6 +189,9 @@ export default function MapPreview({
     // dimensions are known.
     const resizeObserver = new ResizeObserver(() => {
       map.resize();
+      // The padding is a fraction of the container, so a new container
+      // size needs new pixels.
+      applyPadding.current();
     });
     resizeObserver.observe(containerRef.current);
 
@@ -202,6 +231,19 @@ export default function MapPreview({
       map.dragRotate.disable();
     }
   }, [interactive, allowRotation, mapRef]);
+
+  // The sheet decides where the map hole sits. MapLibre then draws the
+  // chosen location at the center of that hole, and `getCenter()` keeps
+  // reporting the location itself.
+  useEffect(() => {
+    applyPadding.current();
+  }, [
+    paddingRatio.top,
+    paddingRatio.right,
+    paddingRatio.bottom,
+    paddingRatio.left,
+    overzoomScale,
+  ]);
 
   useEffect(() => {
     const map = mapRef.current;

@@ -1,12 +1,13 @@
 import { formatCoordinates } from "@/shared/geo/posterBounds";
 import type { Coordinate } from "@/shared/geo/types";
+import type { Rect } from "@/features/poster/domain/sheet";
 import { APP_CREDIT_URL } from "@/core/config";
 import {
   TEXT_DIMENSION_REFERENCE_PX,
-  TEXT_CITY_Y_RATIO,
-  TEXT_DIVIDER_Y_RATIO,
-  TEXT_COUNTRY_Y_RATIO,
-  TEXT_COORDS_Y_RATIO,
+  TEXT_BLOCK_CITY_RATIO,
+  TEXT_BLOCK_DIVIDER_RATIO,
+  TEXT_BLOCK_COUNTRY_RATIO,
+  TEXT_BLOCK_COORDS_RATIO,
   TEXT_EDGE_MARGIN_RATIO,
   CITY_FONT_BASE_PX,
   COUNTRY_FONT_BASE_PX,
@@ -33,6 +34,11 @@ export function drawPosterText(
   showOverlay: boolean,
   includeCredits: boolean = true,
   showTerrainCredit: boolean = false,
+  /**
+   * The box that the sheet reserves for the text block. Null means the
+   * sheet carries no text block, and the four poster lines stay away.
+   */
+  textBlock: Rect | null = null,
 ): void {
   const textColor = theme.ui?.text || "#111111";
   const landColor = theme.map?.land || "#808080";
@@ -51,38 +57,41 @@ export function drawPosterText(
   );
   const attributionFontSize = ATTRIBUTION_FONT_BASE_PX * dimScale;
 
-  if (showPosterText) {
+  if (showPosterText && textBlock) {
     const cityLabel = formatCityLabel(city);
     const cityFontSize = CITY_FONT_BASE_PX * dimScale * computeCityFontScale(city);
 
     const countryFontSize = COUNTRY_FONT_BASE_PX * dimScale;
     const coordinateFontSize = COORDS_FONT_BASE_PX * dimScale;
-    const cityY = height * TEXT_CITY_Y_RATIO;
-    const lineY = height * TEXT_DIVIDER_Y_RATIO;
-    const countryY = height * TEXT_COUNTRY_Y_RATIO;
-    const coordinatesY = height * TEXT_COORDS_Y_RATIO;
+    const cityY = textBlock.y + textBlock.height * TEXT_BLOCK_CITY_RATIO;
+    const lineY = textBlock.y + textBlock.height * TEXT_BLOCK_DIVIDER_RATIO;
+    const countryY = textBlock.y + textBlock.height * TEXT_BLOCK_COUNTRY_RATIO;
+    const coordinatesY =
+      textBlock.y + textBlock.height * TEXT_BLOCK_COORDS_RATIO;
+
+    const blockCenterX = textBlock.x + textBlock.width * 0.5;
 
     ctx.fillStyle = textColor;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.font = `700 ${cityFontSize}px ${titleFontFamily}`;
-    ctx.fillText(cityLabel, width * 0.5, cityY);
+    ctx.fillText(cityLabel, blockCenterX, cityY);
 
     ctx.strokeStyle = textColor;
     ctx.lineWidth = 3 * dimScale;
     ctx.beginPath();
-    ctx.moveTo(width * 0.4, lineY);
-    ctx.lineTo(width * 0.6, lineY);
+    ctx.moveTo(textBlock.x + textBlock.width * 0.4, lineY);
+    ctx.lineTo(textBlock.x + textBlock.width * 0.6, lineY);
     ctx.stroke();
 
     ctx.font = `300 ${countryFontSize}px ${titleFontFamily}`;
-    ctx.fillText(country.toUpperCase(), width * 0.5, countryY);
+    ctx.fillText(country.toUpperCase(), blockCenterX, countryY);
 
     ctx.globalAlpha = 0.75;
     ctx.font = `400 ${coordinateFontSize}px ${bodyFontFamily}`;
     ctx.fillText(
       formatCoordinates(center.lat, center.lon),
-      width * 0.5,
+      blockCenterX,
       coordinatesY,
     );
     ctx.globalAlpha = 1;
