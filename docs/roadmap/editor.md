@@ -4,15 +4,14 @@ Decided on 2026-08-21 after a brainstorm, four real prototypes and a
 grilling of fifteen decisions. This document is the record. A later
 session implements it, one step per release.
 
-**Status 2026-08-21.** Steps 1, 2 and 3 are built, pushed, deployed
-and LIVE, as releases 0.6.0, 0.7.0 and 0.8.0. Release 0.7.1, the
-export resolution, is live as well; its record is
-[resolution.md](resolution.md). Every desktop gate passed. The phone
-checks of 0.6.0, 0.7.0, 0.7.1 and 0.8.0 stay open, and only Marcel can
-run them. Step 4 waits, and the block "Open questions for step 4"
-below lists what it needs before it starts. The decisions stay as they
-were decided; a *Built:* note records what exists, and decision 17
-carries the one reversal.
+**Status 2026-08-21.** All four steps are built, as releases 0.6.0,
+0.7.0, 0.8.0 and 0.9.0. Release 0.7.1, the export resolution, is live
+as well; its record is [resolution.md](resolution.md). Every desktop
+gate passed. The phone checks of 0.6.0, 0.7.0, 0.7.1, 0.8.0 and 0.9.0
+stay open, and only Marcel can run them. The four open questions of
+step 4 are answered, and the answers sit in the block "Answers for
+step 4" below. The decisions stay as they were decided; a *Built:*
+note records what exists, and decision 17 carries the one reversal.
 
 ## The direction
 
@@ -49,7 +48,7 @@ stays editable on its own.
 | 2 | 0.7 | Relief | Shipped 2026-08-21, both gates passed |
 | - | 0.7.1 | Export resolution ([resolution.md](resolution.md)) | Shipped 2026-08-21, every desktop gate passed; the phone gate stays open |
 | 3 | 0.8 | Sheet model, mat, text position, mask | Shipped 2026-08-21, the padding gate passed; the phone gate stays open |
-| 4 | 0.9 | Presets, full permalink coverage | Waits |
+| 4 | 0.9 | Presets, full permalink coverage | Shipped 2026-08-21, five desktop gates passed; the phone gate stays open |
 
 Release 0.7.1 is not a step of this roadmap. It repairs the export
 before step 3 rewrites the same files.
@@ -272,53 +271,101 @@ version bump ship together.
     sections below show the current values. A curated JSON list of 8 to
     12 presets in the repo. The permalink stores the resulting values,
     not the preset name, so a link stays valid when a preset changes.
+    *Built:* `src/features/presets/` holds the slice, and
+    `src/data/presets.json` holds ELEVEN presets. A JSON entry names
+    only the values that differ from the default poster, and
+    `normalizePreset` fills in the rest; that is the rule the permalink
+    codec already follows. The first entry is Classic, and it equals
+    the poster of release 0.8.0 exactly. A preset sets four groups:
+    the theme with its custom colors, the three plate fields, the three
+    sheet fields, and the seven layer switches with the four relief
+    fields. It touches nothing else, so the location, the poster size,
+    the markers, the routes, the font, the "Overlay layer" switch and
+    the "Poster credits" switch all survive a click.
+    *One thing the plan did not carry:* the ACTIVE preset is a
+    comparison, not a stored id. `matchPresetId` answers which preset
+    equals the poster right now, in the manner of `matchPlateId` of the
+    plate. No new state field exists, and a permalink that happens to
+    hold the values of a preset marks that card as well.
 19. A preset click discards current edits, so it asks for confirmation
     only when edits exist.
+    *Built:* "edits exist" is `matchPresetId(...) === null`, so the
+    question appears exactly while no card is active. A click on the
+    active card does nothing at all. The dialog names the preset, says
+    what goes away and what stays, and its cancel keeps every value.
 20. Cards show real renders: one fixed showcase place, one export per
     preset by hand, committed as WebP at card size. A checklist in
     `scripts/` records the steps. A headless export script (Playwright)
     becomes worth it only beyond about fifteen presets.
+    *Built:* `scripts/preset-cards.md` is the checklist and
+    `scripts/make-preset-cards.mjs` turns one PNG per preset into
+    `public/assets/presets/<id>.webp` at 300 x 424 px. The eleven cards
+    take 272 kB together and the `<img>` loads them lazily. The panel
+    draws a card at 88 x 124 px on a desktop and at 108 x 153 px in the
+    phone drawer, so the file carries between 1.7 and 3.4 times the
+    pixels it shows.
 
-### Open questions for step 4
+### Answers for step 4
 
-Decisions 18 to 20 fix the shape of the preset step. Four questions
-stay open, and each one needs an answer from Marcel before the work
-starts. They are questions of taste or of scope, not of engineering.
+Decisions 18 to 20 fixed the shape of the preset step. Four questions
+stayed open, and Marcel answered all four on 2026-08-21, each one from
+real renders and measured numbers.
 
-1. **The list itself.** Which 8 to 12 presets, and what does each one
-   name? A preset is a value for all four dimensions, so the list is a
-   design exercise, not a data entry task. Either Marcel names them, or
-   a session proposes a set as real renders and he cuts it down.
-2. **Custom colors in the permalink.** Decision 6 defers them to this
-   step. The key has to carry a map of color paths, so it needs a
-   compact form; the plain paths (`ui.bg`, `map.buildings`) would make
-   a long hash.
-3. **The nav.** Decision 5 says the nav is restructured once, in this
-   step. Nobody has said what the new nav is. Today it holds Location,
-   Theme, Layout, Layers, Markers, Routes and Style; a Presets section
-   on top makes eight.
-4. **The showcase place.** Decision 20 wants one fixed place for every
-   card. Hanover is the default poster and Marcel's home; Paris and
-   Stuttgart carried the gates. The place decides how a preset reads on
-   its card.
-
-Three gates suggest themselves for this step, in the manner of the
-gates below, and Marcel should confirm them before the work depends on
-them:
-
-- A preset click sets all four dimensions, and the permalink that
-  follows restores exactly those values in a fresh tab.
-- A preset click on a poster with edits asks first, and a cancel keeps
-  every edit.
-- One hand-exported card per preset reads correctly at card size, which
-  decision 20 puts at WebP.
+1. **The list itself.** A session proposed twelve presets, applied each
+   one with `location.hash`, exported a real PNG of each, and showed
+   them as two 3 x 2 contact sheets from
+   `scripts/combine-showcase-grid.mjs`. Marcel cut the list to ELEVEN.
+   Two of the twelve were replaced before the cut: Contour was pale
+   with outline fills and no buildings, and Shoreline was nearly empty
+   with water and parks alone. The list is Classic, Blueprint, Figure
+   Ground, Contour, Medallion, Arch, Neon, Frame, Shoreline, Ridge and
+   Paper. Ink was dropped, because Paper carries the same idea and the
+   `japanese_ink` water reads as land.
+   *One finding from the renders:* every theme sets `ui.bg` equal to
+   `map.land`, so a mat has the color of the land under it. A mat reads
+   as a margin only where the map content reaches the edge, or where a
+   mask cuts the shape. A preset that rests on the mat alone is a weak
+   preset.
+2. **Custom colors in the permalink.** The key is `c`. Its value is a
+   base36 bitmask over the 16 `DISPLAY_PALETTE_KEYS`, padded to a fixed
+   width, followed by the six hex digits of each marked color in key
+   order, with NO separator. One color costs 13 characters with the
+   key; all 16 cost 103. `URLSearchParams` percent-encodes every
+   character except the letters, the digits and `* - . _`, so a
+   separator would cost three characters each time; the app already
+   writes `off=buildings%2Crail` for that reason. Two other forms were
+   measured and rejected: index and hex pairs (151 characters, more
+   readable) and base64url bytes (69 characters, unreadable).
+   The codec is `src/features/theme/domain/colorCodec.ts`, which owns
+   the key order. `permalink.ts` stays free of imports and treats the
+   token as opaque; it only checks the alphabet.
+3. **The nav.** Presets joins as the FIRST tab and the first accordion
+   section, and nothing else moves. Eight tabs. The sections already
+   carry the four dimensions after releases 0.6 to 0.8, so the whole
+   restructure of decision 5 is one addition. The phone strip already
+   scrolls today: at 375 px it shows 273 px of a 504 px strip, which is
+   3.8 of the seven tabs. The eighth tab makes it 576 px and changes no
+   interaction. Two other structures were offered and rejected: merge
+   Markers and Routes into one tab, or fold Style into Layout.
+4. **The showcase place.** LISBON, `loc=38.722300,-9.139300`,
+   `d=3500`, A4 portrait. One plain preset and one relief preset were
+   rendered at Hanover, Lisbon and Stuttgart before the choice. Hanover
+   gives the best city card and no terrain at all, so the Contour and
+   Ridge cards would carry no evidence there. Stuttgart gives the best
+   terrain and the weakest city. Lisbon is the only one of the three
+   that carries a dense centre, water and terrain in one frame. Its
+   cost is the Tagus, which fills about a quarter of every card.
 
 ## Verification gates
 
 Each item has a gate that runs before the work depends on it. A failed
-gate stops the step and reopens the decision. Five gates passed on
-2026-08-21: two in step 1, two in step 2 and the padding gate of step
-3. One gate remains, and it is the phone check of Marcel.
+gate stops the step and reopens the decision. Ten gates passed on
+2026-08-21: two in step 1, two in step 2, the padding gate of step 3
+and five in step 4. One gate remains, and it is the phone check of
+Marcel.
+
+Step 4 confirmed the three gates the block above suggested and added
+two, because the release touches the default poster and the codec.
 
 | Assumption | Gate |
 | --- | --- |
@@ -327,6 +374,11 @@ gate stops the step and reopens the decision. Five gates passed on
 | ~~`maplibre-contour` bundled with its worker under Vite; the protocol reaches the offscreen export map~~ | **PASSED 2026-08-21.** The library inlines its worker as a blob URL, so Vite needs no worker configuration. A relief PNG at true A2 300 DPI (4961 x 7016 px) took 2.3 s from click to file: terrain at 0.1 s, file build at 1.3 s. The product capped an export at 8.5 megapixels then, so the caps were raised for the measurement only. The same export from the production build (`vite build` + `vite preview`) took 1.7 s at the cap of release 0.7. Release 0.7.1 removed that cap, and a relief PNG at true A2 300 DPI now takes 2.0 s in the product itself. |
 | ~~Tile-error count on the export map~~ | **PASSED 2026-08-21.** A wrong terrain host aborts the export after 0.34 s with "Terrain data did not load. Try again, or turn relief off." A wrong base map host aborts with the base map message. MapLibre adds the `sourceId` of the failed source to its error event, which names the right message; a 404 fires no event, which is correct for a terrain tile outside the coverage. |
 | ~~`setPadding` with the scaled container; the one-pixel offset for markers~~ | **PASSED 2026-08-21.** A circle marker on the Eiffel Tower, with a 15 % mat and the circle mask, on A4 at 300 DPI. The marker sits on the tower in the preview, in the PNG and in the SVG. Measured, not judged by eye alone: the DOM preview places the marker at 0.378779 of the width and 0.516081 of the height; the PNG (2480 x 3508) holds it at 939.4 / 1810.4 against the same numbers predicted, and the SVG (2451 x 3467) at 927.7 / 1788.6 against 928.4 / 1789.3 predicted. Both files agree with the preview inside 0.8 px. |
+| ~~A preset click sets all four dimensions, and the permalink restores exactly those values in a fresh tab~~ | **PASSED 2026-08-21.** A click on Blueprint wrote `theme=blueprint&lw=0.9&fills=outline&casings=0&mat=6` and marked that card. A fresh tab loaded with a hash of all four dimensions plus a color token restored it byte for byte: the same hash came back, the water drew `#ff0000` from the token, the contour and hillshade layers existed, the buildings were hidden and the centre sat on the requested coordinates. |
+| ~~A preset click on a poster with edits asks first, and a cancel keeps every edit~~ | **PASSED 2026-08-21.** With `mat=7`, which equals no preset, no card was active and a click on Medallion opened the dialog. The cancel left the hash at `mat=7` with every other value untouched. The confirm applied Medallion and marked its card. A click on the ACTIVE card does nothing and asks nothing. |
+| ~~One exported card per preset reads at card size~~ | **PASSED 2026-08-21.** The eleven WebP cards were compared at their true drawn size of 88 x 124 px. Each one is recognizable by tone, density and shape; the circle of Medallion, the arch of Arch and the top text of Frame all read. Frame and Paper read mostly by tone, because both are low in contrast. |
+| ~~The default preset equals today's poster~~ | **PASSED 2026-08-21.** The startup poster exported at 150 DPI, then Paper was applied, then Classic, then the poster exported again. The two PNG files are 4 922 210 bytes each with the same SHA-256, so they are identical byte for byte. |
+| ~~All 16 custom colors survive a link~~ | **PASSED 2026-08-21.** A hash with all 16 colors, a custom plate, relief, a 20 % mat, a circle mask and five layers off measures 335 characters and restores every value on a fresh load. Water read `#0000ff` (key 4) and rail `#aa00aa` (key 9), so the mask maps to the right keys. The startup location dialog stayed closed, because the link answers the location. |
 | Phone behavior | Marcel checks on the live site after each release; the browser pane cannot open the mobile drawer |
 
 ## Rejected during the brainstorm

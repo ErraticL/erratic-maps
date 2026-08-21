@@ -1,5 +1,108 @@
 [
   {
+    "version": "0.9.0",
+    "date": "2026-08-21",
+    "labels": {
+      "summaryTitle": "Erratic Maps 0.9.0",
+      "detailsTitle": "Release details"
+    },
+    "summary": {
+      "title": "The short version",
+      "points": [
+        {
+          "type": "new",
+          "text": "Presets: a new section at the top of the panel. One click sets the theme, the drawing, the composition and the layers at once."
+        },
+        {
+          "type": "new",
+          "text": "Eleven presets, from Classic to Ridge. Each card shows a real export, not a drawing."
+        },
+        {
+          "type": "new",
+          "text": "Your own colors now travel in the link. A shared poster keeps every color you changed."
+        },
+        {
+          "type": "improved",
+          "text": "A preset asks first when your poster carries changes, so one click cannot lose your work."
+        }
+      ]
+    },
+    "steps": [
+      {
+        "title": "The Presets section",
+        "image": null,
+        "points": [
+          {
+            "type": "new",
+            "text": "The section sits first in the panel, and Presets is the first tab of the navigation."
+          },
+          {
+            "type": "new",
+            "text": "A card is active while the poster equals that preset. Move one control and no card is active any more."
+          },
+          {
+            "type": "info",
+            "text": "A preset is a starting point. Every section below stays editable after a click, and it shows the new values."
+          },
+          {
+            "type": "info",
+            "text": "A preset never touches the location, the poster size, the markers, the routes, the font or the credits."
+          }
+        ]
+      },
+      {
+        "title": "The eleven presets",
+        "image": null,
+        "points": [
+          {
+            "type": "new",
+            "text": "Classic, Blueprint, Figure Ground, Contour, Medallion, Arch, Neon, Frame, Shoreline, Ridge and Paper."
+          },
+          {
+            "type": "info",
+            "text": "Classic is the poster the app has always opened with. Nothing about your old links changes."
+          },
+          {
+            "type": "info",
+            "text": "Every card is one real export of that preset at the same place, so the picture is the poster."
+          }
+        ]
+      },
+      {
+        "title": "Colors in the link",
+        "image": null,
+        "points": [
+          {
+            "type": "new",
+            "text": "The link carries the colors you change in the palette editor, in a short form."
+          },
+          {
+            "type": "info",
+            "text": "All 16 colors together add about 100 characters to the address."
+          },
+          {
+            "type": "info",
+            "text": "A link without colors shows the plain theme, which is what every older link does."
+          }
+        ]
+      },
+      {
+        "title": "What comes next",
+        "image": null,
+        "points": [
+          {
+            "type": "roadmap",
+            "text": "Caption lines and a frame line join the composition."
+          },
+          {
+            "type": "roadmap",
+            "text": "Saved posters of your own, beside the curated presets."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "version": "0.8.0",
     "date": "2026-08-21",
     "labels": {

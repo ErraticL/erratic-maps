@@ -11,6 +11,11 @@ glacier carried far from its origin — this project is that boulder.
 
 ## What Erratic Maps adds
 
+- **Presets**: eleven named starting points in the first section of the
+  panel. One click sets the theme, the plate, the sheet and the layers
+  at once, and every control stays editable afterwards. Each card shows
+  a real export of that preset. A click asks first while the poster
+  carries changes.
 - The **plate**: three controls that change how the map draws, not
   what it shows. A line weight from 0.5x to 2x, solid or outline
   fills for water, parks, landcover and buildings, and a switch for
@@ -46,8 +51,8 @@ glacier carried far from its origin — this project is that boulder.
   the same names), and the originals Iris, Glacier and Bauhaus.
 - **Permalinks**: the URL hash always encodes location, distance,
   theme, layout, the poster names, the plate values, the relief
-  values, the sheet values and the layers that are off, so the
-  address bar is a
+  values, the sheet values, the colors you changed and the layers that
+  are off, so the address bar is a
   shareable link that restores
   the poster and skips the startup dialog. A key appears only when
   its value differs from the default.
