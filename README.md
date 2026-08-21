@@ -11,15 +11,23 @@ glacier carried far from its origin — this project is that boulder.
 
 ## What Erratic Maps adds
 
-- The **classic** and **candy** themes, ported from the retired
-  hand-built predecessor app.
-- A **building height triad**: themes can color buildings in three
+- A **building height triad**: a theme can color buildings in three
   tones by rendered height (low, mid, tall) instead of one blended
   color.
+- **Ten triad themes**: Classic and Candy (ported from the retired
+  hand-built predecessor app), Catppuccin Mocha, Nord, Dracula,
+  Gruvbox and Tokyo Night (after the MIT-licensed editor palettes of
+  the same names), and the originals Iris, Glacier and Bauhaus.
 - **Permalinks**: the URL hash always encodes location, distance,
   theme, layout and the poster names, so the address bar is a
   shareable link that restores the poster and skips the startup
   dialog.
+- A **poster credits switch**: the Style section can remove the
+  credit lines from the poster. The site keeps its attribution in the
+  footer. If you publish a poster without the credit line, add
+  "© OpenStreetMap contributors" next to it.
+- A **gold-on-slate interface** with flat panels. Every color is a
+  token in `src/styles/base.css`.
 
 ![Hanover in the Classic theme with height-triad buildings](./docs/images/showcase-classic-hanover.png)
 
