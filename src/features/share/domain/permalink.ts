@@ -16,8 +16,10 @@
  * `off` lists the content layers that the poster hides, for example
  * `off=parks,rail`. The relief keys are `cont` (the contour interval)
  * and `hs` (the hillshade strength); each appears only while its
- * switch is on. A missing key means the default value, not "keep the
- * value the app shows now".
+ * switch is on. The sheet keys are `mat` (the width of the mat, in
+ * percent of the short side), `text` (the position of the text block)
+ * and `mask` (the shape of the map hole). A missing key means the
+ * default value, not "keep the value the app shows now".
  */
 
 export interface PermalinkData {
@@ -38,10 +40,18 @@ export interface PermalinkData {
   contourInterval?: string;
   /** The hillshade strength. Absent means the hillshade is off. */
   hillshadeStrength?: string;
+  /** The width of the mat, in percent of the short side of the sheet. */
+  matPercent?: number;
+  /** Where the text block sits. Absent means the bottom. */
+  textPosition?: string;
+  /** The shape of the map hole. Absent means no mask. */
+  sheetMask?: string;
 }
 
 const DEFAULT_PLATE_WEIGHT = 1;
 const DEFAULT_PLATE_FILLS = "solid";
+const DEFAULT_TEXT_POSITION = "bottom";
+const DEFAULT_SHEET_MASK = "none";
 
 function finiteInRange(value: number, min: number, max: number): boolean {
   return Number.isFinite(value) && value >= min && value <= max;
@@ -102,6 +112,17 @@ export function parsePermalinkHash(hash: string): PermalinkData | null {
   const hillshadeStrength = String(params.get("hs") ?? "").trim();
   if (hillshadeStrength) data.hillshadeStrength = hillshadeStrength;
 
+  const matPercent = Number(params.get("mat"));
+  if (Number.isFinite(matPercent) && matPercent > 0) {
+    data.matPercent = matPercent;
+  }
+
+  const textPosition = String(params.get("text") ?? "").trim();
+  if (textPosition) data.textPosition = textPosition;
+
+  const sheetMask = String(params.get("mask") ?? "").trim();
+  if (sheetMask) data.sheetMask = sheetMask;
+
   const layersOff = String(params.get("off") ?? "").trim();
   if (layersOff) {
     data.layersOff = layersOff
@@ -132,6 +153,13 @@ export function buildPermalinkHash(data: PermalinkData): string {
   if (data.plateCasings === false) params.set("casings", "0");
   if (data.contourInterval) params.set("cont", data.contourInterval);
   if (data.hillshadeStrength) params.set("hs", data.hillshadeStrength);
+  if (data.matPercent) params.set("mat", String(Math.round(data.matPercent)));
+  if (data.textPosition && data.textPosition !== DEFAULT_TEXT_POSITION) {
+    params.set("text", data.textPosition);
+  }
+  if (data.sheetMask && data.sheetMask !== DEFAULT_SHEET_MASK) {
+    params.set("mask", data.sheetMask);
+  }
   if (data.layersOff && data.layersOff.length > 0) {
     params.set("off", data.layersOff.join(","));
   }

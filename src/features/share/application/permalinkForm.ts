@@ -19,6 +19,12 @@ import {
   isHillshadeStrength,
   DEFAULT_RELIEF,
 } from "@/features/map/domain/relief";
+import {
+  clampMat,
+  isSheetMask,
+  isTextPosition,
+  DEFAULT_SHEET,
+} from "@/features/poster/domain/sheet";
 
 /**
  * The content layers that the `off` key of a permalink can name. Only
@@ -115,6 +121,18 @@ export function permalinkFormFields(
   fields.reliefStrength = isHillshadeStrength(permalink.hillshadeStrength)
     ? permalink.hillshadeStrength
     : DEFAULT_RELIEF.hillshadeStrength;
+
+  // The sheet follows the same rule: a missing key means the default
+  // composition, so a link restores the whole sheet.
+  fields.sheetMat = String(
+    Math.round(clampMat(Number(permalink.matPercent ?? 0) / 100) * 100),
+  );
+  fields.sheetText = isTextPosition(permalink.textPosition)
+    ? permalink.textPosition
+    : DEFAULT_SHEET.textPosition;
+  fields.sheetMask = isSheetMask(permalink.sheetMask)
+    ? permalink.sheetMask
+    : DEFAULT_SHEET.mask;
 
   const hiddenLayers = new Set(permalink.layersOff ?? []);
   const layerFields = fields as Record<string, boolean>;

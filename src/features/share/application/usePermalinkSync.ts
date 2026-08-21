@@ -24,6 +24,9 @@ interface PermalinkFormSlice {
   reliefInterval: string;
   reliefHillshade: boolean;
   reliefStrength: string;
+  sheetMat: string;
+  sheetText: string;
+  sheetMask: string;
   includeLandcover: boolean;
   includeBuildings: boolean;
   includeWater: boolean;
@@ -64,6 +67,9 @@ export function usePermalinkSync(
     reliefInterval,
     reliefHillshade,
     reliefStrength,
+    sheetMat,
+    sheetText,
+    sheetMask,
   } = form;
 
   // The list of hidden layers is one string, so the effect below needs
@@ -93,6 +99,9 @@ export function usePermalinkSync(
         plateCasings: Boolean(plateCasings),
         contourInterval: reliefContours ? reliefInterval : undefined,
         hillshadeStrength: reliefHillshade ? reliefStrength : undefined,
+        matPercent: Number(sheetMat) || undefined,
+        textPosition: sheetText || undefined,
+        sheetMask: sheetMask || undefined,
         layersOff: layersOff ? layersOff.split(",") : undefined,
       });
     }, WRITE_DEBOUNCE_MS);
@@ -114,6 +123,9 @@ export function usePermalinkSync(
     reliefInterval,
     reliefHillshade,
     reliefStrength,
+    sheetMat,
+    sheetText,
+    sheetMask,
     layersOff,
   ]);
 
