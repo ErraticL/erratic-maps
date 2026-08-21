@@ -24,6 +24,11 @@ glacier carried far from its origin — this project is that boulder.
   which your browser loads from Amazon Web Services while a relief
   switch is on. The full credit sits in the map attribution dialog,
   behind the ⓘ button in the footer.
+- **Export resolution**: the download dialog chooses how many pixels
+  an export holds. A print poster takes 150, 200 or 300 DPI; a
+  wallpaper, a social post or a web image takes its named pixel size
+  or twice that size. A readout names the result before the export,
+  and the PNG carries its real resolution in the file.
 - A **building height triad**: a theme can color buildings in three
   tones by rendered height (low, mid, tall) instead of one blended
   color.

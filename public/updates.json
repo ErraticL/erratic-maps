@@ -1,5 +1,112 @@
 [
   {
+    "version": "0.7.1",
+    "date": "2026-08-21",
+    "labels": {
+      "summaryTitle": "Erratic Maps 0.7.1",
+      "detailsTitle": "Release details"
+    },
+    "summary": {
+      "title": "The short version",
+      "points": [
+        {
+          "type": "new",
+          "text": "Export resolution: the download dialog asks how many pixels you want. A print poster offers 150, 200 and 300 DPI. A wallpaper offers its named size and twice that size."
+        },
+        {
+          "type": "improved",
+          "text": "A readout names the result before you export, for example \"A2 - 4961 x 7016 px - about 35 MB\". The file you receive matches it."
+        },
+        {
+          "type": "fixed",
+          "text": "A PNG carries its real resolution now. A large poster used to claim 300 DPI and open at the wrong size in a print shop."
+        },
+        {
+          "type": "new",
+          "text": "A poster reaches 120 cm now, so A2, A1 and A0 fit."
+        }
+      ]
+    },
+    "steps": [
+      {
+        "title": "Choose the resolution",
+        "image": null,
+        "points": [
+          {
+            "type": "new",
+            "text": "Print sizes: 150, 200 and 300 DPI. An A2 poster at 300 DPI holds 4961 x 7016 pixels. It used to leave the app at 2450 x 3466, which is 148 DPI on that paper."
+          },
+          {
+            "type": "new",
+            "text": "Pixel sizes: a wallpaper, a social post and a web image export at their named size. A 4K wallpaper is 3840 x 2160 pixels now, not 3543 x 1993. The 2x option doubles it for a high-density screen."
+          },
+          {
+            "type": "info",
+            "text": "Standard is the resolution of release 0.7. It stays on the list, and it stays the answer where a device cannot hold more."
+          },
+          {
+            "type": "info",
+            "text": "The choice stays on this device. It is not part of a link, because it describes your machine and not your design."
+          }
+        ]
+      },
+      {
+        "title": "The file matches the readout",
+        "image": null,
+        "points": [
+          {
+            "type": "improved",
+            "text": "The readout sits under the picker and under the size fields in the Layout section. It names the pixel size and the size of the file."
+          },
+          {
+            "type": "fixed",
+            "text": "The PNG header carries the real resolution: pixels divided by inches. A print shop opens the file at the size it really holds."
+          },
+          {
+            "type": "improved",
+            "text": "The PDF keeps the page size in centimeters and holds the whole image, so a higher resolution raises the detail of the print."
+          },
+          {
+            "type": "info",
+            "text": "The layered SVG keeps the standard resolution. It embeds one image per map layer, about twenty five of them, and a higher resolution would make the file very large."
+          }
+        ]
+      },
+      {
+        "title": "What your device can hold",
+        "image": null,
+        "points": [
+          {
+            "type": "info",
+            "text": "The app asks your browser for the graphics limit and the memory of the machine, and it suggests 300 DPI where they allow it."
+          },
+          {
+            "type": "info",
+            "text": "An option above that limit stays on the list and carries the words \"may fail on this device\". You keep the choice."
+          },
+          {
+            "type": "improved",
+            "text": "An export that does not fit stops with a clear message and the dialog stays open. You never receive a file that differs from the readout."
+          }
+        ]
+      },
+      {
+        "title": "What comes next",
+        "image": null,
+        "points": [
+          {
+            "type": "roadmap",
+            "text": "Composition: a mat, the text position and a mask for the map follow in the next release."
+          },
+          {
+            "type": "roadmap",
+            "text": "Presets: named starting points that set the theme, the drawing, the composition and the layers at once."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "version": "0.7.0",
     "date": "2026-08-21",
     "labels": {
