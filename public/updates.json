@@ -23,7 +23,11 @@
         },
         {
           "type": "improved",
-          "text": "The gradient fade follows the composition now. It appears only where the text draws over the map, and the poster keeps a clean edge everywhere else."
+          "text": "The gradient fades of the “Overlay layer” switch follow the map now, not the paper. A shape turns them off, so a circle keeps a clean edge."
+        },
+        {
+          "type": "improved",
+          "text": "The poster text has one control again. It sits in the Composition block, and the “Poster text” switch in the Style section is gone."
         }
       ]
     },
@@ -55,6 +59,10 @@
             "text": "The text block sits at the bottom, at the top, or nowhere. The city, the country and the coordinates move together."
           },
           {
+            "type": "improved",
+            "text": "This is the only control for the poster text now. The Style section no longer carries a switch of its own, and “None” gives the map the space the text used."
+          },
+          {
             "type": "new",
             "text": "The shape cuts the map: Full keeps the rectangle, Rounded softens the corners, Circle cuts a disc and Arch cuts a window."
           },
@@ -68,6 +76,10 @@
         "title": "In every file",
         "image": null,
         "points": [
+          {
+            "type": "info",
+            "text": "The “Overlay layer” switch works as before: it fades the top and the bottom of the map into the paper. With a mat the fades sit at the edge of the map, not at the edge of the sheet."
+          },
           {
             "type": "improved",
             "text": "The PNG, the PDF and the SVG all read the same composition as the preview, so the file repeats what you saw."

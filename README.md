@@ -29,8 +29,9 @@ glacier carried far from its origin — this project is that boulder.
   from 0 to 20 % of the short side, in the background color of the
   theme; the text block at the bottom, at the top or nowhere; and a
   shape for the map (Full, Rounded, Circle or Arch). The map keeps
-  the chosen location at the center of the hole, and the gradient
-  fade appears only where the text draws over the map.
+  the chosen location at the center of the hole. The gradient fades
+  of the "Overlay layer" switch follow the hole; a shape turns them
+  off, because the shape is the edge treatment.
 - **Export resolution**: the download dialog chooses how many pixels
   an export holds. A print poster takes 150, 200 or 300 DPI; a
   wallpaper, a social post or a web image takes its named pixel size

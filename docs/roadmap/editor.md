@@ -233,20 +233,35 @@ version bump ship together.
     `MapSettingsSection`, below the layout cards and below the custom
     size editor, so it shows in both states. One slider and two rows
     of pill buttons, in the visual language of the Drawing block.
+    *One control moved here:* the Style section carried a "Poster
+    text" switch, and "Text > None" duplicated it. The two did not even
+    agree: the switch hid the text but kept its reserved band, so the
+    map hole stayed small. The switch is gone, the `showPosterText`
+    form field with it, and the text block of the sheet is now the one
+    control. `drawPosterText` reads the box alone; a null box means no
+    text. The value also joins the permalink, which `showPosterText`
+    never did. Marcel chose this against keeping the switch.
 17. Fades: the sheet model turns a gradient fade on only at an edge
     where a text block overlaps the map hole.
-    *Built:* the test compares the ink band of the text block against
-    the hole, and a fade reaches a quarter of the HOLE height, not of
-    the paper. The layered SVG drops the fades group when no edge
-    carries a fade.
-    *Consequence, and it changes the default poster:* release 0.7.1
-    drew a fade at the top and at the bottom. No text sits at the top,
-    so the top fade is decorative and this rule removes it. The bottom
-    fade of the default poster stays, and the text of the default
-    poster keeps its exact positions: the divider measures 0.8749 of
-    the poster height in the exported file, against 0.875 in release
-    0.7.1. Marcel decides whether the top fade returns as a control or
-    as a preset.
+    **REVERSED on 2026-08-21, after Marcel saw the result.** The
+    decision reads the fades as a legibility device for the text. They
+    are not. They are the "Overlay layer" switch in the Style section,
+    which is a style choice of the visitor. The rule took the top fade
+    away from every poster and left that switch with almost nothing to
+    do. The decision was built as written, and the defect only became
+    visible in the running app.
+    *Built instead:* the sheet decides the GEOMETRY of a fade, never
+    its existence. A fade sits at the top and at the bottom edge of the
+    map hole and reaches a quarter of the hole into it. The "Overlay
+    layer" switch alone turns the pair on and off, exactly as it did in
+    release 0.7.1.
+    *One rule joins it:* a mask takes the fades away. The shape is the
+    edge treatment, and a fade over a circle dissolves the top and the
+    bottom of the disc. So Full carries the fades and Rounded, Circle
+    and Arch do not. Marcel chose this against two other options.
+    The text of the default poster keeps its exact positions: the
+    divider measures 0.8749 of the poster height in the exported file,
+    against 0.875 in release 0.7.1.
 
 ### Presets
 
