@@ -24,6 +24,13 @@ glacier carried far from its origin — this project is that boulder.
   which your browser loads from Amazon Web Services while a relief
   switch is on. The full credit sits in the map attribution dialog,
   behind the ⓘ button in the footer.
+- The **sheet**: three controls in the Layout section under
+  "Composition" that decide how the poster sits on the paper. A mat
+  from 0 to 20 % of the short side, in the background color of the
+  theme; the text block at the bottom, at the top or nowhere; and a
+  shape for the map (Full, Rounded, Circle or Arch). The map keeps
+  the chosen location at the center of the hole, and the gradient
+  fade appears only where the text draws over the map.
 - **Export resolution**: the download dialog chooses how many pixels
   an export holds. A print poster takes 150, 200 or 300 DPI; a
   wallpaper, a social post or a web image takes its named pixel size
@@ -38,7 +45,8 @@ glacier carried far from its origin — this project is that boulder.
   the same names), and the originals Iris, Glacier and Bauhaus.
 - **Permalinks**: the URL hash always encodes location, distance,
   theme, layout, the poster names, the plate values, the relief
-  values and the layers that are off, so the address bar is a
+  values, the sheet values and the layers that are off, so the
+  address bar is a
   shareable link that restores
   the poster and skips the startup dialog. A key appears only when
   its value differs from the default.

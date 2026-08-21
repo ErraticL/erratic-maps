@@ -1,5 +1,104 @@
 [
   {
+    "version": "0.8.0",
+    "date": "2026-08-21",
+    "labels": {
+      "summaryTitle": "Erratic Maps 0.8.0",
+      "detailsTitle": "Release details"
+    },
+    "summary": {
+      "title": "The short version",
+      "points": [
+        {
+          "type": "new",
+          "text": "Composition: the Layout section holds a mat, a text position and a shape for the map. The three together decide how the poster sits on the paper."
+        },
+        {
+          "type": "new",
+          "text": "The mat is a border in the background color. The map keeps your location at the center of the hole, so the poster still shows the place you chose."
+        },
+        {
+          "type": "new",
+          "text": "Four shapes for the map: Full, Rounded, Circle and Arch."
+        },
+        {
+          "type": "improved",
+          "text": "The gradient fade follows the composition now. It appears only where the text draws over the map, and the poster keeps a clean edge everywhere else."
+        }
+      ]
+    },
+    "steps": [
+      {
+        "title": "The mat",
+        "image": null,
+        "points": [
+          {
+            "type": "new",
+            "text": "A slider sets the width of the mat, from 0 to 20 percent of the short side of the poster."
+          },
+          {
+            "type": "info",
+            "text": "The edge that carries the text takes a wider border, so the text can move off the map and onto the mat. This is the classic print: the map above, the name below."
+          },
+          {
+            "type": "info",
+            "text": "The mat takes the background color of the theme, so every theme brings its own paper."
+          }
+        ]
+      },
+      {
+        "title": "The text and the shape",
+        "image": null,
+        "points": [
+          {
+            "type": "new",
+            "text": "The text block sits at the bottom, at the top, or nowhere. The city, the country and the coordinates move together."
+          },
+          {
+            "type": "new",
+            "text": "The shape cuts the map: Full keeps the rectangle, Rounded softens the corners, Circle cuts a disc and Arch cuts a window."
+          },
+          {
+            "type": "improved",
+            "text": "A link carries the composition. The keys are mat, text and mask, and each one appears only when it differs from the default."
+          }
+        ]
+      },
+      {
+        "title": "In every file",
+        "image": null,
+        "points": [
+          {
+            "type": "improved",
+            "text": "The PNG, the PDF and the SVG all read the same composition as the preview, so the file repeats what you saw."
+          },
+          {
+            "type": "improved",
+            "text": "The SVG carries the mat as one vector shape, not as a picture. An editor can recolor it."
+          },
+          {
+            "type": "fixed",
+            "text": "A marker keeps its place under a mat. It sits on the same point in the preview, in the PNG and in the SVG."
+          }
+        ]
+      },
+      {
+        "title": "What comes next",
+        "image": null,
+        "points": [
+          {
+            "type": "roadmap",
+            "text": "Presets: named starting points that set the theme, the drawing, the composition and the layers at once."
+          },
+          {
+            "type": "roadmap",
+            "text": "Caption lines and a frame line join the composition later."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "version": "0.7.1",
     "date": "2026-08-21",
     "labels": {
