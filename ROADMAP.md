@@ -16,7 +16,7 @@
 
 ## Features
 
-- [ ] **Expand export formats** — Additional export options or quality settings beyond current PNG, PDF, SVG
+- [ ] **Expand export formats** — Additional export options beyond current PNG, PDF, SVG. Partly done on 2026-08-21 in release 0.7.1: the download dialog chooses the resolution, a print poster takes 150, 200 or 300 DPI and a pixel layout takes its named size or twice that size. Still open: a true vector SVG, and a lossless Flate stream in the PDF.
 - [ ] **Markers improvements** — Enhance the `markers` feature (custom icons, bulk import, etc.)
 - [ ] **Theme gallery** — Browsable theme previews to make discovery easier
 - [ ] **Accessibility audit** — Ensure full keyboard navigation and screen reader support across all features. Partly done on 2026-08-20: a global `prefers-reduced-motion` block now covers every animation, the startup dialog and the release notes no longer stack two `aria-modal` dialogs at once, and hover styles are gated so a tap on a phone does not leave a hover state stuck. Still open: a screen reader pass, and 7 focus rules in `desktop.css` that sit inside a `hover: hover` media query and therefore do not apply on a large touch device with no mouse.

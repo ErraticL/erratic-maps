@@ -5,7 +5,9 @@ grilling of fifteen decisions. This document is the record. A later
 session implements it, one step per release.
 
 **Status 2026-08-21: step 1 (the plate) shipped as 0.6.0 and step 2
-(relief) as 0.7.0. Both are live.** Steps 3 and 4 wait. The decisions
+(relief) as 0.7.0. Both are live. Release 0.7.1, the export
+resolution, is built and waits for a push; its own record is
+[resolution.md](resolution.md).** Steps 3 and 4 wait. The decisions
 below stay as they were decided; the status notes only record what
 exists.
 
@@ -42,8 +44,12 @@ stays editable on its own.
 | --- | --- | --- | --- |
 | 1 | 0.6 | Plate | Shipped 2026-08-21, both gates passed |
 | 2 | 0.7 | Relief | Shipped 2026-08-21, both gates passed |
+| - | 0.7.1 | Export resolution ([resolution.md](resolution.md)) | Built 2026-08-21, waits for a push; every desktop gate passed |
 | 3 | 0.8 | Sheet model, mat, text position, mask | Waits |
 | 4 | 0.9 | Presets, full permalink coverage | Waits |
+
+Release 0.7.1 is not a step of this roadmap. It repairs the export
+before step 3 rewrites the same files.
 
 The order follows Marcel's ranking of the prototypes: line plate first,
 relief second, sheet third. The default poster keeps today's look until
@@ -217,7 +223,7 @@ belong to step 3.
 | --- | --- |
 | ~~Outline mode as line layers under the 5.5x overzoom~~ | **PASSED 2026-08-21.** Checked by eye at zoom 12, 14 and 16, on 1:1 crops of the render canvas. |
 | ~~Layered SVG export with the extra layers~~ | **PASSED 2026-08-21.** One SVG per plate. Full and Bold hold the 23 layer groups of 0.5; Line holds 19, with the five outline groups and no casing groups. |
-| ~~`maplibre-contour` bundled with its worker under Vite; the protocol reaches the offscreen export map~~ | **PASSED 2026-08-21.** The library inlines its worker as a blob URL, so Vite needs no worker configuration. A relief PNG at true A2 300 DPI (4961 x 7016 px) took 2.3 s from click to file: terrain at 0.1 s, file build at 1.3 s. The product caps an export at 8.5 megapixels, so the caps were raised for the measurement only. The same export from the production build (`vite build` + `vite preview`) took 1.7 s at the real cap. |
+| ~~`maplibre-contour` bundled with its worker under Vite; the protocol reaches the offscreen export map~~ | **PASSED 2026-08-21.** The library inlines its worker as a blob URL, so Vite needs no worker configuration. A relief PNG at true A2 300 DPI (4961 x 7016 px) took 2.3 s from click to file: terrain at 0.1 s, file build at 1.3 s. The product capped an export at 8.5 megapixels then, so the caps were raised for the measurement only. The same export from the production build (`vite build` + `vite preview`) took 1.7 s at the cap of release 0.7. Release 0.7.1 removed that cap, and a relief PNG at true A2 300 DPI now takes 2.0 s in the product itself. |
 | ~~Tile-error count on the export map~~ | **PASSED 2026-08-21.** A wrong terrain host aborts the export after 0.34 s with "Terrain data did not load. Try again, or turn relief off." A wrong base map host aborts with the base map message. MapLibre adds the `sourceId` of the failed source to its error event, which names the right message; a 404 fires no event, which is correct for a terrain tile outside the coverage. |
 | `setPadding` with the scaled container; the one-pixel offset for markers | A marker on a landmark sits on it in preview, PNG and SVG, with a mat and with a circle |
 | Phone behavior | Marcel checks on the live site after each release; the browser pane cannot open the mobile drawer |

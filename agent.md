@@ -23,8 +23,9 @@ The codebase is split into vertical feature slices under `src/features/`, each w
 
 ```text
 src/features/
-  export/     install/    layout/     location/
-  map/        markers/    poster/     theme/      updates/
+  export/     install/    layout/     legal/      location/
+  map/        markers/    poster/     routes/     share/
+  theme/      updates/
 ```
 
 Cross-cutting concerns live outside features:
@@ -35,7 +36,7 @@ Cross-cutting concerns live outside features:
 - **`shared/ui/`** — UI atoms (icons, modals) used across features.
 - **`shared/utils/`** — helper utilities (color, location, number, string).
 - **`data/`** — static JSON data files (themes, layouts).
-- **`styles/`** — global CSS only (10 files). Desktop breakpoint `>980px`, mobile `≤760px`.
+- **`styles/`** — global CSS only (13 files). Desktop breakpoint `>980px`, mobile `≤760px`.
 
 ### Layer import rules
 
@@ -64,6 +65,7 @@ Cross-cutting concerns live outside features:
 | `useLocationAutocomplete` | location | debounced search with stale-result guard |
 | `useCurrentLocation` | location | GPS + reverse-geocode shared handler |
 | `useExport` | export | poster export orchestration |
+| `useExportResolution` | export | export resolution tiers, the readout and the stored choice |
 | `useInstallPrompt` | install | PWA install prompt |
 | `useRepoStars` | shared/hooks | GitHub star count with cache |
 | `useSwipeDown` | shared/hooks | mobile swipe gesture |
