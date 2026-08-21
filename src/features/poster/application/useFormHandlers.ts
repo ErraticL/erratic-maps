@@ -181,6 +181,15 @@ export function useFormHandlers() {
     [dispatch],
   );
 
+  // The sheet options are pill buttons, not inputs, so they dispatch
+  // the field by name.
+  const handleSheetOptionChange = useCallback(
+    (name: string, value: string) => {
+      dispatch({ type: "SET_FIELD", name, value });
+    },
+    [dispatch],
+  );
+
   const handleColorChange = useCallback(
     (key: string, value: string) => {
       dispatch({ type: "SET_COLOR", key, value });
@@ -226,6 +235,7 @@ export function useFormHandlers() {
     handlePlateChange,
     handlePlateFillsChange,
     handleReliefOptionChange,
+    handleSheetOptionChange,
     handleColorChange,
     handleResetColors,
     handleLocationSelect,

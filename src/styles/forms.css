@@ -3607,6 +3607,100 @@ button.plate-card:focus-visible {
   font-weight: 400;
 }
 
+/* ────── Sheet (the composition, in the Layout section) ────── */
+
+.sheet-section {
+  margin-top: 18px;
+  margin-bottom: 4px;
+}
+
+.sheet-field {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.sheet-field > span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* This value changes while the user drags the slider. */
+.sheet-value {
+  font-family: "Spline Sans Mono", monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+}
+
+.sheet-hint {
+  margin: 2px 0 12px;
+  font-size: 0.74rem;
+  line-height: 1.45;
+  color: var(--ink-muted);
+  opacity: 0.85;
+  font-weight: 400;
+}
+
+.sheet-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.sheet-option-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 2px 0 12px;
+}
+
+.sheet-option {
+  margin: 0;
+  padding: 6px 12px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--item-bg);
+  color: var(--ink-muted);
+  cursor: pointer;
+  transition:
+    border-color var(--dur-short) var(--ease-out),
+    background var(--dur-short) var(--ease-out),
+    color var(--dur-short) var(--ease-out);
+}
+
+.sheet-option--active {
+  border-color: var(--accent-line);
+  background: var(--accent-wash);
+  color: var(--ink);
+}
+
+button.sheet-option:focus-visible {
+  transform: none;
+  filter: none;
+  border-color: var(--accent-line);
+  box-shadow: 0 0 0 3px var(--accent-ring);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  /* This rule turns off the global lift on button:not(:disabled):hover.
+     It names the element and the disabled test, so it stays stronger
+     than the lift whatever the order of the files. */
+  button.sheet-option:not(:disabled):hover {
+    transform: none;
+    filter: none;
+    border-color: var(--accent-line);
+    color: var(--ink);
+  }
+}
+
 /* ────── Relief (the terrain, in the Layers section) ────── */
 
 .relief-section {

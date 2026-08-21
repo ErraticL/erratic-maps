@@ -69,6 +69,7 @@ export default function SettingsPanel({
     handlePlateChange,
     handlePlateFillsChange,
     handleReliefOptionChange,
+    handleSheetOptionChange,
     handleColorChange,
     handleResetColors,
     handleLocationSelect,
@@ -167,6 +168,7 @@ export default function SettingsPanel({
                 onNumericFieldBlur={handleNumericFieldBlur}
                 onThemeChange={handleThemeChange}
                 onLayoutChange={handleLayoutChange}
+                onSheetOptionChange={handleSheetOptionChange}
                 selectedTheme={selectedTheme}
                 themeOptions={themeOptions}
                 layoutGroups={layoutGroups}
@@ -204,6 +206,7 @@ export default function SettingsPanel({
                 onNumericFieldBlur={handleNumericFieldBlur}
                 onThemeChange={handleThemeChange}
                 onLayoutChange={handleLayoutChange}
+                onSheetOptionChange={handleSheetOptionChange}
                 selectedTheme={selectedTheme}
                 themeOptions={themeOptions}
                 layoutGroups={layoutGroups}

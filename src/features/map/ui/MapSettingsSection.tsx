@@ -13,6 +13,13 @@ import {
   createFallbackThemeOption,
 } from "@/features/theme/domain/colorSuggestions";
 import { useExportResolution } from "@/features/export/application/useExportResolution";
+import {
+  clampMat,
+  maskOptions,
+  textPositionOptions,
+  MAX_MAT,
+  MIN_MAT,
+} from "@/features/poster/domain/sheet";
 import LayoutCard from "@/features/layout/ui/LayoutCard";
 import MapDimensionFields from "./MapDimensionFields";
 import ColorPicker from "@/features/theme/ui/ColorPicker";
@@ -30,6 +37,9 @@ interface MapSettingsForm {
   width: string;
   height: string;
   distance: string;
+  sheetMat: string;
+  sheetText: string;
+  sheetMask: string;
   includeBuildings: boolean;
   includeWater: boolean;
   includeParks: boolean;
@@ -48,6 +58,7 @@ interface MapSettingsSectionProps {
   onNumericFieldBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
   onThemeChange: (themeId: string) => void;
   onLayoutChange: (layoutId: string) => void;
+  onSheetOptionChange: (name: string, value: string) => void;
   selectedTheme: ResolvedTheme;
   themeOptions: ThemeOption[];
   layoutGroups: LayoutGroup[];
@@ -66,6 +77,7 @@ export default function MapSettingsSection({
   onNumericFieldBlur,
   onThemeChange,
   onLayoutChange,
+  onSheetOptionChange,
   selectedTheme,
   themeOptions,
   layoutGroups,
@@ -186,6 +198,73 @@ export default function MapSettingsSection({
       <span className="layout-resolution-readout-label">Export</span>
       {resolutionReadout}
     </p>
+  );
+
+  // The composition. The sheet model owns the geometry; these three
+  // controls only choose its values. See features/poster/domain/sheet.ts.
+  const matPercent = Math.round(
+    clampMat(Number(form.sheetMat) / 100) * 100,
+  );
+  const compositionBlock = (
+    <div className="sheet-section">
+      <h3 className="map-details-subtitle">Composition</h3>
+
+      <label className="sheet-field">
+        <span>
+          <span>Mat</span>
+          <span className="sheet-value">{matPercent}&thinsp;%</span>
+        </span>
+        <input
+          className="plate-weight-slider"
+          name="sheetMat"
+          type="range"
+          min={MIN_MAT * 100}
+          max={MAX_MAT * 100}
+          step={1}
+          value={matPercent}
+          onChange={onChange}
+          aria-label="Mat width"
+        />
+      </label>
+      <p className="sheet-hint">
+        The mat is a border in the background color. The map keeps its
+        place: the poster shows your location at the center of the hole.
+      </p>
+
+      <span className="sheet-label">Text</span>
+      <div className="sheet-option-row">
+        {textPositionOptions.map((option) => (
+          <button
+            key={option.id}
+            type="button"
+            className={`sheet-option${
+              form.sheetText === option.id ? " sheet-option--active" : ""
+            }`}
+            aria-pressed={form.sheetText === option.id}
+            onClick={() => onSheetOptionChange("sheetText", option.id)}
+          >
+            {option.label}
+          </button>
+        ))}
+      </div>
+
+      <span className="sheet-label">Shape</span>
+      <div className="sheet-option-row">
+        {maskOptions.map((option) => (
+          <button
+            key={option.id}
+            type="button"
+            className={`sheet-option${
+              form.sheetMask === option.id ? " sheet-option--active" : ""
+            }`}
+            aria-pressed={form.sheetMask === option.id}
+            onClick={() => onSheetOptionChange("sheetMask", option.id)}
+          >
+            {option.label}
+          </button>
+        ))}
+      </div>
+    </div>
   );
 
   function clearColorPickerState() {
@@ -465,6 +544,8 @@ export default function MapSettingsSection({
             ))}
           </div>
         )}
+
+        {compositionBlock}
       </div>
     </section>
   );
