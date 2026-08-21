@@ -1,5 +1,102 @@
 [
   {
+    "version": "0.6.0",
+    "date": "2026-08-21",
+    "labels": {
+      "summaryTitle": "Erratic Maps 0.6",
+      "detailsTitle": "Release details"
+    },
+    "summary": {
+      "title": "The short version",
+      "points": [
+        {
+          "type": "new",
+          "text": "The plate: three controls in the Layers section change how the map draws. You set the line weight, you draw the areas as outlines, and you remove the road casings."
+        },
+        {
+          "type": "new",
+          "text": "Three named plates: Full, Line and Bold set all three drawing rules with one click."
+        },
+        {
+          "type": "improved",
+          "text": "The link carries the drawing: a permalink now holds the plate values and the layers that you switched off."
+        },
+        {
+          "type": "info",
+          "text": "The default poster does not change. The app opens with the Full plate, which draws the poster of release 0.5."
+        }
+      ]
+    },
+    "steps": [
+      {
+        "title": "The plate: how the map draws",
+        "image": null,
+        "points": [
+          {
+            "type": "new",
+            "text": "Line weight: one slider multiplies every line width on the map, from one half to two times."
+          },
+          {
+            "type": "new",
+            "text": "Outline fills: water, parks, landcover and buildings draw as their border only. The border keeps the color of the area, moved towards the text color, so that a thin line stays visible."
+          },
+          {
+            "type": "new",
+            "text": "Road casings: the light halo under the roads has its own switch."
+          },
+          {
+            "type": "new",
+            "text": "Named plates: Full is the drawing of release 0.5. Line draws outlines and no casings. Bold keeps the fills and makes the lines heavier."
+          },
+          {
+            "type": "info",
+            "text": "One click, then free: a named plate sets the three rules. Every rule stays editable on its own afterwards."
+          },
+          {
+            "type": "info",
+            "text": "Drawing, not content: the plate changes how the map draws. The switches above it stay the content of the map."
+          },
+          {
+            "type": "improved",
+            "text": "Every export follows: the PNG, the PDF and the layered SVG all use the plate. In the SVG, each outline is its own layer group."
+          }
+        ]
+      },
+      {
+        "title": "Links carry more",
+        "image": null,
+        "points": [
+          {
+            "type": "improved",
+            "text": "The address bar holds the plate values and the list of the layers that you switched off."
+          },
+          {
+            "type": "info",
+            "text": "Short links: a key appears in the link only when its value differs from the default."
+          },
+          {
+            "type": "info",
+            "text": "Old links still work. A link without the new keys opens the default drawing."
+          }
+        ]
+      },
+      {
+        "title": "What comes next",
+        "image": null,
+        "points": [
+          {
+            "type": "roadmap",
+            "text": "Relief: contour lines and hillshade join the Layers section in the next release."
+          },
+          {
+            "type": "roadmap",
+            "text": "Composition: a mat, the text position and a mask for the map follow after that."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "version": "0.5.0",
     "date": "2026-08-21",
     "labels": {
