@@ -4,13 +4,15 @@ Decided on 2026-08-21 after a brainstorm, four real prototypes and a
 grilling of fifteen decisions. This document is the record. A later
 session implements it, one step per release.
 
-**Status 2026-08-21: step 1 (the plate) shipped as 0.6.0, step 2
-(relief) as 0.7.0 and step 3 (the sheet) as 0.8.0. Releases 0.6.0 and
-0.7.0 are live. Release 0.7.1, the export resolution, and release
-0.8.0 are built and wait for a push; the record of 0.7.1 is
-[resolution.md](resolution.md).** Step 4 waits. The decisions below
-stay as they were decided; the status notes only record what
-exists.
+**Status 2026-08-21.** Steps 1, 2 and 3 are built, pushed, deployed
+and LIVE, as releases 0.6.0, 0.7.0 and 0.8.0. Release 0.7.1, the
+export resolution, is live as well; its record is
+[resolution.md](resolution.md). Every desktop gate passed. The phone
+checks of 0.6.0, 0.7.0, 0.7.1 and 0.8.0 stay open, and only Marcel can
+run them. Step 4 waits, and the block "Open questions for step 4"
+below lists what it needs before it starts. The decisions stay as they
+were decided; a *Built:* note records what exists, and decision 17
+carries the one reversal.
 
 ## The direction
 
@@ -45,8 +47,8 @@ stays editable on its own.
 | --- | --- | --- | --- |
 | 1 | 0.6 | Plate | Shipped 2026-08-21, both gates passed |
 | 2 | 0.7 | Relief | Shipped 2026-08-21, both gates passed |
-| - | 0.7.1 | Export resolution ([resolution.md](resolution.md)) | Built 2026-08-21, waits for a push; every desktop gate passed |
-| 3 | 0.8 | Sheet model, mat, text position, mask | Built 2026-08-21, waits for a push; the open gate passed |
+| - | 0.7.1 | Export resolution ([resolution.md](resolution.md)) | Shipped 2026-08-21, every desktop gate passed; the phone gate stays open |
+| 3 | 0.8 | Sheet model, mat, text position, mask | Shipped 2026-08-21, the padding gate passed; the phone gate stays open |
 | 4 | 0.9 | Presets, full permalink coverage | Waits |
 
 Release 0.7.1 is not a step of this roadmap. It repairs the export
@@ -276,6 +278,40 @@ version bump ship together.
     preset by hand, committed as WebP at card size. A checklist in
     `scripts/` records the steps. A headless export script (Playwright)
     becomes worth it only beyond about fifteen presets.
+
+### Open questions for step 4
+
+Decisions 18 to 20 fix the shape of the preset step. Four questions
+stay open, and each one needs an answer from Marcel before the work
+starts. They are questions of taste or of scope, not of engineering.
+
+1. **The list itself.** Which 8 to 12 presets, and what does each one
+   name? A preset is a value for all four dimensions, so the list is a
+   design exercise, not a data entry task. Either Marcel names them, or
+   a session proposes a set as real renders and he cuts it down.
+2. **Custom colors in the permalink.** Decision 6 defers them to this
+   step. The key has to carry a map of color paths, so it needs a
+   compact form; the plain paths (`ui.bg`, `map.buildings`) would make
+   a long hash.
+3. **The nav.** Decision 5 says the nav is restructured once, in this
+   step. Nobody has said what the new nav is. Today it holds Location,
+   Theme, Layout, Layers, Markers, Routes and Style; a Presets section
+   on top makes eight.
+4. **The showcase place.** Decision 20 wants one fixed place for every
+   card. Hanover is the default poster and Marcel's home; Paris and
+   Stuttgart carried the gates. The place decides how a preset reads on
+   its card.
+
+Three gates suggest themselves for this step, in the manner of the
+gates below, and Marcel should confirm them before the work depends on
+them:
+
+- A preset click sets all four dimensions, and the permalink that
+  follows restores exactly those values in a fresh tab.
+- A preset click on a poster with edits asks first, and a cancel keeps
+  every edit.
+- One hand-exported card per preset reads correctly at card size, which
+  decision 20 puts at WebP.
 
 ## Verification gates
 

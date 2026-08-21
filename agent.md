@@ -53,7 +53,7 @@ Cross-cutting concerns live outside features:
 - **Single source of truth**: `PosterContext` — React Context + `useReducer`.
 - `posterReducer.ts` owns `PosterState`, `PosterForm`, and the `PosterAction` discriminated union.
 - **No prop drilling** — components call `usePosterContext()` directly.
-- Side-effect logic lives in application hooks: `useFormHandlers`, `useMapSync`, `useGeolocation`, `useLocationAutocomplete`, `useCurrentLocation`, `useExport`.
+- Side-effect logic lives in application hooks: `useFormHandlers`, `useMapSync`, `useLocationAutocomplete`, `useCurrentLocation`, `useExport`, `useExportResolution`, `usePermalinkSync`.
 
 ## Key Application Hooks
 
@@ -61,11 +61,15 @@ Cross-cutting concerns live outside features:
 | --- | --- | --- |
 | `useFormHandlers` | poster | form input and location handlers |
 | `useMapSync` | map | bidirectional map ↔ form sync |
-| `useGeolocation` | map | browser geolocation on startup |
 | `useLocationAutocomplete` | location | debounced search with stale-result guard |
 | `useCurrentLocation` | location | GPS + reverse-geocode shared handler |
+| `useRecentLocations` | location | the recent places of this device |
 | `useExport` | export | poster export orchestration |
 | `useExportResolution` | export | export resolution tiers, the readout and the stored choice |
+| `useSessionAnalytics` | export | session events |
+| `usePermalinkSync` | share | the URL hash, in both directions |
+| `useGpxUpload` | routes | a GPX file becomes a route |
+| `useLegalDoc` | legal | the privacy text, fetched and cached |
 | `useInstallPrompt` | install | PWA install prompt |
 | `useRepoStars` | shared/hooks | GitHub star count with cache |
 | `useSwipeDown` | shared/hooks | mobile swipe gesture |

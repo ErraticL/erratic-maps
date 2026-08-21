@@ -4,9 +4,9 @@ Decided on 2026-08-21 after a measurement session and a grilling. This
 step sits between 0.7 (relief) and 0.8 (sheet model) in
 [editor.md](editor.md).
 
-**Status 2026-08-21: BUILT as release 0.7.1. Every gate passed on the
-desktop; the phone gate belongs to Marcel.** The decisions below stay
-as they were decided. A *Built:* note records what exists, and the gate
+**Status 2026-08-21: SHIPPED as release 0.7.1, pushed and live. Every
+gate passed on the desktop; the phone gate belongs to Marcel.** The
+decisions below stay as they were decided. A *Built:* note records what exists, and the gate
 table at the end carries the measured results. The section "The
 problem" describes release 0.7, not the app of today.
 
