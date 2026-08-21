@@ -2,18 +2,25 @@
 
 Decided on 2026-08-21 after a brainstorm, four real prototypes and a
 grilling of fifteen decisions. This document is the record. A later
-session implements it, one step per release.
+session implements it, one step per release. All four sessions ran on
+the same day, and the last one closed the list.
 
-**Status 2026-08-21.** All four steps are built, as releases 0.6.0,
-0.7.0, 0.8.0 and 0.9.0. Release 0.7.1, the export resolution, is live
-as well; its record is [resolution.md](resolution.md). Every desktop
-gate passed. The phone checks of 0.6.0, 0.7.0, 0.7.1, 0.8.0 and 0.9.0
-stay open, and only Marcel can run them. The four open questions of
-step 4 are answered, and the answers sit in the block "Answers for
-step 4" below. The decisions stay as they were decided; a *Built:*
-note records what exists, and decision 17 carries the one reversal.
+**Status 2026-08-21.** Every step of this roadmap is built, pushed,
+deployed and LIVE, as releases 0.6.0, 0.7.0, 0.8.0 and 0.9.0. Release
+0.7.1, the export resolution, is live as well; its record is
+[resolution.md](resolution.md). The deploy run for 783736c succeeded,
+and the site serves the 0.9.0 announcement entry and the preset cards.
+Every desktop gate passed. The phone checks of 0.6.0, 0.7.0, 0.7.1,
+0.8.0 and 0.9.0 stay open, and only Marcel can run them. The four open
+questions of step 4 are answered, and the answers sit in the block
+"Answers for step 4" below. The decisions stay as they were decided;
+a *Built:* note records what exists, and decision 17 carries the one
+reversal.
 
 ## The direction
+
+*Since release 0.9.0 this section describes what exists, not what
+comes.*
 
 Erratic Maps becomes an editor. Every visible property of the poster
 becomes a control. Presets are starting points only. There is no
@@ -48,7 +55,7 @@ stays editable on its own.
 | 2 | 0.7 | Relief | Shipped 2026-08-21, both gates passed |
 | - | 0.7.1 | Export resolution ([resolution.md](resolution.md)) | Shipped 2026-08-21, every desktop gate passed; the phone gate stays open |
 | 3 | 0.8 | Sheet model, mat, text position, mask | Shipped 2026-08-21, the padding gate passed; the phone gate stays open |
-| 4 | 0.9 | Presets, full permalink coverage | Shipped 2026-08-21, five desktop gates passed; the phone gate stays open |
+| 4 | 0.9 | Presets, full permalink coverage | Shipped 2026-08-21, live, five desktop gates passed; the phone gate stays open |
 
 Release 0.7.1 is not a step of this roadmap. It repairs the export
 before step 3 rewrites the same files.

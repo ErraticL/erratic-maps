@@ -6,7 +6,7 @@
 ## Branch
 
 - [ ] I have read the [contributing guidelines](./CONTRIBUTING.md)
-- [ ] This branch was created from `dev` and this PR targets `dev`
+- [ ] This branch was created from `main` and this PR targets `main`, the only branch of this repository
 
 ## CLA
 

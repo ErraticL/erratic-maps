@@ -40,32 +40,37 @@ Environment variables are documented in [`.env.example`](./.env.example).
 - Do not assume environment values are present for core functionality.
 - Access environment values only through `src/core/config.ts`.
 
+## Where a change belongs
+
+Erratic Maps is a fork of [Terraink](https://github.com/yousifamanuel/terraink)
+and it tracks upstream through deliberate merges. Send a change to the
+repository that owns it:
+
+| Your change | Where it goes |
+| --- | --- |
+| A feature or a fix that is not specific to this fork | Upstream Terraink. Read their `CONTRIBUTING.md` and follow their `dev -> beta -> main` model. |
+| A feature or a fix of an Erratic-only part (presets, plate, relief, sheet, permalinks, the themes of this fork, the interface skin) | This repository. |
+
 ## Branch Strategy
 
-The repository follows a linear promotion model:
+This repository has ONE branch, `main`, and a push to it deploys the
+site. There is no `dev` and no `beta` here; those two branches exist
+upstream.
 
-```text
-dev -> beta -> main
-```
-
-| Branch | Purpose                                                                                                       |
-| ------ | ------------------------------------------------------------------------------------------------------------- |
-| `dev`  | Active development. All feature branches are created from here and all external PRs target this branch first. |
-| `beta` | Staging or pre-release testing. Changes are promoted here from `dev` when they are ready for broader testing. |
-| `main` | Production. Changes reach this branch only after they were verified in `beta`.                                |
-
-Always branch from `dev` and always open your pull request against `dev`.
-
-Pull requests must not target `main` directly. PRs opened against `main` will be redirected or closed.
+Branch from `main`, name the branch after the change
+(`fix/geocoding-error`, `feat/svg-export`), and open the pull request
+against `main`. Keep the diff small: a large divergence from upstream
+makes every later merge harder, and that cost falls on the whole
+project.
 
 ## Contribution Flow
 
 1. Pick an existing issue, or open a new issue first to discuss the bug or feature.
-2. Create a branch from `dev` with a short descriptive name such as `fix/geocoding-error` or `feat/svg-export`.
+2. Create a branch from `main` with a short descriptive name such as `fix/geocoding-error` or `feat/svg-export`.
 3. Implement the change in a focused, minimal diff.
 4. Run `bun install`.
 5. Run `bun run build` and verify the build passes before opening a PR.
-6. Open a pull request against `dev` and fill out the pull request template completely.
+6. Open a pull request against `main` and fill out the pull request template completely.
 7. Add screenshots for visible UI changes.
 8. Wait for maintainer review. Do not merge your own PR.
 
@@ -73,11 +78,11 @@ Pull requests must not target `main` directly. PRs opened against `main` will be
 
 Before requesting review, make sure your PR satisfies all of the following:
 
-- The PR targets `dev`, never `main`.
+- The PR targets `main`, which is the only branch of this repository.
 - The PR description clearly explains what changed, why it changed, and any known limitations.
 - UI contributions include screenshots or a short demo of the final behavior.
 
-Maintainers may close PRs that target the wrong branch, do not follow the agreed feature scope, or do not meet the engineering standards below.
+Maintainers may close PRs that do not follow the agreed feature scope, or do not meet the engineering standards below.
 
 ## Commit Messages
 

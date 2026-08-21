@@ -14,8 +14,9 @@ glacier carried far from its origin — this project is that boulder.
 - **Presets**: eleven named starting points in the first section of the
   panel. One click sets the theme, the plate, the sheet and the layers
   at once, and every control stays editable afterwards. Each card shows
-  a real export of that preset. A click asks first while the poster
-  carries changes.
+  a real export of that preset at one fixed place, Lisbon, so the
+  picture is the poster and not a drawing of it. A click asks first
+  while the poster carries changes.
 - The **plate**: three controls that change how the map draws, not
   what it shows. A line weight from 0.5x to 2x, solid or outline
   fills for water, parks, landcover and buildings, and a switch for
@@ -74,7 +75,8 @@ low, orange buildings are mid-rise, red buildings are tall.
 - **Smart geocoding** — search for any city or region by name, or enter coordinates manually
 - **Rich theme system** — choose from dozens of curated themes or build your own custom color palette
 - **Detailed map layers** — roads, water bodies, parks, and building footprints with per-layer styling
-- **Typography controls** — set city/country display labels in one of nine bundled, self-hosted typefaces
+- **Typography controls** — set city/country display labels, and choose the typeface: the default Space Grotesk or one of nine self-hosted families. No font request leaves the site.
+- **Markers and routes** — place markers on the map with your own icons, and draw a route from a GPX file
 - **High-resolution export** — download a print-ready poster as PNG, PDF, or layered SVG at any defined dimension
 
 ## Run

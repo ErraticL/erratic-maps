@@ -1,7 +1,11 @@
-# TerraInk — Agent Architecture Guide
+# Erratic Maps — Agent Architecture Guide
 
 > **For any AI coding agent working on this codebase.**
 > Read this file fully before writing, editing, or deleting any code.
+
+This repository is Erratic Maps, a fork of Terraink. The architecture
+below comes from upstream and still holds; the sections that differ in
+the fork say so.
 
 ## Zero Hallucination Rule
 
@@ -24,18 +28,22 @@ The codebase is split into vertical feature slices under `src/features/`, each w
 ```text
 src/features/
   export/     install/    layout/     legal/      location/
-  map/        markers/    poster/     routes/     share/
-  theme/      updates/
+  map/        markers/    poster/     presets/    routes/
+  share/      theme/      updates/
 ```
+
+`legal/`, `presets/`, `routes/` and `share/` are newer than upstream.
+`presets/` holds the eleven curated starting points of release 0.9.0,
+and `share/` holds the permalink codec.
 
 Cross-cutting concerns live outside features:
 
 - **`core/`** — `ICache`, `IHttp`, `IFontLoader` ports and their adapters. `config.ts` for all env vars. `services.ts` wires all adapters into named singletons consumed by application hooks.
 - **`shared/geo/`** — geographic math and pure utilities.
-- **`shared/hooks/`** — reusable React hooks used across features (`useRepoStars`, `useSwipeDown`).
+- **`shared/hooks/`** — reusable React hooks used across features (`useRepoStars`, `useSwipeDown`, `useAdhesionOffset`, `useConsentButtonSlot`).
 - **`shared/ui/`** — UI atoms (icons, modals) used across features.
 - **`shared/utils/`** — helper utilities (color, location, number, string).
-- **`data/`** — static JSON data files (themes, layouts).
+- **`data/`** — static JSON data files (themes, layouts, presets).
 - **`styles/`** — global CSS only (13 files). Desktop breakpoint `>980px`, mobile `≤760px`.
 
 ### Layer import rules
@@ -53,7 +61,7 @@ Cross-cutting concerns live outside features:
 - **Single source of truth**: `PosterContext` — React Context + `useReducer`.
 - `posterReducer.ts` owns `PosterState`, `PosterForm`, and the `PosterAction` discriminated union.
 - **No prop drilling** — components call `usePosterContext()` directly.
-- Side-effect logic lives in application hooks: `useFormHandlers`, `useMapSync`, `useLocationAutocomplete`, `useCurrentLocation`, `useExport`, `useExportResolution`, `usePermalinkSync`.
+- Side-effect logic lives in application hooks: `useFormHandlers`, `useMapSync`, `useLocationAutocomplete`, `useCurrentLocation`, `useExport`, `useExportResolution`, `usePermalinkSync`, `usePresets`.
 
 ## Key Application Hooks
 
@@ -68,6 +76,7 @@ Cross-cutting concerns live outside features:
 | `useExportResolution` | export | export resolution tiers, the readout and the stored choice |
 | `useSessionAnalytics` | export | session events |
 | `usePermalinkSync` | share | the URL hash, in both directions |
+| `usePresets` | presets | the preset list, the active preset and the apply action |
 | `useGpxUpload` | routes | a GPX file becomes a route |
 | `useLegalDoc` | legal | the privacy text, fetched and cached |
 | `useInstallPrompt` | install | PWA install prompt |
@@ -82,7 +91,11 @@ Pre-instantiated singletons — the only place application hooks should import I
 searchLocations            // location autocomplete (Nominatim)
 geocodeLocation            // name → coordinates
 reverseGeocodeCoordinates  // coordinates → name
-ensureGoogleFont           // font loading
+listRecentLocations        // the recent places of this device
+addRecentLocation
+removeRecentLocation
+clearRecentLocations
+ensureFont                 // font loading; the fonts are self-hosted
 compositeExport            // poster compositing
 captureMapAsCanvas         // map → canvas snapshot
 createPngBlob              // canvas → PNG
@@ -90,7 +103,15 @@ createLayeredSvgBlobFromMap
 createPdfBlobFromCanvas
 createPosterFilename
 triggerDownloadBlob
+trackEvent                 // analytics
+setUserProperty
+fetchMarkdownDoc           // the legal documents
+gpxParser                  // a GPX file becomes a route
+drawRoutesOnCanvas
 ```
+
+The font service is `ensureFont`, not `ensureGoogleFont`. The adapter
+is `localFontsAdapter`, and the nine typefaces ship with the app.
 
 ## TypeScript Rules
 
@@ -114,15 +135,22 @@ All `VITE_*` env vars are accessed **only** through `src/core/config.ts`. Never 
 
 ## Branch Strategy
 
+**This fork has one branch, `main`, and work commits straight to it.**
+`origin` carries `main` alone. Do not create a branch unless the user
+asks for one.
+
+The promotion model below belongs to UPSTREAM Terraink, and it applies
+only to a pull request opened against that repository:
+
 ```text
 feature/fix branch → dev → beta → main
 ```
 
-- `dev` — active development; all PRs target this branch
+- `dev` — active development; all upstream PRs target this branch
 - `beta` — staging and pre-release testing
 - `main` — production
 
-External pull requests must be opened against `dev`, never `main` or `beta`.
+`upstream/dev` and `upstream/beta` exist; this fork has neither.
 
 ## Contribution and Documentation Rules
 
