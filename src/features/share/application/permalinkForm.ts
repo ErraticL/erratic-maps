@@ -25,6 +25,7 @@ import {
   isTextPosition,
   DEFAULT_SHEET,
 } from "@/features/poster/domain/sheet";
+import { decodeCustomColors } from "@/features/theme/domain/colorCodec";
 
 /**
  * The content layers that the `off` key of a permalink can name. Only
@@ -51,6 +52,18 @@ export function layersOffTokens(
   return LAYER_SWITCH_TOKENS.filter(({ field }) => !form[field]).map(
     ({ token }) => token,
   );
+}
+
+/**
+ * Reads the custom colors of a permalink. The `c` key follows the rule
+ * of every other key: a missing key means the default, and the default
+ * is a theme without an override. The caller therefore replaces the
+ * whole color map, and does not merge into it.
+ */
+export function permalinkCustomColors(
+  permalink: PermalinkData,
+): Record<string, string> {
+  return decodeCustomColors(permalink.colors ?? "");
 }
 
 /**

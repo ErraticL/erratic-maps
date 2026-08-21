@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { CUSTOM_LAYOUT_ID } from "@/features/layout/domain/types";
 import { layersOffTokens } from "@/features/share/application/permalinkForm";
+import { encodeCustomColors } from "@/features/theme/domain/colorCodec";
 import type { PermalinkData } from "@/features/share/domain/permalink";
 import {
   readCurrentPermalink,
@@ -48,6 +49,7 @@ const WRITE_DEBOUNCE_MS = 400;
  */
 export function usePermalinkSync(
   form: PermalinkFormSlice,
+  customColors: Record<string, string>,
   onExternalPermalink: (data: PermalinkData) => void,
 ): void {
   const {
@@ -77,6 +79,10 @@ export function usePermalinkSync(
   const layersOff = layersOffTokens(
     form as unknown as Record<string, unknown>,
   ).join(",");
+  // The custom colors are an object, and a new object arrives on every
+  // color change. The token is a string, so the effect compares values
+  // and not identities.
+  const colors = encodeCustomColors(customColors);
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -102,6 +108,7 @@ export function usePermalinkSync(
         matPercent: Number(sheetMat) || undefined,
         textPosition: sheetText || undefined,
         sheetMask: sheetMask || undefined,
+        colors: colors || undefined,
         layersOff: layersOff ? layersOff.split(",") : undefined,
       });
     }, WRITE_DEBOUNCE_MS);
@@ -126,6 +133,7 @@ export function usePermalinkSync(
     sheetMat,
     sheetText,
     sheetMask,
+    colors,
     layersOff,
   ]);
 

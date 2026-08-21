@@ -111,6 +111,7 @@ export type PosterAction =
   | {
       type: "APPLY_PERMALINK";
       fields: Partial<PosterForm>;
+      customColors: Record<string, string>;
       displayNameOverrides: { city: boolean; country: boolean };
     }
   | { type: "SET_THEME"; themeId: string }
@@ -208,6 +209,10 @@ export function posterReducer(
       return {
         ...state,
         form: { ...state.form, ...action.fields },
+        // The `c` key follows the rule of every other key: a missing
+        // key means the default, so a link replaces the whole color
+        // map instead of merging into it.
+        customColors: action.customColors,
         selectedLocation: null,
         displayNameOverrides: {
           city: Boolean(action.displayNameOverrides.city),

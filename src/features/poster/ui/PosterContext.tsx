@@ -64,7 +64,10 @@ import {
 } from "@/core/config";
 import { readStartupPermalink } from "@/features/share/infrastructure/permalinkLocation";
 import { usePermalinkSync } from "@/features/share/application/usePermalinkSync";
-import { permalinkFormFields } from "@/features/share/application/permalinkForm";
+import {
+  permalinkCustomColors,
+  permalinkFormFields,
+} from "@/features/share/application/permalinkForm";
 import { readStoredResolution } from "@/features/export/application/resolutionStorage";
 import type { PermalinkData } from "@/features/share/domain/permalink";
 
@@ -129,7 +132,7 @@ const INITIAL_STATE: PosterState = {
   form: startupPermalink
     ? { ...DEFAULT_FORM, ...permalinkFormFields(startupPermalink) }
     : DEFAULT_FORM,
-  customColors: {},
+  customColors: startupPermalink ? permalinkCustomColors(startupPermalink) : {},
   markers: [],
   customMarkerIcons: [],
   markerDefaults: {
@@ -193,13 +196,14 @@ export function PosterProvider({ children }: { children: ReactNode }) {
     dispatch({
       type: "APPLY_PERMALINK",
       fields: permalinkFormFields(data),
+      customColors: permalinkCustomColors(data),
       displayNameOverrides: {
         city: Boolean(data.city),
         country: Boolean(data.country),
       },
     });
   }, []);
-  usePermalinkSync(state.form, handleExternalPermalink);
+  usePermalinkSync(state.form, state.customColors, handleExternalPermalink);
   const lastSyncedMarkerThemeColorRef = useRef<string | null>(null);
   const lastSyncedRouteThemeColorRef = useRef<string | null>(null);
   const hasLoadedCustomIconsRef = useRef(false);

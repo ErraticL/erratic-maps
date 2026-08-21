@@ -18,7 +18,10 @@
  * and `hs` (the hillshade strength); each appears only while its
  * switch is on. The sheet keys are `mat` (the width of the mat, in
  * percent of the short side), `text` (the position of the text block)
- * and `mask` (the shape of the map hole). A missing key means the
+ * and `mask` (the shape of the map hole). The key `c` carries the
+ * custom colors in the compact form of
+ * `features/theme/domain/colorCodec.ts`; this module treats it as an
+ * opaque token and only checks its alphabet. A missing key means the
  * default value, not "keep the value the app shows now".
  */
 
@@ -46,6 +49,11 @@ export interface PermalinkData {
   textPosition?: string;
   /** The shape of the map hole. Absent means no mask. */
   sheetMask?: string;
+  /**
+   * The custom colors, as the compact token of the color codec. Absent
+   * means the theme carries no override.
+   */
+  colors?: string;
 }
 
 const DEFAULT_PLATE_WEIGHT = 1;
@@ -123,6 +131,11 @@ export function parsePermalinkHash(hash: string): PermalinkData | null {
   const sheetMask = String(params.get("mask") ?? "").trim();
   if (sheetMask) data.sheetMask = sheetMask;
 
+  // The token stays opaque here. The caller decodes it, because the
+  // key order belongs to the theme domain.
+  const colors = String(params.get("c") ?? "").trim();
+  if (colors && /^[0-9a-zA-Z]+$/.test(colors)) data.colors = colors.toLowerCase();
+
   const layersOff = String(params.get("off") ?? "").trim();
   if (layersOff) {
     data.layersOff = layersOff
@@ -160,6 +173,7 @@ export function buildPermalinkHash(data: PermalinkData): string {
   if (data.sheetMask && data.sheetMask !== DEFAULT_SHEET_MASK) {
     params.set("mask", data.sheetMask);
   }
+  if (data.colors) params.set("c", data.colors);
   if (data.layersOff && data.layersOff.length > 0) {
     params.set("off", data.layersOff.join(","));
   }
