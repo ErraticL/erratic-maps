@@ -108,8 +108,18 @@ const referenceAliases: Record<string, string> = {
 };
 
 const preferredThemeOrder = [
+  // Erratic themes first: every one carries a buildings triad.
   "classic",
   "candy",
+  "catppuccin_mocha",
+  "nord",
+  "dracula",
+  "gruvbox",
+  "tokyo_night",
+  "iris",
+  "glacier",
+  "bauhaus",
+  // Upstream order follows.
   "carrara",
   "blush",
   "sandstone",
