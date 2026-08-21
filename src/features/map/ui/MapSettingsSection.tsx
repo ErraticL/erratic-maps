@@ -105,9 +105,17 @@ export default function MapSettingsSection({
     [customColors, selectedTheme],
   );
 
+  // A user-picked buildings color replaces the triad on the map, so the
+  // summary card drops the triad swatches in the same case.
   const summaryThemeOption = useMemo(
-    () => ({ ...selectedThemeOption, palette: currentThemePalette }),
-    [currentThemePalette, selectedThemeOption],
+    () => ({
+      ...selectedThemeOption,
+      palette: currentThemePalette,
+      accentColors: customColors["map.buildings"]
+        ? undefined
+        : selectedThemeOption.accentColors,
+    }),
+    [currentThemePalette, customColors, selectedThemeOption],
   );
 
   const activeColorChoices = useMemo(() => {

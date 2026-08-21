@@ -37,12 +37,20 @@ export default function ThemeCard({
     if (!Array.isArray(themeOption.palette)) return [];
     const seen = new Set<string>();
     const result: string[] = [];
-    for (const index of majorPaletteIndices) {
-      const color = themeOption.palette[index];
+    const push = (color: string | undefined) => {
       if (color && !seen.has(color)) {
         seen.add(color);
         result.push(color);
       }
+    };
+    for (const index of majorPaletteIndices) {
+      push(themeOption.palette[index]);
+    }
+    // A theme with one ink color for text and every road collapses to two
+    // swatches. Its accent colors (the buildings triad) then fill the strip
+    // and show the one thing that sets the theme apart.
+    for (const color of themeOption.accentColors ?? []) {
+      push(color);
     }
     return result;
   })();

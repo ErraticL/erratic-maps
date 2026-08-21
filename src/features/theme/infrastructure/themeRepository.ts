@@ -330,12 +330,26 @@ export function getThemePalette(theme: unknown): string[] {
   ).filter((color) => isCssColor(color));
 }
 
-export const themeOptions: ThemeOption[] = themeNames.map((name) => ({
-  id: name,
-  name: String(getPathValue(themesByName[name], "name") ?? name),
-  description: String(getPathValue(themesByName[name], "description") ?? ""),
-  palette: getThemePalette(themesByName[name]),
-}));
+/**
+ * Colors that define a theme but that no palette key carries. Today
+ * that is the buildings triad. A theme without a triad gets `undefined`,
+ * so the option object stays identical to the upstream shape.
+ */
+export function getThemeAccentColors(theme: unknown): string[] | undefined {
+  const triad = normalizeTheme(theme).map.buildingsTriad;
+  return triad ? [...triad] : undefined;
+}
+
+export const themeOptions: ThemeOption[] = themeNames.map((name) => {
+  const accentColors = getThemeAccentColors(themesByName[name]);
+  return {
+    id: name,
+    name: String(getPathValue(themesByName[name], "name") ?? name),
+    description: String(getPathValue(themesByName[name], "description") ?? ""),
+    palette: getThemePalette(themesByName[name]),
+    ...(accentColors ? { accentColors } : {}),
+  };
+});
 
 // Erratic Maps opens with its own exclusive theme instead of the
 // upstream default "midnight_blue".

@@ -65,6 +65,12 @@ export interface ThemeOption {
   name: string;
   description: string;
   palette: string[];
+  /**
+   * Colors that the palette keys do not carry but that define the theme,
+   * for example the `buildings_triad`. The theme card appends them to its
+   * swatch strip. Absent for a theme without such colors.
+   */
+  accentColors?: string[];
 }
 
 export const DISPLAY_PALETTE_KEYS: ThemeColorKey[] = [
