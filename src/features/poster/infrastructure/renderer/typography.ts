@@ -85,6 +85,10 @@ export function drawPosterText(
     ctx.globalAlpha = 1;
   }
 
+  // `includeCredits` controls both credit lines. The site stays
+  // attributed through its footer; the poster is the user's produced work.
+  if (!includeCredits) return;
+
   ctx.fillStyle = attributionColor;
   ctx.globalAlpha = attributionAlpha;
   ctx.textAlign = "right";
@@ -95,19 +99,12 @@ export function drawPosterText(
     width * (1 - TEXT_EDGE_MARGIN_RATIO),
     height * (1 - TEXT_EDGE_MARGIN_RATIO),
   );
-  ctx.globalAlpha = 1;
 
-  if (includeCredits) {
-    ctx.fillStyle = attributionColor;
-    ctx.globalAlpha = attributionAlpha;
-    ctx.textAlign = "left";
-    ctx.textBaseline = "bottom";
-    ctx.font = `300 ${attributionFontSize}px ${bodyFontFamily}`;
-    ctx.fillText(
-      `© ${APP_CREDIT_URL}`,
-      width * TEXT_EDGE_MARGIN_RATIO,
-      height * (1 - TEXT_EDGE_MARGIN_RATIO),
-    );
-    ctx.globalAlpha = 1;
-  }
+  ctx.textAlign = "left";
+  ctx.fillText(
+    `© ${APP_CREDIT_URL}`,
+    width * TEXT_EDGE_MARGIN_RATIO,
+    height * (1 - TEXT_EDGE_MARGIN_RATIO),
+  );
+  ctx.globalAlpha = 1;
 }

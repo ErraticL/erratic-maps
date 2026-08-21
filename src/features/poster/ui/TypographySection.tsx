@@ -66,6 +66,28 @@ export default function TypographySection({
             <span className="theme-switch-track" aria-hidden="true" />
           </span>
         </label>
+        {/* One switch hides both credit lines: the OpenStreetMap line and
+            the site line. The footer keeps the attribution for the site.
+            A poster that a user publishes is the user's produced work;
+            the hint passes that duty on in the words of the guidelines. */}
+        <label className="toggle-field">
+          <span>Poster credits</span>
+          <span className="theme-switch">
+            <input
+              type="checkbox"
+              name="includeCredits"
+              checked={Boolean(form.includeCredits)}
+              onChange={onChange}
+            />
+            <span className="theme-switch-track" aria-hidden="true" />
+          </span>
+        </label>
+        {!form.includeCredits ? (
+          <p className="credits-hint">
+            The credits stay in the footer. If you publish the poster, add
+            &ldquo;&copy; OpenStreetMap contributors&rdquo; next to it.
+          </p>
+        ) : null}
 
         <div className="field-grid keep-two-mobile">
           <label>
