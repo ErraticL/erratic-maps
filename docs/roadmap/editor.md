@@ -4,11 +4,12 @@ Decided on 2026-08-21 after a brainstorm, four real prototypes and a
 grilling of fifteen decisions. This document is the record. A later
 session implements it, one step per release.
 
-**Status 2026-08-21: step 1 (the plate) shipped as 0.6.0 and step 2
-(relief) as 0.7.0. Both are live. Release 0.7.1, the export
-resolution, is built and waits for a push; its own record is
-[resolution.md](resolution.md).** Steps 3 and 4 wait. The decisions
-below stay as they were decided; the status notes only record what
+**Status 2026-08-21: step 1 (the plate) shipped as 0.6.0, step 2
+(relief) as 0.7.0 and step 3 (the sheet) as 0.8.0. Releases 0.6.0 and
+0.7.0 are live. Release 0.7.1, the export resolution, and release
+0.8.0 are built and wait for a push; the record of 0.7.1 is
+[resolution.md](resolution.md).** Step 4 waits. The decisions below
+stay as they were decided; the status notes only record what
 exists.
 
 ## The direction
@@ -45,7 +46,7 @@ stays editable on its own.
 | 1 | 0.6 | Plate | Shipped 2026-08-21, both gates passed |
 | 2 | 0.7 | Relief | Shipped 2026-08-21, both gates passed |
 | - | 0.7.1 | Export resolution ([resolution.md](resolution.md)) | Built 2026-08-21, waits for a push; every desktop gate passed |
-| 3 | 0.8 | Sheet model, mat, text position, mask | Waits |
+| 3 | 0.8 | Sheet model, mat, text position, mask | Built 2026-08-21, waits for a push; the open gate passed |
 | 4 | 0.9 | Presets, full permalink coverage | Waits |
 
 Release 0.7.1 is not a step of this roadmap. It repairs the export
@@ -182,10 +183,30 @@ version bump ship together.
     and sheet settings in, geometry out (map hole, mask, text block
     positions). The DOM preview, the canvas compositor and the SVG
     exporter all read it.
+    *Built:* `src/features/poster/domain/sheet.ts` holds the `Sheet`
+    type and `computeSheetGeometry`. The geometry carries the hole,
+    the hole outline as ONE SVG path string, the MapLibre padding as
+    fractions of the sheet, the center offset, the box of the text
+    block and the height of each fade. Four consumers read it: the
+    DOM overlay `SheetMat.tsx`, the padding of `MapPreview`, the
+    canvas compositor and the layered SVG exporter. The DOM and the
+    canvas fill the SAME path string, so the preview and the file
+    cannot draw a different shape.
 14. First version: a mat (0 to 20 % of the short side, in the theme
     background color), the text position (bottom, top, none), a mask
     (none, circle, arch, rounded). Caption lines and a frame line
     follow as a small later step.
+    *Built:* one rule decides the hole, and it needed a decision that
+    the plan did not carry. The mat insets all four edges by the same
+    amount, and the edge that carries the text takes
+    `max(mat, min(2 * mat, text block))`. The text block is a quarter
+    of the poster height. That formula keeps the control continuous:
+    at a mat of zero the poster is the poster of release 0.7.1, no
+    edge jumps as the mat grows, and from a mat of about 19 % the
+    text sits fully on the paper. The hole is therefore NOT symmetric
+    while the text is on, which is what makes decision 15 real. The
+    mask labels in the interface are Full, Rounded, Circle and
+    Arch.
 15. The map stays full-frame under the mat. The preview draws the mat
     as an overlay with a hole; the exports draw the full map and paint
     the mat around the hole. `map.setPadding` keeps the chosen location
@@ -193,10 +214,39 @@ version bump ship together.
     location; the export map receives the same padding. The marker and
     route projection stays, plus one pixel offset for the padding. The
     overzoom and distance-to-zoom code stays untouched.
+    *Built:* the MapLibre constructor takes no padding, so each export
+    map calls `setPadding` right after it is built. The preview
+    padding transfers with one scale factor per axis, because the
+    export container has the size of the preview container.
+    `MarkerProjectionInput` carries `centerOffsetX` and
+    `centerOffsetY`, which are `(left - right) / 2` and
+    `(top - bottom) / 2` of the padding; `projectMarkerToCanvas` adds
+    them. This is exactly what MapLibre does in
+    `EdgeInsets.getCenter`. The preview overlays needed no change,
+    because they call `map.project`, which already answers in the
+    padded frame. The mat draws AFTER the markers on the canvas and
+    in the SVG, so a marker outside the hole is cut off with the
+    map.
 16. The controls live in the Layout section under a "Composition"
     sub-heading. The name "Layout" stays.
+    *Built:* the block sits at the end of the layout part of
+    `MapSettingsSection`, below the layout cards and below the custom
+    size editor, so it shows in both states. One slider and two rows
+    of pill buttons, in the visual language of the Drawing block.
 17. Fades: the sheet model turns a gradient fade on only at an edge
     where a text block overlaps the map hole.
+    *Built:* the test compares the ink band of the text block against
+    the hole, and a fade reaches a quarter of the HOLE height, not of
+    the paper. The layered SVG drops the fades group when no edge
+    carries a fade.
+    *Consequence, and it changes the default poster:* release 0.7.1
+    drew a fade at the top and at the bottom. No text sits at the top,
+    so the top fade is decorative and this rule removes it. The bottom
+    fade of the default poster stays, and the text of the default
+    poster keeps its exact positions: the divider measures 0.8749 of
+    the poster height in the exported file, against 0.875 in release
+    0.7.1. Marcel decides whether the top fade returns as a control or
+    as a preset.
 
 ### Presets
 
@@ -215,9 +265,9 @@ version bump ship together.
 ## Verification gates
 
 Each item has a gate that runs before the work depends on it. A failed
-gate stops the step and reopens the decision. Four gates passed on
-2026-08-21, two in step 1 and two in step 2. Two gates remain, and both
-belong to step 3.
+gate stops the step and reopens the decision. Five gates passed on
+2026-08-21: two in step 1, two in step 2 and the padding gate of step
+3. One gate remains, and it is the phone check of Marcel.
 
 | Assumption | Gate |
 | --- | --- |
@@ -225,7 +275,7 @@ belong to step 3.
 | ~~Layered SVG export with the extra layers~~ | **PASSED 2026-08-21.** One SVG per plate. Full and Bold hold the 23 layer groups of 0.5; Line holds 19, with the five outline groups and no casing groups. |
 | ~~`maplibre-contour` bundled with its worker under Vite; the protocol reaches the offscreen export map~~ | **PASSED 2026-08-21.** The library inlines its worker as a blob URL, so Vite needs no worker configuration. A relief PNG at true A2 300 DPI (4961 x 7016 px) took 2.3 s from click to file: terrain at 0.1 s, file build at 1.3 s. The product capped an export at 8.5 megapixels then, so the caps were raised for the measurement only. The same export from the production build (`vite build` + `vite preview`) took 1.7 s at the cap of release 0.7. Release 0.7.1 removed that cap, and a relief PNG at true A2 300 DPI now takes 2.0 s in the product itself. |
 | ~~Tile-error count on the export map~~ | **PASSED 2026-08-21.** A wrong terrain host aborts the export after 0.34 s with "Terrain data did not load. Try again, or turn relief off." A wrong base map host aborts with the base map message. MapLibre adds the `sourceId` of the failed source to its error event, which names the right message; a 404 fires no event, which is correct for a terrain tile outside the coverage. |
-| `setPadding` with the scaled container; the one-pixel offset for markers | A marker on a landmark sits on it in preview, PNG and SVG, with a mat and with a circle |
+| ~~`setPadding` with the scaled container; the one-pixel offset for markers~~ | **PASSED 2026-08-21.** A circle marker on the Eiffel Tower, with a 15 % mat and the circle mask, on A4 at 300 DPI. The marker sits on the tower in the preview, in the PNG and in the SVG. Measured, not judged by eye alone: the DOM preview places the marker at 0.378779 of the width and 0.516081 of the height; the PNG (2480 x 3508) holds it at 939.4 / 1810.4 against the same numbers predicted, and the SVG (2451 x 3467) at 927.7 / 1788.6 against 928.4 / 1789.3 predicted. Both files agree with the preview inside 0.8 px. |
 | Phone behavior | Marcel checks on the live site after each release; the browser pane cannot open the mobile drawer |
 
 ## Rejected during the brainstorm
