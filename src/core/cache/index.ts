@@ -1,2 +1,2 @@
 export type { ICache } from "./ports";
-export { localStorageCache } from "./localStorageCache";
+export { localStorageCache, localSettingsStore } from "./localStorageCache";
