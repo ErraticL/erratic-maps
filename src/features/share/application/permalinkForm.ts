@@ -9,6 +9,38 @@ import {
 import { CUSTOM_LAYOUT_ID } from "@/features/layout/domain/types";
 import { layoutOptions } from "@/features/layout/infrastructure/layoutRepository";
 import { themeNames } from "@/features/theme/infrastructure/themeRepository";
+import {
+  clampPlateWeight,
+  isPlateFills,
+  DEFAULT_PLATE,
+} from "@/features/map/domain/plate";
+
+/**
+ * The content layers that the `off` key of a permalink can name. Only
+ * the switches with their own control in the Layers section appear
+ * here, so the key stays short and readable.
+ */
+export const LAYER_SWITCH_TOKENS: {
+  token: string;
+  field: keyof PosterForm;
+}[] = [
+  { token: "landcover", field: "includeLandcover" },
+  { token: "buildings", field: "includeBuildings" },
+  { token: "water", field: "includeWater" },
+  { token: "parks", field: "includeParks" },
+  { token: "roads", field: "includeRoads" },
+  { token: "rail", field: "includeRail" },
+  { token: "aeroway", field: "includeAeroway" },
+];
+
+/** Lists the layer tokens that the poster hides right now. */
+export function layersOffTokens(
+  form: Record<string, unknown>,
+): string[] {
+  return LAYER_SWITCH_TOKENS.filter(({ field }) => !form[field]).map(
+    ({ token }) => token,
+  );
+}
 
 /**
  * Maps a parsed permalink onto poster form fields. Both consumers use
@@ -55,6 +87,24 @@ export function permalinkFormFields(
       fields.width = String(option.widthCm);
       fields.height = String(option.heightCm);
     }
+  }
+
+  // The plate and the layer switches follow the rule of the codec: a
+  // missing key means the default value. A link therefore restores the
+  // whole drawing, and does not keep a switch the previous poster had
+  // turned off.
+  fields.plateWeight = String(
+    clampPlateWeight(Number(permalink.plateWeight ?? DEFAULT_PLATE.weight)),
+  );
+  fields.plateFills = isPlateFills(permalink.plateFills)
+    ? permalink.plateFills
+    : DEFAULT_PLATE.fills;
+  fields.plateCasings = permalink.plateCasings ?? DEFAULT_PLATE.casings;
+
+  const hiddenLayers = new Set(permalink.layersOff ?? []);
+  const layerFields = fields as Record<string, boolean>;
+  for (const { token, field } of LAYER_SWITCH_TOKENS) {
+    layerFields[field] = !hiddenLayers.has(token);
   }
 
   fields.displayCity = permalink.city ?? "";

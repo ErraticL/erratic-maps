@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { CUSTOM_LAYOUT_ID } from "@/features/layout/domain/types";
+import { layersOffTokens } from "@/features/share/application/permalinkForm";
 import type { PermalinkData } from "@/features/share/domain/permalink";
 import {
   readCurrentPermalink,
@@ -16,6 +17,16 @@ interface PermalinkFormSlice {
   height: string;
   displayCity: string;
   displayCountry: string;
+  plateWeight: string;
+  plateFills: string;
+  plateCasings: boolean;
+  includeLandcover: boolean;
+  includeBuildings: boolean;
+  includeWater: boolean;
+  includeParks: boolean;
+  includeRoads: boolean;
+  includeRail: boolean;
+  includeAeroway: boolean;
 }
 
 const WRITE_DEBOUNCE_MS = 400;
@@ -42,7 +53,16 @@ export function usePermalinkSync(
     height,
     displayCity,
     displayCountry,
+    plateWeight,
+    plateFills,
+    plateCasings,
   } = form;
+
+  // The list of hidden layers is one string, so the effect below needs
+  // one dependency for all seven switches.
+  const layersOff = layersOffTokens(
+    form as unknown as Record<string, unknown>,
+  ).join(",");
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -60,6 +80,10 @@ export function usePermalinkSync(
           : {}),
         city: displayCity || undefined,
         country: displayCountry || undefined,
+        plateWeight: Number(plateWeight) || undefined,
+        plateFills: plateFills || undefined,
+        plateCasings: Boolean(plateCasings),
+        layersOff: layersOff ? layersOff.split(",") : undefined,
       });
     }, WRITE_DEBOUNCE_MS);
     return () => window.clearTimeout(timer);
@@ -73,6 +97,10 @@ export function usePermalinkSync(
     height,
     displayCity,
     displayCountry,
+    plateWeight,
+    plateFills,
+    plateCasings,
+    layersOff,
   ]);
 
   useEffect(() => {

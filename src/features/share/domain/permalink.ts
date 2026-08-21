@@ -10,6 +10,12 @@
  * format can grow without breaking old links. Validation against the
  * theme and layout registries happens in the caller — this module
  * stays free of imports.
+ *
+ * A key appears only when its value differs from the default. The
+ * plate keys are `lw` (line weight), `fills` and `casings`. The key
+ * `off` lists the content layers that the poster hides, for example
+ * `off=parks,rail`. A missing key means the default value, not "keep
+ * the value the app shows now".
  */
 
 export interface PermalinkData {
@@ -22,7 +28,14 @@ export interface PermalinkData {
   heightCm?: number;
   city?: string;
   country?: string;
+  plateWeight?: number;
+  plateFills?: string;
+  plateCasings?: boolean;
+  layersOff?: string[];
 }
+
+const DEFAULT_PLATE_WEIGHT = 1;
+const DEFAULT_PLATE_FILLS = "solid";
 
 function finiteInRange(value: number, min: number, max: number): boolean {
   return Number.isFinite(value) && value >= min && value <= max;
@@ -66,6 +79,25 @@ export function parsePermalinkHash(hash: string): PermalinkData | null {
   const country = String(params.get("country") ?? "").trim();
   if (country) data.country = country;
 
+  const lineWeight = Number(params.get("lw"));
+  if (Number.isFinite(lineWeight) && lineWeight > 0) {
+    data.plateWeight = lineWeight;
+  }
+
+  const fills = String(params.get("fills") ?? "").trim();
+  if (fills) data.plateFills = fills;
+
+  const casings = params.get("casings");
+  if (casings !== null) data.plateCasings = casings !== "0";
+
+  const layersOff = String(params.get("off") ?? "").trim();
+  if (layersOff) {
+    data.layersOff = layersOff
+      .split(",")
+      .map((token) => token.trim())
+      .filter(Boolean);
+  }
+
   return data;
 }
 
@@ -79,5 +111,15 @@ export function buildPermalinkHash(data: PermalinkData): string {
   if (data.heightCm) params.set("h", String(data.heightCm));
   if (data.city) params.set("city", data.city);
   if (data.country) params.set("country", data.country);
+  if (data.plateWeight && data.plateWeight !== DEFAULT_PLATE_WEIGHT) {
+    params.set("lw", String(data.plateWeight));
+  }
+  if (data.plateFills && data.plateFills !== DEFAULT_PLATE_FILLS) {
+    params.set("fills", data.plateFills);
+  }
+  if (data.plateCasings === false) params.set("casings", "0");
+  if (data.layersOff && data.layersOff.length > 0) {
+    params.set("off", data.layersOff.join(","));
+  }
   return "#" + params.toString();
 }
