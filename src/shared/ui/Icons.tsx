@@ -32,6 +32,7 @@ export { FiLayout as LayoutIcon } from "react-icons/fi";
 export { FiType as StyleIcon } from "react-icons/fi";
 export { FiInfo as InfoIcon } from "react-icons/fi";
 export { FiLayers as LayersIcon } from "react-icons/fi";
+export { FiGrid as PresetsIcon } from "react-icons/fi";
 export { BsPinMap as MarkersIcon } from "react-icons/bs";
 export { FaRoute as RouteIcon } from "react-icons/fa6";
 export { FiChevronDown as ChevronDownIcon } from "react-icons/fi";

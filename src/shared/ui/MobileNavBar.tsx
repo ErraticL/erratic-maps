@@ -1,4 +1,5 @@
 import {
+  PresetsIcon,
   LocationIcon,
   ThemeIcon,
   LayoutIcon,
@@ -10,6 +11,7 @@ import {
 } from "./Icons";
 
 export type MobileTab =
+  | "presets"
   | "location"
   | "theme"
   | "layout"
@@ -23,6 +25,7 @@ const tabs: {
   label: string;
   Icon: React.ComponentType<{ className?: string }>;
 }[] = [
+  { id: "presets", label: "Presets", Icon: PresetsIcon },
   { id: "location", label: "Location", Icon: LocationIcon },
   { id: "theme", label: "Theme", Icon: ThemeIcon },
   { id: "layout", label: "Layout", Icon: LayoutIcon },

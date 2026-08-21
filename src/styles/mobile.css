@@ -1469,6 +1469,11 @@
 
   /* ── Tab-driven section visibility ── */
 
+  /* Presets tab: show only the presets section */
+  [data-mobile-tab="presets"] .mobile-section:not(.mobile-section--presets) {
+    display: none;
+  }
+
   /* Location tab: show only location section */
   [data-mobile-tab="location"] .mobile-section:not(.mobile-section--location) {
     display: none;

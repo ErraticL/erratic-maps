@@ -114,6 +114,11 @@ export type PosterAction =
       customColors: Record<string, string>;
       displayNameOverrides: { city: boolean; country: boolean };
     }
+  | {
+      type: "APPLY_PRESET";
+      fields: Partial<PosterForm>;
+      customColors: Record<string, string>;
+    }
   | { type: "SET_THEME"; themeId: string }
   | { type: "SET_LAYOUT"; layoutId: string; widthCm: string; heightCm: string }
   | { type: "SET_COLOR"; key: string; value: string }
@@ -218,6 +223,16 @@ export function posterReducer(
           city: Boolean(action.displayNameOverrides.city),
           country: Boolean(action.displayNameOverrides.country),
         },
+      };
+
+    // A preset sets all four dimensions at once. The theme and the
+    // colors must land in the same action, because SET_THEME clears
+    // every custom color.
+    case "APPLY_PRESET":
+      return {
+        ...state,
+        form: { ...state.form, ...action.fields },
+        customColors: action.customColors,
       };
 
     case "SET_THEME":

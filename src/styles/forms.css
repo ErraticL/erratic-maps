@@ -3756,3 +3756,138 @@ button.relief-option:focus-visible {
     color: var(--ink);
   }
 }
+
+/* ────── Presets (the first section: all four dimensions at once) ────── */
+
+.preset-section {
+  margin-bottom: 4px;
+}
+
+.preset-hint {
+  margin: 0 0 12px;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  color: var(--ink-muted);
+}
+
+.preset-card-grid {
+  display: grid;
+  /* Three cards on a normal panel, two in a narrow phone drawer. */
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 10px;
+}
+
+.preset-card {
+  display: grid;
+  gap: 6px;
+  align-content: start;
+  margin: 0;
+  padding: 6px 6px 8px;
+  text-align: center;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--item-bg);
+  color: var(--ink);
+  cursor: pointer;
+  transition:
+    border-color var(--dur-short) var(--ease-out),
+    box-shadow var(--dur-short) var(--ease-out),
+    background var(--dur-short) var(--ease-out);
+}
+
+.preset-card-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 300 / 424;
+  object-fit: cover;
+  border-radius: 7px;
+  background: var(--raised);
+}
+
+.preset-card-name {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.preset-card--active {
+  border-color: var(--accent-line);
+  box-shadow: 0 0 0 2px var(--accent-ring);
+  background: var(--raised);
+}
+
+button.preset-card:focus-visible {
+  transform: none;
+  filter: none;
+  border-color: var(--accent-line);
+  box-shadow: 0 0 0 3px var(--accent-ring);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  /* This rule turns off the global lift on button:not(:disabled):hover.
+     It names the element and the disabled test, so it stays stronger
+     than the lift whatever the order of the files. */
+  button.preset-card:not(:disabled):hover {
+    transform: none;
+    filter: none;
+    border-color: var(--accent-line);
+    background: var(--raised);
+  }
+}
+
+/* The confirmation of decision 19, shown only while edits exist. */
+
+.preset-confirm-modal {
+  max-width: 360px;
+}
+
+.preset-confirm-modal__body {
+  display: grid;
+  gap: 10px;
+  padding: 18px;
+}
+
+.preset-confirm-modal__headline {
+  margin: 0;
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.preset-confirm-modal__text {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--ink-muted);
+}
+
+.preset-confirm-modal__actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
+.preset-confirm-modal__cancel,
+.preset-confirm-modal__confirm {
+  padding: 8px 14px;
+  border-radius: 9px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.preset-confirm-modal__cancel {
+  border: 1px solid var(--border);
+  background: var(--item-bg);
+  color: var(--ink);
+}
+
+.preset-confirm-modal__confirm {
+  border: 1px solid var(--accent-line);
+  background: var(--accent);
+  color: var(--accent-ink);
+}

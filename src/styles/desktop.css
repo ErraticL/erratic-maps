@@ -649,6 +649,12 @@
 
   /* ── Tab-driven section visibility (desktop sidebar) ── */
 
+  [data-desktop-tab="presets"]
+    .desktop-settings-slide
+    .mobile-section:not(.mobile-section--presets) {
+    display: none;
+  }
+
   [data-desktop-tab="theme"]
     .desktop-settings-slide
     .mobile-section:not(.mobile-section--theme-settings) {
