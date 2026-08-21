@@ -37,14 +37,6 @@ export const DEFAULT_SHEET: Sheet = {
 /** The share of the sheet height that the text block takes. */
 export const TEXT_BLOCK_RATIO = 0.25;
 
-/**
- * Where the ink of the text block starts and ends inside the block.
- * The block reserves space above the city line and below the
- * coordinate line, so these two numbers are not 0 and 1.
- */
-const TEXT_INK_TOP = 0.28;
-const TEXT_INK_BOTTOM = 0.8;
-
 /** How far a gradient fade reaches into the hole. */
 const FADE_RATIO = 0.25;
 
@@ -257,26 +249,15 @@ export function computeSheetGeometry(
     text = { x: 0, y: 0, width: safeWidth, height: textBlockHeight };
   }
 
-  // Decision 17: a fade exists only where a text block draws over the
-  // map hole. A wide mat lifts the text off the map, and the fade goes
-  // with it.
-  const holeTop = hole.y;
-  const holeBottom = hole.y + hole.height;
-  const fadeSize = FADE_RATIO * hole.height;
-  let fadeTop = 0;
-  let fadeBottom = 0;
-  if (text && textPosition === "bottom") {
-    const inkTop = text.y + TEXT_INK_TOP * text.height;
-    if (inkTop < holeBottom) {
-      fadeBottom = fadeSize;
-    }
-  }
-  if (text && textPosition === "top") {
-    const inkBottom = text.y + TEXT_INK_BOTTOM * text.height;
-    if (inkBottom > holeTop) {
-      fadeTop = fadeSize;
-    }
-  }
+  // The fades belong to the "Overlay layer" switch, which is a style
+  // choice of the visitor. The sheet decides only their GEOMETRY: a
+  // fade sits at an edge of the map hole and reaches a quarter of the
+  // hole into it. The caller decides whether it draws them at all.
+  //
+  // A mask takes the fades away, because the shape IS the edge
+  // treatment. A fade over a circle dissolves the top and the bottom
+  // of the disc and the poster loses the shape it asked for.
+  const fadeSize = mask === "none" ? FADE_RATIO * hole.height : 0;
 
   return {
     width: safeWidth,
@@ -287,6 +268,6 @@ export function computeSheetGeometry(
     padding,
     centerOffset,
     text,
-    fades: { top: fadeTop, bottom: fadeBottom },
+    fades: { top: fadeSize, bottom: fadeSize },
   };
 }

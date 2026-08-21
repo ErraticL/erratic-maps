@@ -5,9 +5,10 @@ import type { SheetGeometry } from "@/features/poster/domain/sheet";
  * Paints the gradient fades of the sheet.
  *
  * A fade belongs to the map hole, not to the paper: it starts solid at
- * an edge of the hole and reaches into it. The sheet model decides
- * which edges carry one. Decision 17 of the roadmap: a fade exists
- * only where a text block draws over the map hole.
+ * an edge of the hole and reaches into it. The sheet model gives it
+ * that geometry. The "Overlay layer" switch of the visitor decides
+ * whether the poster carries the fades at all, so the caller checks it
+ * before it calls this function.
  */
 export function applyFades(
   ctx: CanvasRenderingContext2D,

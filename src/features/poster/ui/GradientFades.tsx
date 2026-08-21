@@ -7,9 +7,10 @@ interface GradientFadesProps {
 }
 
 /**
- * CSS gradient overlays that fade the edges of the map hole. They match
- * `applyFades()` on the canvas and run on the GPU. The sheet model
- * decides which edges carry a fade and how tall it is.
+ * CSS gradient overlays that fade the top and the bottom edge of the
+ * map hole. They match `applyFades()` on the canvas and run on the
+ * GPU. The sheet model gives them their position and their height; the
+ * "Overlay layer" switch decides whether they appear.
  */
 export default function GradientFades({ color, geometry }: GradientFadesProps) {
   const solid = withAlpha(color, 1);
