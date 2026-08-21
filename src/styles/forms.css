@@ -937,6 +937,31 @@ button.color-editor-target:focus-visible {
   color: var(--ink-muted);
 }
 
+/* What the export writes at the current resolution. The line reports
+   only; the picker in the download dialog owns the choice. */
+.layout-resolution-readout {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0 0;
+  font-family: "Spline Sans Mono", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  color: var(--ink-muted);
+}
+
+.layout-resolution-readout-label {
+  padding: 2px 8px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--item-bg);
+  font-size: 0.64rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-dim);
+}
+
 .section-summary-label {
   margin: 0 0 10px;
   font-size: 1rem;

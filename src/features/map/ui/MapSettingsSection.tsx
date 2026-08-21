@@ -12,6 +12,7 @@ import {
   buildDynamicColorChoices,
   createFallbackThemeOption,
 } from "@/features/theme/domain/colorSuggestions";
+import { useExportResolution } from "@/features/export/application/useExportResolution";
 import LayoutCard from "@/features/layout/ui/LayoutCard";
 import MapDimensionFields from "./MapDimensionFields";
 import ColorPicker from "@/features/theme/ui/ColorPicker";
@@ -176,6 +177,16 @@ export default function MapSettingsSection({
     selectedLayoutOption.id === "custom"
       ? "Your custom layout."
       : selectedLayoutOption.description?.trim() || "No description available.";
+
+  // What the export writes at the current resolution. The download
+  // dialog owns the choice; this line only reports the result.
+  const { readout: resolutionReadout } = useExportResolution();
+  const resolutionLine = (
+    <p className="layout-resolution-readout">
+      <span className="layout-resolution-readout-label">Export</span>
+      {resolutionReadout}
+    </p>
+  );
 
   function clearColorPickerState() {
     setActiveColorKey(null);
@@ -421,6 +432,8 @@ export default function MapSettingsSection({
           )}
         </div>
 
+        {isLayoutEditing ? null : resolutionLine}
+
         {isLayoutEditing ? (
           <div className="layout-custom-editor">
             <MapDimensionFields
@@ -431,6 +444,7 @@ export default function MapSettingsSection({
               onNumericFieldBlur={onNumericFieldBlur}
               showDistanceField={false}
             />
+            {resolutionLine}
           </div>
         ) : (
           <div className="layout-inline-groups" ref={layoutGroupsRef}>
