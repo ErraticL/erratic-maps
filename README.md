@@ -11,6 +11,12 @@ glacier carried far from its origin — this project is that boulder.
 
 ## What Erratic Maps adds
 
+- The **plate**: three controls that change how the map draws, not
+  what it shows. A line weight from 0.5x to 2x, solid or outline
+  fills for water, parks, landcover and buildings, and a switch for
+  the road casings. The named plates *Full*, *Line* and *Bold* set
+  all three at once. They live in the Layers section under
+  "Drawing".
 - A **building height triad**: a theme can color buildings in three
   tones by rendered height (low, mid, tall) instead of one blended
   color.
@@ -19,9 +25,10 @@ glacier carried far from its origin — this project is that boulder.
   Gruvbox and Tokyo Night (after the MIT-licensed editor palettes of
   the same names), and the originals Iris, Glacier and Bauhaus.
 - **Permalinks**: the URL hash always encodes location, distance,
-  theme, layout and the poster names, so the address bar is a
-  shareable link that restores the poster and skips the startup
-  dialog.
+  theme, layout, the poster names, the plate values and the layers
+  that are off, so the address bar is a shareable link that restores
+  the poster and skips the startup dialog. A key appears only when
+  its value differs from the default.
 - A **poster credits switch**: the Style section can remove the
   credit lines from the poster. The site keeps its attribution in the
   footer. If you publish a poster without the credit line, add
