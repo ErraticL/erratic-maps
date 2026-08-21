@@ -1,5 +1,108 @@
 [
   {
+    "version": "0.7.0",
+    "date": "2026-08-21",
+    "labels": {
+      "summaryTitle": "Erratic Maps 0.7",
+      "detailsTitle": "Release details"
+    },
+    "summary": {
+      "title": "The short version",
+      "points": [
+        {
+          "type": "new",
+          "text": "Relief: the Layers section draws the terrain. Contour lines and a hillshade each have their own switch."
+        },
+        {
+          "type": "new",
+          "text": "Contour interval: you choose Auto, 10, 20, 50 or 100 meters. The hillshade has two strengths, Soft and Strong."
+        },
+        {
+          "type": "improved",
+          "text": "The export reports what it does: it names the phase, and it stops with a clear message when a tile fails to load."
+        },
+        {
+          "type": "info",
+          "text": "Relief is off until you turn it on. The default poster does not change."
+        }
+      ]
+    },
+    "steps": [
+      {
+        "title": "Relief: the terrain",
+        "image": null,
+        "points": [
+          {
+            "type": "new",
+            "text": "Contour lines: the map draws the height lines of the land. The interval is Auto, or a fixed 10, 20, 50 or 100 meters. Every fifth line is a heavier major line."
+          },
+          {
+            "type": "new",
+            "text": "Hillshade: the light of a low sun models the slopes. Soft keeps the map flat and calm. Strong pushes the mountains forward."
+          },
+          {
+            "type": "info",
+            "text": "Every theme: the contour lines take the text color and the hillshade takes tones of the land color, so relief works with all 29 themes."
+          },
+          {
+            "type": "improved",
+            "text": "Every export follows: the PNG, the PDF and the layered SVG all carry the relief. In the SVG, the hillshade and the two contour layers are their own layer groups."
+          },
+          {
+            "type": "info",
+            "text": "The data are Tilezen terrain tiles. Your browser loads them from Amazon Web Services while a relief switch is on, and sends nothing to Amazon while both switches are off. The full credit sits in the map attribution dialog in the footer."
+          }
+        ]
+      },
+      {
+        "title": "The export tells you more",
+        "image": null,
+        "points": [
+          {
+            "type": "improved",
+            "text": "Phases: the download dialog reports Loading terrain, Rendering map and Building file. Real map events drive the text."
+          },
+          {
+            "type": "fixed",
+            "text": "No more holes: a poster used to export with a blank area when a map tile failed to load. The export now stops and says so."
+          },
+          {
+            "type": "improved",
+            "text": "The dialog stays open when an export stops, and it shows the reason."
+          }
+        ]
+      },
+      {
+        "title": "Links carry more",
+        "image": null,
+        "points": [
+          {
+            "type": "improved",
+            "text": "The address bar holds the relief values. A link restores the contour interval and the hillshade strength."
+          },
+          {
+            "type": "info",
+            "text": "Old links still work. A link without the new keys opens a poster without relief."
+          }
+        ]
+      },
+      {
+        "title": "What comes next",
+        "image": null,
+        "points": [
+          {
+            "type": "roadmap",
+            "text": "Composition: a mat, the text position and a mask for the map follow in the next release."
+          },
+          {
+            "type": "roadmap",
+            "text": "Presets: named starting points that set the theme, the drawing, the composition and the layers at once."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "version": "0.6.0",
     "date": "2026-08-21",
     "labels": {
