@@ -70,6 +70,21 @@ function applyIncrementalStyleUpdate(
   }
 }
 
+/**
+ * The incremental update above changes existing layers only. It cannot
+ * add a layer or remove one, so a style with a different set of layer
+ * ids needs the full setStyle path.
+ */
+function hasSameLayerIds(
+  prev: StyleSpecification,
+  next: StyleSpecification,
+): boolean {
+  if (prev.layers.length !== next.layers.length) {
+    return false;
+  }
+  return prev.layers.every((layer, index) => layer.id === next.layers[index].id);
+}
+
 interface MapPreviewProps {
   style: StyleSpecification;
   center: [lon: number, lat: number];
@@ -228,7 +243,8 @@ export default function MapPreview({
     if (
       prevStyleRef.current &&
       JSON.stringify(prevStyleRef.current.sources) ===
-        JSON.stringify(style.sources)
+        JSON.stringify(style.sources) &&
+      hasSameLayerIds(prevStyleRef.current, style)
     ) {
       applyIncrementalStyleUpdate(map, prevStyleRef.current, style);
     } else {

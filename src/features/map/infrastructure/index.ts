@@ -1,4 +1,5 @@
 export { generateMapStyle } from "./maplibreStyle";
+export { applyPlate } from "./plateTransform";
 export {
   GEOLOCATION_TIMEOUT_MS,
   MAP_BUTTON_ZOOM_STEP,
