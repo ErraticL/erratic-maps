@@ -4,7 +4,10 @@
 export const CM_PER_INCH = 2.54;
 
 export const MIN_POSTER_CM = 4;
-export const MAX_POSTER_CM = 45;
+// A0 is 84.1 x 118.9 cm. The old ceiling of 45 cm stopped the poster
+// below A2, so the print resolutions of release 0.7.1 had no size to
+// work on. The export caps the pixels; the paper size does not.
+export const MAX_POSTER_CM = 120;
 export const DEFAULT_POSTER_WIDTH_CM = 20;
 export const DEFAULT_POSTER_HEIGHT_CM = 30;
 export const LAYOUT_MATCH_TOLERANCE_CM = 0.01;
