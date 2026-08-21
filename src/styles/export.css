@@ -63,6 +63,105 @@
   gap: 8px;
 }
 
+/* ────── The resolution picker ──────
+   How many pixels the export holds. A print layout offers Standard and
+   three print resolutions; a pixel layout offers its named size and
+   twice that size. The readout names the file the visitor receives. */
+
+.export-resolution {
+  margin: 0 0 12px;
+}
+
+.export-resolution-label {
+  margin: 0 0 6px;
+  font-family: "Spline Sans Mono", monospace;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+}
+
+.export-resolution-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.export-resolution-option {
+  margin: 0;
+  padding: 6px 12px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--item-bg);
+  color: var(--ink-muted);
+  cursor: pointer;
+  transition:
+    border-color var(--dur-short) var(--ease-out),
+    background var(--dur-short) var(--ease-out),
+    color var(--dur-short) var(--ease-out);
+}
+
+.export-resolution-option--active {
+  border-color: var(--accent-line);
+  background: var(--accent-wash);
+  color: var(--ink);
+}
+
+/* Above the memory budget of the device. The option stays on offer,
+   because the budget is an estimate and the WebGL limit is a fact. */
+.export-resolution-option--risky {
+  border-style: dashed;
+}
+
+.export-resolution-option:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+button.export-resolution-option:focus-visible {
+  transform: none;
+  filter: none;
+  border-color: var(--accent-line);
+  box-shadow: 0 0 0 3px var(--accent-ring);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  /* This rule turns off the global lift on button:not(:disabled):hover.
+     It names the element and the disabled test, so it stays stronger
+     than the lift whatever the order of the files. */
+  button.export-resolution-option:not(:disabled):hover {
+    transform: none;
+    filter: none;
+    border-color: var(--accent-line);
+    color: var(--ink);
+  }
+}
+
+.export-resolution-readout {
+  margin: 8px 0 0;
+  font-family: "Spline Sans Mono", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  color: var(--ink-muted);
+}
+
+.export-resolution-warning {
+  margin: 6px 0 0;
+  font-size: 0.72rem;
+  line-height: 1.4;
+  color: var(--danger-ink);
+}
+
+.export-resolution-note {
+  margin: 6px 0 0;
+  font-size: 0.72rem;
+  line-height: 1.4;
+  color: var(--ink-dim);
+}
+
 .export-modal-support-label {
   margin: 14px 0 8px;
   text-align: center;

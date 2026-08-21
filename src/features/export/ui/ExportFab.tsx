@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
 import { useExport } from "@/features/export/application/useExport";
+import { useExportResolution } from "@/features/export/application/useExportResolution";
+import {
+  ABOVE_BUDGET_WARNING,
+  SVG_STANDARD_NOTE,
+} from "@/features/export/domain/resolution";
 import type { ExportFormat } from "@/features/export/domain/types";
 import { CloseIcon, DownloadIcon, LoaderIcon } from "@/shared/ui/Icons";
 import SocialLinkGroup from "@/shared/ui/SocialLinkGroup";
@@ -16,6 +21,12 @@ interface ExportFabProps {
 
 export default function ExportFab({ isMobile }: ExportFabProps) {
   const { isExporting, exportPhase, exportError, exportPoster } = useExport();
+  const {
+    options: resolutionOptions,
+    selected: selectedResolution,
+    readout: resolutionReadout,
+    selectTier,
+  } = useExportResolution();
   const [isOpen, setIsOpen] = useState(false);
   const [activeFormat, setActiveFormat] = useState<ExportFormat | null>(null);
   const [isTriggerVisible, setIsTriggerVisible] = useState(true);
@@ -63,6 +74,13 @@ export default function ExportFab({ isMobile }: ExportFabProps) {
     void exportPoster(format);
   };
 
+  // The device holds every offered option, but the memory budget of a
+  // device is an estimate. An option above it stays on offer and says
+  // so, here and on the option itself.
+  const selectedIsRisky = resolutionOptions.some(
+    (option) => option.tier.id === selectedResolution.id && !option.withinBudget,
+  );
+
   const triggerClass = isMobile
     ? `mobile-export-fab-trigger${isTriggerVisible ? "" : " is-hidden"}`
     : "export-fab-trigger-desktop";
@@ -106,6 +124,52 @@ export default function ExportFab({ isMobile }: ExportFabProps) {
                 <CloseIcon />
               </button>
             </div>
+            <div className="export-resolution">
+              <p className="export-resolution-label" id="export-resolution-label">
+                Resolution
+              </p>
+              <div
+                className="export-resolution-row"
+                role="group"
+                aria-labelledby="export-resolution-label"
+              >
+                {resolutionOptions
+                  .filter((option) => option.available)
+                  .map(({ tier, withinBudget }) => {
+                    const isActive = tier.id === selectedResolution.id;
+                    return (
+                      <button
+                        key={tier.id}
+                        type="button"
+                        className={`export-resolution-option${
+                          isActive ? " export-resolution-option--active" : ""
+                        }${withinBudget ? "" : " export-resolution-option--risky"}`}
+                        aria-pressed={isActive}
+                        aria-label={
+                          withinBudget
+                            ? undefined
+                            : `${tier.label}, ${ABOVE_BUDGET_WARNING}`
+                        }
+                        title={withinBudget ? undefined : ABOVE_BUDGET_WARNING}
+                        onClick={() => selectTier(tier.id)}
+                        disabled={isExporting}
+                      >
+                        {tier.label}
+                      </button>
+                    );
+                  })}
+              </div>
+              <p className="export-resolution-readout">{resolutionReadout}</p>
+              {selectedIsRisky ? (
+                <p className="export-resolution-warning">
+                  This resolution {ABOVE_BUDGET_WARNING}.
+                </p>
+              ) : null}
+              {!selectedResolution.standard ? (
+                <p className="export-resolution-note">{SVG_STANDARD_NOTE}</p>
+              ) : null}
+            </div>
+
             <div className="export-modal-actions">
               {FORMAT_OPTIONS.map(({ format, label }) => (
                 <button
