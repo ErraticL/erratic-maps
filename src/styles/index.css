@@ -11,3 +11,5 @@
 @import "./desktop.css";
 /* Last, so the reduced-motion rules override every rule above. */
 @import "./motion.css";
+/* Brand spike: gold on slate. A proposal. See the file header. */
+@import "./brand-spike.css";
