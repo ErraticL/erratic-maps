@@ -1,4 +1,5 @@
 import type { ExportOptions } from "../domain/types";
+import { MEMORY_LIMIT_MESSAGE } from "../domain/resolution";
 
 function base64ToBytes(base64: string): Uint8Array {
   const binary = atob(base64);
@@ -30,8 +31,17 @@ export function createPdfBlobFromCanvas(
   const pageWidthPt = (widthCm / 2.54) * 72;
   const pageHeightPt = (heightCm / 2.54) * 72;
 
+  // The page keeps the centimeters of the poster and holds the whole
+  // image, so a higher resolution raises the detail of the print and
+  // not the page size. A browser that cannot hold the pixels answers
+  // with an empty data URL; the export stops there.
   const jpegDataUrl = canvas.toDataURL("image/jpeg", 0.94);
-  const base64 = jpegDataUrl.split(",")[1] || "";
+  const base64 = jpegDataUrl.startsWith("data:image/jpeg")
+    ? jpegDataUrl.split(",")[1] || ""
+    : "";
+  if (!base64) {
+    throw new Error(MEMORY_LIMIT_MESSAGE);
+  }
   const imageBytes = base64ToBytes(base64);
 
   const contentStream = [

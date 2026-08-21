@@ -4,8 +4,10 @@ import type { MarkerProjectionInput } from "@/features/markers/domain/types";
 import { reliefSourceIdsInStyle } from "@/features/map/infrastructure/reliefSource";
 import {
   waitForMapIdle,
+  createExportCanvas,
   createOffscreenContainer,
   resolveExportRenderParams,
+  trackContextLoss,
   trackTileErrors,
   assertNoTileErrors,
   reportLoadPhases,
@@ -24,12 +26,18 @@ export interface CapturedMapResult {
 /**
  * Captures the currently visible map view at full export resolution.
  * Uses a hidden offscreen map so PNG/PDF output remains sharp.
+ *
+ * `maxCanvasSide` raises the MapLibre limit of the GL canvas to what
+ * the chosen resolution needs. Without it MapLibre lowers the pixel
+ * ratio until the canvas fits its default of 4096, and the 2D canvas
+ * then scales a small render up to the export size.
  */
 export async function captureMapAsCanvas(
   map: MaplibreMap,
   exportWidth: number,
   exportHeight: number,
   onPhase?: ExportPhaseReporter,
+  maxCanvasSide: number = 4096,
 ): Promise<CapturedMapResult> {
   await waitForMapIdle(map);
 
@@ -62,6 +70,7 @@ export async function captureMapAsCanvas(
     interactive: false,
     attributionControl: false,
     pixelRatio,
+    maxCanvasSize: [maxCanvasSide, maxCanvasSide],
     canvasContextAttributes: { preserveDrawingBuffer: true },
   });
 
@@ -69,6 +78,7 @@ export async function captureMapAsCanvas(
   // reports the map as loaded. The export counts the failures and
   // refuses to build a file from an incomplete map.
   const tileErrors = trackTileErrors(exportMap, reliefSourceIds);
+  const contextLoss = trackContextLoss(exportMap);
   const stopPhases = reportLoadPhases(exportMap, reliefSourceIds, onPhase);
 
   try {
@@ -78,18 +88,16 @@ export async function captureMapAsCanvas(
         reliefSourceIds.length > 0 ? RELIEF_EXPORT_TIMEOUT_MS : undefined,
       ),
       tileErrors.failure,
+      contextLoss.failure,
     ]);
     assertNoTileErrors(tileErrors.report());
     onPhase?.("Building file");
 
     const glCanvas = exportMap.getCanvas();
-    const exportCanvas = document.createElement("canvas");
-    exportCanvas.width = exportWidth;
-    exportCanvas.height = exportHeight;
-    const ctx = exportCanvas.getContext("2d");
-    if (!ctx) {
-      throw new Error("Could not create 2D context for export canvas");
-    }
+    const { canvas: exportCanvas, ctx } = createExportCanvas(
+      exportWidth,
+      exportHeight,
+    );
 
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = "high";
@@ -99,6 +107,7 @@ export async function captureMapAsCanvas(
   } finally {
     stopPhases();
     tileErrors.dispose();
+    contextLoss.dispose();
     exportMap.remove();
     offscreenContainer.remove();
   }

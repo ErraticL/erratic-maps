@@ -12,6 +12,8 @@ export interface CanvasSize {
   requestedWidth: number;
   requestedHeight: number;
   downscaleFactor: number;
+  /** The real print resolution of the file: pixels divided by inches. */
+  dpi: number;
 }
 
 /** Options passed to the export compositor (map snapshot + text overlay). */

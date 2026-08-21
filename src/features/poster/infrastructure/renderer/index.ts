@@ -3,6 +3,7 @@ import { drawPosterText } from "./typography";
 import { drawMarkersOnCanvas } from "@/features/markers/infrastructure/rendering";
 import { drawRoutesOnCanvas } from "@/features/routes/infrastructure/rendering";
 import { routeEndpointMarkerItems } from "@/features/routes/infrastructure/helpers";
+import { MEMORY_LIMIT_MESSAGE } from "@/features/export/domain/resolution";
 import type { ExportOptions, CanvasSize } from "../../domain/types";
 
 /**
@@ -47,7 +48,12 @@ export async function compositeExport(
   canvas.height = height;
 
   const ctx = canvas.getContext("2d");
-  if (!ctx) throw new Error("Canvas rendering is not available.");
+  // The compositor holds a second canvas of the full export size. A
+  // browser that cannot allocate it keeps the old size or hands out no
+  // context, and the visitor needs a lower resolution either way.
+  if (!ctx || canvas.width !== width || canvas.height !== height) {
+    throw new Error(MEMORY_LIMIT_MESSAGE);
+  }
 
   // 1. Draw map snapshot
   ctx.drawImage(mapCanvas, 0, 0);
@@ -120,11 +126,12 @@ export async function compositeExport(
     requestedWidth: width,
     requestedHeight: height,
     downscaleFactor: 1,
+    dpi: _wi > 0 ? width / _wi : 0,
   };
 
   return { canvas, size };
 }
 
-export { resolveCanvasSize } from "./canvas";
+export { resolveCanvasSize, STANDARD_LIMITS } from "./canvas";
 export { applyFades } from "./layers";
 export { drawPosterText } from "./typography";

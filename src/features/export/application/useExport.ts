@@ -4,7 +4,12 @@ import { localStorageCache } from "@/core/cache/localStorageCache";
 import type { ExportFormat } from "@/features/export/domain/types";
 import { captureMapAsCanvas } from "@/features/export/infrastructure/mapExporter";
 import { compositeExport } from "@/features/poster/infrastructure/renderer";
-import { resolveCanvasSize } from "@/features/poster/infrastructure/renderer/canvas";
+import {
+  limitsFor,
+  sizeForTier,
+  useExportResolution,
+} from "@/features/export/application/useExportResolution";
+import { baseTierFor } from "@/features/export/domain/resolution";
 import { getAllMarkerIcons } from "@/features/markers/infrastructure/iconRegistry";
 import { ensureFont } from "@/core/services";
 import {
@@ -85,6 +90,9 @@ function writePosterExportCount(nextCount: number): void {
 export function useExport() {
   const { state, dispatch, effectiveTheme, mapRef } = usePosterContext();
   const { form } = state;
+  // The resolution the visitor chose in the download dialog. The same
+  // numbers drive the readout there, so the file always matches it.
+  const { input: sizeInput, selected: selectedTier } = useExportResolution();
   const hasVisibleMarkers = form.showMarkers && state.markers.length > 0;
   const visibleRoutes = useMemo(
     () =>
@@ -122,9 +130,15 @@ export function useExport() {
 
         const widthCm = Number(form.width) || DEFAULT_POSTER_WIDTH_CM;
         const heightCm = Number(form.height) || DEFAULT_POSTER_HEIGHT_CM;
-        const dpi = 300;
         const widthInches = widthCm / CM_PER_INCH;
         const heightInches = heightCm / CM_PER_INCH;
+
+        // The layered SVG export embeds one raster per layer, about
+        // twenty five of them, so it keeps the standard resolution.
+        const tier =
+          format === "svg" ? baseTierFor(sizeInput.kind) : selectedTier;
+        const size = sizeForTier(sizeInput, tier);
+        const maxCanvasSide = limitsFor(tier).maxSide;
 
         // Aggregate, non-personal export data. Use only the structured city /
         // country — never raw input (form.location) or coordinates.
@@ -139,6 +153,7 @@ export function useExport() {
           poster_country: form.displayCountry.trim() || "unknown",
           theme: form.theme,
           poster_size: `${widthCm}x${heightCm}`,
+          resolution: tier.id,
           font: form.fontFamily.trim() || "default",
           has_markers: hasVisibleMarkers,
           has_routes: visibleRoutes.length > 0,
@@ -147,8 +162,6 @@ export function useExport() {
             ? { seconds_between_exports: secondsBetweenExports }
             : {}),
         };
-
-        const size = resolveCanvasSize(widthInches, heightInches);
 
         const lat = Number(form.latitude) || 0;
         const lon = Number(form.longitude) || 0;
@@ -173,6 +186,7 @@ export function useExport() {
               : [],
             routes: visibleRoutes,
             onPhase: reportPhase,
+            maxCanvasSide,
           });
           const svgFilename = createPosterFilename(
             form.displayCity || form.location,
@@ -198,6 +212,7 @@ export function useExport() {
           size.width,
           size.height,
           reportPhase,
+          maxCanvasSide,
         );
 
         // 2. Composite fades + text
@@ -238,7 +253,7 @@ export function useExport() {
           });
           await triggerDownloadBlob(pdfBlob, filename);
         } else {
-          const pngBlob = await createPngBlob(canvas, dpi);
+          const pngBlob = await createPngBlob(canvas, size.dpi);
           await triggerDownloadBlob(pngBlob, filename);
         }
 
@@ -260,6 +275,8 @@ export function useExport() {
       hasVisibleOverlays,
       showTerrainCredit,
       visibleRoutes,
+      sizeInput,
+      selectedTier,
       state.markers,
       state.customMarkerIcons,
     ],

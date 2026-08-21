@@ -10,6 +10,7 @@ import {
 } from "@/features/markers/domain/constants";
 import { createDefaultMarkerSettings } from "@/features/markers/infrastructure/helpers";
 import { featuredMarkerIcons } from "@/features/markers/infrastructure/iconRegistry";
+import type { ResolutionSetting } from "@/features/export/domain/resolution";
 import { clamp } from "@/shared/geo/math";
 import type { Route, RouteDefaults } from "@/features/routes/domain/types";
 import {
@@ -79,6 +80,12 @@ export interface PosterState {
    * reports a phase and never a percentage.
    */
   exportPhase: string;
+  /**
+   * How many pixels an export holds, one tier per layout kind. It
+   * describes the device, not the poster, so it stays out of the
+   * permalink and lives in localStorage instead.
+   */
+  exportResolution: ResolutionSetting;
   isLocationFocused: boolean;
   selectedLocation: SearchResult | null;
   userLocation: SearchResult | null;
@@ -113,6 +120,7 @@ export type PosterAction =
   | { type: "SET_ERROR"; error: string }
   | { type: "SET_EXPORT_STATUS"; exporting: boolean; error?: string }
   | { type: "SET_EXPORT_PHASE"; phase: string }
+  | { type: "SET_EXPORT_RESOLUTION"; setting: ResolutionSetting }
   | { type: "SET_MARKER_EDITOR_ACTIVE"; active: boolean }
   | { type: "SET_ACTIVE_MARKER"; markerId: string | null }
   | { type: "ADD_MARKER"; marker: MarkerItem }
@@ -283,6 +291,9 @@ export function posterReducer(
 
     case "SET_EXPORT_PHASE":
       return { ...state, exportPhase: action.phase };
+
+    case "SET_EXPORT_RESOLUTION":
+      return { ...state, exportResolution: action.setting };
 
     case "SET_MARKER_EDITOR_ACTIVE":
       return {

@@ -58,6 +58,7 @@ import {
 import { readStartupPermalink } from "@/features/share/infrastructure/permalinkLocation";
 import { usePermalinkSync } from "@/features/share/application/usePermalinkSync";
 import { permalinkFormFields } from "@/features/share/application/permalinkForm";
+import { readStoredResolution } from "@/features/export/application/resolutionStorage";
 import type { PermalinkData } from "@/features/share/domain/permalink";
 
 const defaultLayoutOption = getLayoutOption(defaultLayoutId);
@@ -136,6 +137,9 @@ const INITIAL_STATE: PosterState = {
   error: "",
   isExporting: false,
   exportPhase: "",
+  // The export resolution of this device, from the last visit. An
+  // empty setting means "take the default of this device".
+  exportResolution: readStoredResolution(),
   isLocationFocused: false,
   selectedLocation: null,
   userLocation: null,

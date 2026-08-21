@@ -1,3 +1,5 @@
+import { MEMORY_LIMIT_MESSAGE } from "../domain/resolution";
+
 function writeUint32BE(target: Uint8Array, offset: number, value: number) {
   target[offset] = (value >>> 24) & 0xff;
   target[offset + 1] = (value >>> 16) & 0xff;
@@ -77,6 +79,14 @@ function injectDpiChunk(pngBytes: Uint8Array, dpi: number): Uint8Array {
   return result;
 }
 
+/**
+ * Writes the canvas as a PNG file.
+ *
+ * `dpi` is the REAL print resolution of the canvas: its pixels divided
+ * by the inches of the poster. The pHYs chunk carries it, so a print
+ * shop opens the file at the size it really holds. A fixed 300 made a
+ * downscaled A3 file claim a size it did not have.
+ */
 export async function createPngBlob(
   canvas: HTMLCanvasElement,
   dpi: number = 300,
@@ -86,7 +96,10 @@ export async function createPngBlob(
       if (blob) {
         resolve(blob);
       } else {
-        reject(new Error("Failed to create PNG blob from canvas."));
+        // A null blob at this size means the browser could not hold the
+        // pixels. Every other reason for a null blob needs the same
+        // answer from the visitor: choose a lower resolution.
+        reject(new Error(MEMORY_LIMIT_MESSAGE));
       }
     }, "image/png");
   });

@@ -4,6 +4,7 @@ import maplibregl, {
 } from "maplibre-gl";
 import type { MarkerProjectionInput } from "@/features/markers/domain/types";
 import { MAP_OVERZOOM_SCALE } from "@/features/map/infrastructure/constants";
+import { MEMORY_LIMIT_MESSAGE } from "../domain/resolution";
 
 const EXPORT_MAP_TIMEOUT_MS = 15_000;
 
@@ -131,6 +132,82 @@ export function assertNoTileErrors(report: TileErrorReport): void {
     return;
   }
   throw new Error(tileErrorMessage(report.terrain));
+}
+
+/* ────── The memory limit of the device ────── */
+
+/**
+ * A resolution above what the device holds fails in one of three ways:
+ * the browser refuses the canvas, `toBlob` answers null, or the GPU
+ * drops the WebGL context. Each one aborts the export with the same
+ * message, and the dialog stays open with it. The export never falls
+ * back to a lower tier, because the visitor must never receive a file
+ * that differs from the readout.
+ */
+
+/**
+ * Creates a canvas of the requested size, or throws the memory message.
+ *
+ * A browser that cannot allocate the pixels answers in two ways. It
+ * keeps the old size of the canvas, or it hands out no 2D context. The
+ * check covers both.
+ */
+export function createExportCanvas(
+  width: number,
+  height: number,
+): { canvas: HTMLCanvasElement; ctx: CanvasRenderingContext2D } {
+  const canvas = document.createElement("canvas");
+  try {
+    canvas.width = width;
+    canvas.height = height;
+  } catch {
+    throw new Error(MEMORY_LIMIT_MESSAGE);
+  }
+
+  if (canvas.width !== width || canvas.height !== height) {
+    throw new Error(MEMORY_LIMIT_MESSAGE);
+  }
+
+  const ctx = canvas.getContext("2d");
+  if (!ctx) {
+    throw new Error(MEMORY_LIMIT_MESSAGE);
+  }
+
+  return { canvas, ctx };
+}
+
+export interface ContextLossTracker {
+  /** Rejects as soon as the export map loses its WebGL context. */
+  failure: Promise<never>;
+  dispose(): void;
+}
+
+/**
+ * Watches the export map for a lost WebGL context. The GPU drops the
+ * context when the canvas does not fit in its memory, and MapLibre then
+ * renders nothing and never goes idle.
+ */
+export function trackContextLoss(map: MaplibreMap): ContextLossTracker {
+  let rejectFailure: ((error: Error) => void) | null = null;
+
+  const failure = new Promise<never>((_resolve, reject) => {
+    rejectFailure = reject;
+  });
+
+  const handleLoss = () => {
+    rejectFailure?.(new Error(MEMORY_LIMIT_MESSAGE));
+    rejectFailure = null;
+  };
+
+  map.on("webglcontextlost", handleLoss);
+
+  return {
+    failure,
+    dispose: () => {
+      map.off("webglcontextlost", handleLoss);
+      rejectFailure = null;
+    },
+  };
 }
 
 /* ────── Export phases ────── */

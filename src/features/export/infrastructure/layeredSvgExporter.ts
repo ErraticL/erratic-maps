@@ -14,8 +14,10 @@ import type { ResolvedTheme } from "@/features/theme/domain/types";
 import { reliefSourceIdsInStyle } from "@/features/map/infrastructure/reliefSource";
 import {
   waitForMapIdle,
+  createExportCanvas,
   createOffscreenContainer,
   resolveExportRenderParams,
+  trackContextLoss,
   trackTileErrors,
   assertNoTileErrors,
   reportLoadPhases,
@@ -40,6 +42,7 @@ interface LayeredSvgOptions {
   markerIcons: MarkerIconDefinition[];
   routes?: Route[];
   onPhase?: ExportPhaseReporter;
+  maxCanvasSide?: number;
 }
 
 function renderMapCanvasToDataUrl(
@@ -47,13 +50,10 @@ function renderMapCanvasToDataUrl(
   exportWidth: number,
   exportHeight: number,
 ): string {
-  const layerCanvas = document.createElement("canvas");
-  layerCanvas.width = exportWidth;
-  layerCanvas.height = exportHeight;
-  const ctx = layerCanvas.getContext("2d");
-  if (!ctx) {
-    throw new Error("Could not create 2D context for SVG layer export.");
-  }
+  const { canvas: layerCanvas, ctx } = createExportCanvas(
+    exportWidth,
+    exportHeight,
+  );
   ctx.clearRect(0, 0, exportWidth, exportHeight);
   ctx.drawImage(mapCanvas, 0, 0, exportWidth, exportHeight);
   return layerCanvas.toDataURL("image/png");
@@ -64,13 +64,7 @@ function canvasToDataUrl(
   height: number,
   draw: (ctx: CanvasRenderingContext2D) => void,
 ): string {
-  const canvas = document.createElement("canvas");
-  canvas.width = width;
-  canvas.height = height;
-  const ctx = canvas.getContext("2d");
-  if (!ctx) {
-    throw new Error("Could not create 2D context for SVG overlay export.");
-  }
+  const { canvas, ctx } = createExportCanvas(width, height);
   ctx.clearRect(0, 0, width, height);
   draw(ctx);
   return canvas.toDataURL("image/png");
@@ -97,6 +91,7 @@ export async function createLayeredSvgBlobFromMap({
   markerIcons,
   routes = [],
   onPhase,
+  maxCanvasSide = 4096,
 }: LayeredSvgOptions): Promise<Blob> {
   await waitForMapIdle(map);
 
@@ -131,18 +126,21 @@ export async function createLayeredSvgBlobFromMap({
     interactive: false,
     attributionControl: false,
     pixelRatio,
+    maxCanvasSize: [maxCanvasSide, maxCanvasSide],
     canvasContextAttributes: { preserveDrawingBuffer: true },
   });
 
   // The SVG export draws one layer at a time. A failed tile would leave
   // a hole in one group, so the same rule applies here as for the PNG.
   const tileErrors = trackTileErrors(exportMap, reliefSourceIds);
+  const contextLoss = trackContextLoss(exportMap);
   const stopPhases = reportLoadPhases(exportMap, reliefSourceIds, onPhase);
 
   try {
     await Promise.race([
       waitForMapIdle(exportMap, reliefTimeoutMs),
       tileErrors.failure,
+      contextLoss.failure,
     ]);
     assertNoTileErrors(tileErrors.report());
     onPhase?.("Building file");
@@ -311,6 +309,7 @@ ${overlayGroups}
   } finally {
     stopPhases();
     tileErrors.dispose();
+    contextLoss.dispose();
     exportMap.remove();
     offscreenContainer.remove();
   }
