@@ -12,6 +12,7 @@ import {
   getLayoutOption,
   layoutOptions,
 } from "@/features/layout/infrastructure/layoutRepository";
+import { getPlateOption } from "@/features/map/domain/plate";
 import {
   MIN_POSTER_CM,
   MAX_POSTER_CM,
@@ -141,6 +142,36 @@ export function useFormHandlers() {
     [dispatch],
   );
 
+  // A named plate sets all three drawing rules at once. The rules stay
+  // editable on their own afterwards.
+  const handlePlateChange = useCallback(
+    (plateId: string) => {
+      const option = getPlateOption(plateId);
+      if (!option) return;
+
+      dispatch({
+        type: "SET_FORM_FIELDS",
+        fields: {
+          plateWeight: String(option.plate.weight),
+          plateFills: option.plate.fills,
+          plateCasings: option.plate.casings,
+        },
+      });
+    },
+    [dispatch],
+  );
+
+  const handlePlateFillsChange = useCallback(
+    (outline: boolean) => {
+      dispatch({
+        type: "SET_FIELD",
+        name: "plateFills",
+        value: outline ? "outline" : "solid",
+      });
+    },
+    [dispatch],
+  );
+
   const handleColorChange = useCallback(
     (key: string, value: string) => {
       dispatch({ type: "SET_COLOR", key, value });
@@ -183,6 +214,8 @@ export function useFormHandlers() {
     handleNumericFieldBlur,
     handleThemeChange,
     handleLayoutChange,
+    handlePlateChange,
+    handlePlateFillsChange,
     handleColorChange,
     handleResetColors,
     handleLocationSelect,

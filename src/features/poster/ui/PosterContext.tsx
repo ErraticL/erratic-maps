@@ -18,6 +18,13 @@ import type { ResolvedTheme } from "@/features/theme/domain/types";
 import { getTheme } from "@/features/theme/infrastructure/themeRepository";
 import { applyThemeColorOverrides } from "@/features/theme/domain/colorPaths";
 import { generateMapStyle } from "@/features/map/infrastructure/maplibreStyle";
+import { applyPlate } from "@/features/map/infrastructure/plateTransform";
+import {
+  clampPlateWeight,
+  isPlateFills,
+  DEFAULT_PLATE,
+  type Plate,
+} from "@/features/map/domain/plate";
 import type { StyleSpecification } from "maplibre-gl";
 import type { MapInstanceRef } from "@/features/map/domain/types";
 import { createDefaultMarkerSettings } from "@/features/markers/infrastructure/helpers";
@@ -83,6 +90,9 @@ export const DEFAULT_FORM: PosterForm = {
   includeRoadPath: true,
   includeRoadMinorLow: true,
   includeRoadOutline: true,
+  plateWeight: String(DEFAULT_PLATE.weight),
+  plateFills: DEFAULT_PLATE.fills,
+  plateCasings: DEFAULT_PLATE.casings,
   showMarkers: true,
   showRoutes: true,
 };
@@ -242,23 +252,41 @@ export function PosterProvider({ children }: { children: ReactNode }) {
     });
   }, [state.customMarkerIcons]);
 
+  // The plate holds the drawing rules. Its transform runs after
+  // generateMapStyle, so the style generator stays close to upstream.
+  const plate = useMemo<Plate>(
+    () => ({
+      weight: clampPlateWeight(Number(state.form.plateWeight)),
+      fills: isPlateFills(state.form.plateFills)
+        ? state.form.plateFills
+        : DEFAULT_PLATE.fills,
+      casings: Boolean(state.form.plateCasings),
+    }),
+    [state.form.plateWeight, state.form.plateFills, state.form.plateCasings],
+  );
+
   const mapStyle = useMemo(
     () =>
-      generateMapStyle(effectiveTheme, {
-        includeLandcover: state.form.includeLandcover,
-        includeBuildings: state.form.includeBuildings,
-        includeWater: state.form.includeWater,
-        includeParks: state.form.includeParks,
-        includeAeroway: state.form.includeAeroway,
-        includeRail: state.form.includeRail,
-        includeRoads: state.form.includeRoads,
-        includeRoadPath: state.form.includeRoadPath,
-        includeRoadMinorLow: state.form.includeRoadMinorLow,
-        includeRoadOutline: state.form.includeRoadOutline,
-        distanceMeters: Number(state.form.distance),
-      }),
+      applyPlate(
+        generateMapStyle(effectiveTheme, {
+          includeLandcover: state.form.includeLandcover,
+          includeBuildings: state.form.includeBuildings,
+          includeWater: state.form.includeWater,
+          includeParks: state.form.includeParks,
+          includeAeroway: state.form.includeAeroway,
+          includeRail: state.form.includeRail,
+          includeRoads: state.form.includeRoads,
+          includeRoadPath: state.form.includeRoadPath,
+          includeRoadMinorLow: state.form.includeRoadMinorLow,
+          includeRoadOutline: state.form.includeRoadOutline,
+          distanceMeters: Number(state.form.distance),
+        }),
+        effectiveTheme,
+        plate,
+      ),
     [
       effectiveTheme,
+      plate,
       state.form.includeLandcover,
       state.form.includeBuildings,
       state.form.includeWater,

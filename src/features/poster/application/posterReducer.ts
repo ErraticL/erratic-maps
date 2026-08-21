@@ -46,6 +46,10 @@ export interface PosterForm {
   includeRoadPath: boolean;
   includeRoadMinorLow: boolean;
   includeRoadOutline: boolean;
+  // The plate: the drawing rules. See features/map/domain/plate.ts.
+  plateWeight: string;
+  plateFills: string;
+  plateCasings: boolean;
   showMarkers: boolean;
   showRoutes: boolean;
 }

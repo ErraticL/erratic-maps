@@ -66,6 +66,8 @@ export default function SettingsPanel({
     handleNumericFieldBlur,
     handleThemeChange,
     handleLayoutChange,
+    handlePlateChange,
+    handlePlateFillsChange,
     handleColorChange,
     handleResetColors,
     handleLocationSelect,
@@ -237,6 +239,8 @@ export default function SettingsPanel({
                 minPosterCm={MIN_POSTER_CM}
                 maxPosterCm={MAX_POSTER_CM}
                 onNumericFieldBlur={handleNumericFieldBlur}
+                onPlateChange={handlePlateChange}
+                onPlateFillsChange={handlePlateFillsChange}
               />
             ) : null}
           </div>

@@ -89,7 +89,8 @@ label {
   margin: 0;
 }
 
-.distance-slider {
+.distance-slider,
+.plate-weight-slider {
   display: block;
   width: 100%;
   margin: 0;
@@ -103,7 +104,8 @@ label {
   cursor: pointer;
 }
 
-.distance-slider::-webkit-slider-runnable-track {
+.distance-slider::-webkit-slider-runnable-track,
+.plate-weight-slider::-webkit-slider-runnable-track {
   height: 10px;
   border-radius: 999px;
   border: 1px solid var(--border);
@@ -115,7 +117,8 @@ label {
   box-sizing: border-box;
 }
 
-.distance-slider::-webkit-slider-thumb {
+.distance-slider::-webkit-slider-thumb,
+.plate-weight-slider::-webkit-slider-thumb {
   appearance: none;
   -webkit-appearance: none;
   width: 20px;
@@ -131,7 +134,8 @@ label {
   cursor: grab;
 }
 
-.distance-slider::-moz-range-track {
+.distance-slider::-moz-range-track,
+.plate-weight-slider::-moz-range-track {
   height: 10px;
   border-radius: 999px;
   border: 1px solid var(--border);
@@ -143,7 +147,8 @@ label {
   box-sizing: border-box;
 }
 
-.distance-slider::-moz-range-thumb {
+.distance-slider::-moz-range-thumb,
+.plate-weight-slider::-moz-range-thumb {
   width: 20px;
   height: 20px;
   border-radius: 999px;
@@ -3472,4 +3477,107 @@ button.route-card__endpoint-option:focus-visible {
 button.route-card__endpoint-option.is-selected {
   background: rgba(255, 255, 255, 0.14);
   border-color: rgba(255, 255, 255, 0.45);
+}
+
+/* ────── Plate (the drawing rules, in the Layers section) ────── */
+
+.plate-section {
+  margin-top: 16px;
+  margin-bottom: 4px;
+}
+
+.plate-card-row {
+  display: grid;
+  /* Three columns on a normal panel. A very narrow phone drawer gets
+     two, because a card below 92 px cannot hold its hint. */
+  grid-template-columns: repeat(auto-fit, minmax(92px, 1fr));
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.plate-card {
+  display: grid;
+  gap: 4px;
+  align-content: start;
+  margin: 0;
+  padding: 10px 10px 12px;
+  text-align: left;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--item-bg);
+  color: var(--ink);
+  cursor: pointer;
+  transition:
+    border-color var(--dur-short) var(--ease-out),
+    box-shadow var(--dur-short) var(--ease-out),
+    background var(--dur-short) var(--ease-out);
+}
+
+.plate-card--active {
+  border-color: var(--accent-line);
+  box-shadow: 0 0 0 2px var(--accent-ring);
+  background: var(--raised);
+}
+
+button.plate-card:focus-visible {
+  transform: none;
+  filter: none;
+  border-color: var(--accent-line);
+  box-shadow: 0 0 0 3px var(--accent-ring);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  /* This rule turns off the global lift on button:not(:disabled):hover.
+     It names the element and the disabled test, so it stays stronger
+     than the lift whatever the order of the files. */
+  button.plate-card:not(:disabled):hover {
+    transform: none;
+    filter: none;
+    border-color: var(--accent-line);
+    background: var(--raised);
+  }
+}
+
+.plate-card-name {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.plate-card-hint {
+  font-size: 0.68rem;
+  line-height: 1.35;
+  color: var(--ink-muted);
+}
+
+.plate-weight-field {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.plate-weight-field > span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* This value changes while the user drags the slider. */
+.plate-weight-value {
+  font-family: "Spline Sans Mono", monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+}
+
+.plate-hint {
+  margin: 2px 0 12px;
+  font-size: 0.74rem;
+  line-height: 1.45;
+  color: var(--ink-muted);
+  opacity: 0.85;
+  font-weight: 400;
 }
