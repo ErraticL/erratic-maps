@@ -43,16 +43,23 @@ export default function ThemeCard({
         result.push(color);
       }
     };
-    for (const index of majorPaletteIndices) {
-      push(themeOption.palette[index]);
+    const accentColors = themeOption.accentColors ?? [];
+    if (showFullPalette) {
+      for (const index of majorPaletteIndices) push(themeOption.palette[index]);
+      for (const color of accentColors) push(color);
+      return result;
     }
-    // A theme with one ink color for text and every road collapses to two
-    // swatches. Its accent colors (the buildings triad) then fill the strip
-    // and show the one thing that sets the theme apart.
-    for (const color of themeOption.accentColors ?? []) {
-      push(color);
-    }
-    return result;
+    // The compact strip has five columns. For a theme with a buildings
+    // triad, the triad is the thing that sets the theme apart, so text,
+    // land and the three triad colors take the columns. The road tones
+    // only fill columns that stay free. A theme without a triad keeps the
+    // upstream strip: text, land and three road tones.
+    const [textIndex, landIndex, ...roadIndices] = majorPaletteIndices;
+    push(themeOption.palette[textIndex]);
+    push(themeOption.palette[landIndex]);
+    for (const color of accentColors) push(color);
+    for (const index of roadIndices) push(themeOption.palette[index]);
+    return result.slice(0, 5);
   })();
   const className = ["theme-card", isSelected ? "is-selected" : ""]
     .filter(Boolean)
