@@ -17,6 +17,13 @@ glacier carried far from its origin — this project is that boulder.
   the road casings. The named plates *Full*, *Line* and *Bold* set
   all three at once. They live in the Layers section under
   "Drawing".
+- **Relief**: contour lines with an interval (Auto, 10, 20, 50 or
+  100 m) and a hillshade with a strength (Soft or Strong), both in
+  the Layers section. The tones follow the theme, so relief works
+  with every theme. The elevation data are Tilezen terrain tiles,
+  which your browser loads from Amazon Web Services while a relief
+  switch is on. The full credit sits in the map attribution dialog,
+  behind the ⓘ button in the footer.
 - A **building height triad**: a theme can color buildings in three
   tones by rendered height (low, mid, tall) instead of one blended
   color.
@@ -25,8 +32,9 @@ glacier carried far from its origin — this project is that boulder.
   Gruvbox and Tokyo Night (after the MIT-licensed editor palettes of
   the same names), and the originals Iris, Glacier and Bauhaus.
 - **Permalinks**: the URL hash always encodes location, distance,
-  theme, layout, the poster names, the plate values and the layers
-  that are off, so the address bar is a shareable link that restores
+  theme, layout, the poster names, the plate values, the relief
+  values and the layers that are off, so the address bar is a
+  shareable link that restores
   the poster and skips the startup dialog. A key appears only when
   its value differs from the default.
 - A **poster credits switch**: the Style section can remove the
