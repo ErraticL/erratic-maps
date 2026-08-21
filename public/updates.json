@@ -1,5 +1,106 @@
 [
   {
+    "version": "0.5.0",
+    "date": "2026-08-21",
+    "labels": {
+      "summaryTitle": "Erratic Maps 0.5",
+      "detailsTitle": "Release details"
+    },
+    "summary": {
+      "title": "The short version",
+      "points": [
+        {
+          "type": "new",
+          "text": "Eight new themes: Catppuccin Mocha, Nord, Dracula, Gruvbox, Tokyo Night, Iris, Glacier and Bauhaus join the list. Each one paints the buildings in three tones by height."
+        },
+        {
+          "type": "new",
+          "text": "Poster credits switch: the Style section can remove the credit lines from the poster."
+        },
+        {
+          "type": "improved",
+          "text": "New look: the interface uses slate surfaces and one gold accent, both taken from the logo. The panels are flat."
+        },
+        {
+          "type": "fixed",
+          "text": "Theme cards: the Classic and Candy cards now show their building colors. Before this fix, three of their five columns stayed empty."
+        }
+      ]
+    },
+    "steps": [
+      {
+        "title": "Eight new themes",
+        "image": null,
+        "points": [
+          {
+            "type": "new",
+            "text": "Popular palettes: Catppuccin Mocha, Nord, Dracula, Gruvbox and Tokyo Night follow the editor palettes of the same names. All five palettes are MIT licensed."
+          },
+          {
+            "type": "new",
+            "text": "Three originals: Iris (lilac to indigo), Glacier (ice to navy) and Bauhaus (yellow, red, blue) are light themes made for this site."
+          },
+          {
+            "type": "info",
+            "text": "Height tones: every new theme paints the buildings in three tones. The map selects the tone from the building height, with the same rule as Classic and Candy."
+          },
+          {
+            "type": "fixed",
+            "text": "Theme cards: a card shows the text color, the land color and the three building tones. Classic and Candy showed two colors before this fix."
+          },
+          {
+            "type": "info",
+            "text": "List order: the ten Erratic themes come first, then the themes from the Terraink base."
+          }
+        ]
+      },
+      {
+        "title": "Credits on the poster",
+        "image": null,
+        "points": [
+          {
+            "type": "new",
+            "text": "Poster credits: a switch in the Style section removes both credit lines from the poster, the OpenStreetMap line and the site line."
+          },
+          {
+            "type": "info",
+            "text": "Default: the switch is on, so a poster carries its credit unless you decide otherwise."
+          },
+          {
+            "type": "info",
+            "text": "Your duty: the site keeps its attribution in the footer. If you publish a poster without the credit line, add \"© OpenStreetMap contributors\" next to it."
+          }
+        ]
+      },
+      {
+        "title": "A new look",
+        "image": null,
+        "points": [
+          {
+            "type": "improved",
+            "text": "Gold on slate: the colors of the interface come from the logo. The surfaces are slate, and the one accent is gold."
+          },
+          {
+            "type": "improved",
+            "text": "Flat panels: the glass blur and the glow shadows are gone. A thin line separates the panels."
+          },
+          {
+            "type": "improved",
+            "text": "One accent: the active tab, the switches, the selected cards and the Download button share the gold."
+          },
+          {
+            "type": "info",
+            "text": "Unchanged: the layout, the typefaces and the motion stay as they were."
+          },
+          {
+            "type": "core",
+            "text": "Tokens: every interface color is a variable in one file, so a later change of the palette is small."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "version": "0.4.2",
     "date": "2026-08-20",
     "labels": {
