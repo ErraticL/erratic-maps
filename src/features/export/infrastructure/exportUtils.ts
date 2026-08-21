@@ -8,17 +8,26 @@ import { MAP_OVERZOOM_SCALE } from "@/features/map/infrastructure/constants";
 const EXPORT_MAP_TIMEOUT_MS = 15_000;
 
 /**
+ * Terrain needs more time than the vector map: the browser downloads
+ * elevation tiles and a worker builds the contour lines from them.
+ */
+export const RELIEF_EXPORT_TIMEOUT_MS = 45_000;
+
+/**
  * Waits for MapLibre to finish rendering (idle, no active movement).
  * Rejects if tiles don't settle within the timeout.
  */
-export function waitForMapIdle(map: MaplibreMap): Promise<void> {
+export function waitForMapIdle(
+  map: MaplibreMap,
+  timeoutMs: number = EXPORT_MAP_TIMEOUT_MS,
+): Promise<void> {
   return new Promise<void>((resolve, reject) => {
     let settled = false;
     const timeout = window.setTimeout(() => {
       if (settled) return;
       settled = true;
       reject(new Error("Timed out while waiting for map tiles to render."));
-    }, EXPORT_MAP_TIMEOUT_MS);
+    }, timeoutMs);
 
     const finish = () => {
       if (settled) return;
@@ -34,6 +43,151 @@ export function waitForMapIdle(map: MaplibreMap): Promise<void> {
 
     map.once("idle", finish);
   });
+}
+
+/* ────── Tile errors on the export map ────── */
+
+/**
+ * MapLibre treats a failed tile as a loaded tile: the map goes idle and
+ * the export writes a hole into the poster. The export therefore counts
+ * the tile errors of the export map and refuses to build a file when
+ * any of them occurred.
+ *
+ * A 404 is not an error here. MapLibre reports no event for it and uses
+ * the parent tile instead, which is the correct answer for a terrain
+ * tile outside the coverage of the data set.
+ */
+
+export interface TileErrorReport {
+  count: number;
+  /** True when at least one failed tile belongs to the terrain. */
+  terrain: boolean;
+}
+
+export interface TileErrorTracker {
+  report(): TileErrorReport;
+  /**
+   * Rejects as soon as the map reports the first failed tile. The
+   * export races it against the idle event, so a dead tile server
+   * stops the export at once instead of after the whole timeout.
+   */
+  failure: Promise<never>;
+  dispose(): void;
+}
+
+function tileErrorMessage(terrain: boolean): string {
+  return terrain
+    ? "Terrain data did not load. Try again, or turn relief off."
+    : "Map tiles did not load. Please try the export again.";
+}
+
+/**
+ * Counts the tile errors of a map until `dispose` is called.
+ *
+ * MapLibre bubbles a tile error from the source to the map and adds
+ * the `sourceId` of the source on the way, so the id of the failed
+ * source names the right message.
+ */
+export function trackTileErrors(
+  map: MaplibreMap,
+  reliefSourceIds: string[] = [],
+): TileErrorTracker {
+  let count = 0;
+  let terrain = false;
+  let rejectFailure: ((error: Error) => void) | null = null;
+
+  const failure = new Promise<never>((_resolve, reject) => {
+    rejectFailure = reject;
+  });
+
+  const handleError = (event: any) => {
+    count += 1;
+    if (reliefSourceIds.includes(String(event?.sourceId ?? ""))) {
+      terrain = true;
+    }
+    rejectFailure?.(new Error(tileErrorMessage(terrain)));
+    rejectFailure = null;
+  };
+
+  map.on("error", handleError);
+
+  return {
+    report: () => ({ count, terrain }),
+    failure,
+    dispose: () => {
+      map.off("error", handleError);
+      rejectFailure = null;
+    },
+  };
+}
+
+/**
+ * Stops the export when the export map failed to load a tile. It
+ * catches the errors that arrive together with the last tile, where
+ * the idle event wins the race above.
+ */
+export function assertNoTileErrors(report: TileErrorReport): void {
+  if (report.count === 0) {
+    return;
+  }
+  throw new Error(tileErrorMessage(report.terrain));
+}
+
+/* ────── Export phases ────── */
+
+export type ExportPhase =
+  | "Loading terrain"
+  | "Rendering map"
+  | "Building file";
+
+export type ExportPhaseReporter = (phase: ExportPhase) => void;
+
+/**
+ * Reports "Loading terrain" until the terrain sources of the export map
+ * report themselves loaded, then "Rendering map". Real MapLibre events
+ * drive the change, so the text never claims a state the map is not in.
+ * A poster without relief starts at "Rendering map".
+ */
+export function reportLoadPhases(
+  map: MaplibreMap,
+  reliefSourceIds: string[],
+  onPhase?: ExportPhaseReporter,
+): () => void {
+  if (!onPhase) {
+    return () => undefined;
+  }
+
+  if (reliefSourceIds.length === 0) {
+    onPhase("Rendering map");
+    return () => undefined;
+  }
+
+  onPhase("Loading terrain");
+  let terrainDone = false;
+
+  // Every `sourcedata` event asks the map itself whether the terrain
+  // sources hold their tiles now. The map answers for the source that
+  // the event names and for the others as well, so one source that
+  // stays quiet does not hold the phase back.
+  const handleSourceData = () => {
+    if (terrainDone) {
+      return;
+    }
+    const ready = reliefSourceIds.every((id) => {
+      const source = map.getSource(id);
+      return !source || map.isSourceLoaded(id);
+    });
+    if (!ready) {
+      return;
+    }
+    terrainDone = true;
+    onPhase("Rendering map");
+  };
+
+  map.on("sourcedata", handleSourceData);
+  return () => {
+    map.off("sourcedata", handleSourceData);
+  };
 }
 
 /**

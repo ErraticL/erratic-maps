@@ -11,10 +11,16 @@ import { routeEndpointMarkerItems } from "@/features/routes/infrastructure/helpe
 import { applyFades } from "@/features/poster/infrastructure/renderer/layers";
 import { drawPosterText } from "@/features/poster/infrastructure/renderer/typography";
 import type { ResolvedTheme } from "@/features/theme/domain/types";
+import { reliefSourceIdsInStyle } from "@/features/map/infrastructure/reliefSource";
 import {
   waitForMapIdle,
   createOffscreenContainer,
   resolveExportRenderParams,
+  trackTileErrors,
+  assertNoTileErrors,
+  reportLoadPhases,
+  RELIEF_EXPORT_TIMEOUT_MS,
+  type ExportPhaseReporter,
 } from "./exportUtils";
 
 interface LayeredSvgOptions {
@@ -29,9 +35,11 @@ interface LayeredSvgOptions {
   showPosterText: boolean;
   showOverlay: boolean;
   includeCredits: boolean;
+  showTerrainCredit?: boolean;
   markers: MarkerItem[];
   markerIcons: MarkerIconDefinition[];
   routes?: Route[];
+  onPhase?: ExportPhaseReporter;
 }
 
 function renderMapCanvasToDataUrl(
@@ -84,9 +92,11 @@ export async function createLayeredSvgBlobFromMap({
   showPosterText,
   showOverlay,
   includeCredits,
+  showTerrainCredit = false,
   markers,
   markerIcons,
   routes = [],
+  onPhase,
 }: LayeredSvgOptions): Promise<Blob> {
   await waitForMapIdle(map);
 
@@ -105,6 +115,9 @@ export async function createLayeredSvgBlobFromMap({
     markerSizeScale,
   } = resolveExportRenderParams(map, exportWidth, exportHeight);
 
+  const reliefSourceIds = reliefSourceIdsInStyle(style);
+  const reliefTimeoutMs =
+    reliefSourceIds.length > 0 ? RELIEF_EXPORT_TIMEOUT_MS : undefined;
   const offscreenContainer = createOffscreenContainer(renderWidth, renderHeight);
   document.body.appendChild(offscreenContainer);
 
@@ -121,8 +134,18 @@ export async function createLayeredSvgBlobFromMap({
     canvasContextAttributes: { preserveDrawingBuffer: true },
   });
 
+  // The SVG export draws one layer at a time. A failed tile would leave
+  // a hole in one group, so the same rule applies here as for the PNG.
+  const tileErrors = trackTileErrors(exportMap, reliefSourceIds);
+  const stopPhases = reportLoadPhases(exportMap, reliefSourceIds, onPhase);
+
   try {
-    await waitForMapIdle(exportMap);
+    await Promise.race([
+      waitForMapIdle(exportMap, reliefTimeoutMs),
+      tileErrors.failure,
+    ]);
+    assertNoTileErrors(tileErrors.report());
+    onPhase?.("Building file");
 
     const exportStyle = exportMap.getStyle();
     const layerIds = (exportStyle.layers ?? []).map((layer) => layer.id);
@@ -138,12 +161,12 @@ export async function createLayeredSvgBlobFromMap({
     for (const layerId of visibleLayerIds) {
       exportMap.setLayoutProperty(layerId, "visibility", "none");
     }
-    await waitForMapIdle(exportMap);
+    await waitForMapIdle(exportMap, reliefTimeoutMs);
 
     const mapLayerDataUrls: { id: string; dataUrl: string }[] = [];
     for (const layerId of visibleLayerIds) {
       exportMap.setLayoutProperty(layerId, "visibility", "visible");
-      await waitForMapIdle(exportMap);
+      await waitForMapIdle(exportMap, reliefTimeoutMs);
       mapLayerDataUrls.push({
         id: layerId,
         dataUrl: renderMapCanvasToDataUrl(
@@ -153,14 +176,14 @@ export async function createLayeredSvgBlobFromMap({
         ),
       });
       exportMap.setLayoutProperty(layerId, "visibility", "none");
-      await waitForMapIdle(exportMap);
+      await waitForMapIdle(exportMap, reliefTimeoutMs);
     }
 
     for (const layerId of layerIds) {
       const visibility = originalVisibility.get(layerId) ?? "visible";
       exportMap.setLayoutProperty(layerId, "visibility", visibility);
     }
-    await waitForMapIdle(exportMap);
+    await waitForMapIdle(exportMap, reliefTimeoutMs);
 
     const overlayLayers: { id: string; dataUrl: string }[] = [];
 
@@ -257,6 +280,7 @@ export async function createLayeredSvgBlobFromMap({
           showPosterText,
           showOverlay,
           includeCredits,
+          showTerrainCredit,
         );
       }),
     });
@@ -285,6 +309,8 @@ ${overlayGroups}
 
     return new Blob([svg], { type: "image/svg+xml;charset=utf-8" });
   } finally {
+    stopPhases();
+    tileErrors.dispose();
     exportMap.remove();
     offscreenContainer.remove();
   }

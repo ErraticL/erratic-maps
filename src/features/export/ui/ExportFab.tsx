@@ -15,17 +15,25 @@ interface ExportFabProps {
 }
 
 export default function ExportFab({ isMobile }: ExportFabProps) {
-  const { isExporting, exportPoster } = useExport();
+  const { isExporting, exportPhase, exportError, exportPoster } = useExport();
   const [isOpen, setIsOpen] = useState(false);
   const [activeFormat, setActiveFormat] = useState<ExportFormat | null>(null);
   const [isTriggerVisible, setIsTriggerVisible] = useState(true);
+  const [failure, setFailure] = useState("");
 
+  // A finished export closes the dialog. A failed one keeps it open and
+  // shows why, because the settings panel that holds the error line is
+  // not on screen while the dialog is.
   useEffect(() => {
     if (!isExporting && activeFormat) {
       setActiveFormat(null);
-      setIsOpen(false);
+      if (exportError) {
+        setFailure(exportError);
+      } else {
+        setIsOpen(false);
+      }
     }
-  }, [isExporting, activeFormat]);
+  }, [isExporting, activeFormat, exportError]);
 
   useEffect(() => {
     if (!isMobile) return;
@@ -50,6 +58,7 @@ export default function ExportFab({ isMobile }: ExportFabProps) {
   }, [isMobile]);
 
   const runExport = (format: ExportFormat) => {
+    setFailure("");
     setActiveFormat(format);
     void exportPoster(format);
   };
@@ -115,6 +124,16 @@ export default function ExportFab({ isMobile }: ExportFabProps) {
                 </button>
               ))}
             </div>
+            {isExporting && exportPhase ? (
+              <p className="export-modal-phase" role="status" aria-live="polite">
+                {exportPhase}&hellip;
+              </p>
+            ) : null}
+            {!isExporting && failure ? (
+              <p className="export-modal-error" role="alert">
+                {failure}
+              </p>
+            ) : null}
             <p className="export-modal-support-label">
               Support the project <span className="heart">❤︎</span>
             </p>

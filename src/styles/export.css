@@ -235,3 +235,28 @@
   width: 16px;
   height: 16px;
 }
+
+/* The phase of a running export: "Loading terrain", "Rendering map",
+   "Building file". Real MapLibre events drive the text. */
+.export-modal-phase {
+  margin: 12px 0 0;
+  text-align: center;
+  font-family: "Spline Sans Mono", monospace;
+  font-size: 0.76rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-muted);
+}
+
+/* Why an export stopped. The dialog stays open for it, because the
+   error line of the settings panel is off screen at that moment. */
+.export-modal-error {
+  margin: 12px 0 0;
+  padding: 8px 10px;
+  text-align: center;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  border: 1px solid var(--danger-line);
+  border-radius: 10px;
+  background: var(--danger-bg);
+  color: var(--danger-ink);
+}

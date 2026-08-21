@@ -94,6 +94,10 @@ export function useExport() {
     [form.showRoutes, state.routes],
   );
   const hasVisibleOverlays = hasVisibleMarkers || visibleRoutes.length > 0;
+  // The poster names the terrain source while relief draws on it.
+  const showTerrainCredit = Boolean(
+    form.reliefContours || form.reliefHillshade,
+  );
 
   const exportPoster = useCallback(
     async (format: ExportFormat) => {
@@ -104,6 +108,11 @@ export function useExport() {
       }
 
       dispatch({ type: "SET_EXPORT_STATUS", exporting: true });
+      // Real MapLibre events drive this text. It reports a phase, not a
+      // percentage, and it serves every export, not only relief.
+      const reportPhase = (phase: string) =>
+        dispatch({ type: "SET_EXPORT_PHASE", phase });
+      reportPhase("Rendering map");
 
       try {
         // Ensure font is loaded before compositing text
@@ -157,11 +166,13 @@ export function useExport() {
             showPosterText: form.showPosterText,
             showOverlay: form.showMarkers,
             includeCredits: form.includeCredits,
+            showTerrainCredit,
             markers: hasVisibleMarkers ? state.markers : [],
             markerIcons: hasVisibleOverlays
               ? getAllMarkerIcons(state.customMarkerIcons)
               : [],
             routes: visibleRoutes,
+            onPhase: reportPhase,
           });
           const svgFilename = createPosterFilename(
             form.displayCity || form.location,
@@ -182,7 +193,12 @@ export function useExport() {
           markerScaleX,
           markerScaleY,
           markerSizeScale,
-        } = await captureMapAsCanvas(map, size.width, size.height);
+        } = await captureMapAsCanvas(
+          map,
+          size.width,
+          size.height,
+          reportPhase,
+        );
 
         // 2. Composite fades + text
         const { canvas } = await compositeExport(mapCanvas, {
@@ -196,6 +212,7 @@ export function useExport() {
           showPosterText: form.showPosterText,
           showOverlay: form.showMarkers,
           includeCredits: form.includeCredits,
+          showTerrainCredit,
           markers: hasVisibleMarkers ? state.markers : [],
           markerIcons: hasVisibleOverlays
             ? getAllMarkerIcons(state.customMarkerIcons)
@@ -241,6 +258,7 @@ export function useExport() {
       dispatch,
       hasVisibleMarkers,
       hasVisibleOverlays,
+      showTerrainCredit,
       visibleRoutes,
       state.markers,
       state.customMarkerIcons,
@@ -264,6 +282,8 @@ export function useExport() {
 
   return {
     isExporting: state.isExporting,
+    exportPhase: state.exportPhase,
+    exportError: state.error,
     exportPoster,
     handleDownloadPng,
     handleDownloadPdf,
