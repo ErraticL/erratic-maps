@@ -147,12 +147,24 @@ AI-assisted coding is allowed. Vibe-coded submissions are not.
 - Do not submit generated output that still contains hard-coded assumptions, weak abstractions, or incomplete UX requirements.
 - If a maintainer asks for a specific engineering direction, implement that direction intentionally instead of pasting agent output with minimal changes.
 
-## Contributor License Agreement (CLA)
+## The license of your contribution
 
-This project requires a Contributor License Agreement for code contributions (pull requests, patches, and commits). By submitting a pull request, you agree to the terms in [`CLA.md`](./CLA.md). Opening issues or discussions does not require signing the CLA.
+**This repository has no Contributor License Agreement.** Nothing to
+sign, and nobody collects rights beyond the license below.
 
-In summary: you retain copyright over your work, but you grant the project maintainer a perpetual, irrevocable, non-exclusive license to use, sublicense, and relicense your contributions — including under commercial or proprietary terms. This is necessary because the project uses a dual-licensing model.
+Erratic Maps is licensed under the **GNU Affero General Public License
+v3.0 (AGPL-3.0)**, which the upstream license requires. See
+[`LICENSE`](./LICENSE) for the full text. When you open a pull request
+here, you offer your contribution under that same license. You keep the
+copyright of your work.
 
-The project is licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0)**. See [`LICENSE`](./LICENSE) for the full text.
+Upstream Terraink runs its own Contributor License Agreement, and it
+allows the upstream maintainer to relicense a contribution. This
+repository cannot accept that agreement for them, and it does not ask
+you for one. If you want your change upstream as well, open it there
+and follow their rules.
 
-You sign the CLA by checking the checkbox in the pull request template. Questions can be asked in issues or discussions without signing.
+The `LICENSE` file carries an upstream additional term about dual
+licensing. That term is a reservation of the upstream copyright holder,
+and it covers the upstream code. It gives this fork no right over your
+contribution, and this fork asks for none.

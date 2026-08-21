@@ -132,3 +132,7 @@ with Terraink.
 This fork tracks upstream through deliberate merges. Feature ideas that
 are not Erratic-specific belong upstream — read the upstream
 [CONTRIBUTING.md](./CONTRIBUTING.md) and contribute there.
+
+There is no Contributor License Agreement here. A contribution to this
+fork is AGPL-3.0, like the rest of the code, and you keep the copyright
+of your work.

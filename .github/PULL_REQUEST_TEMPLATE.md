@@ -8,9 +8,9 @@
 - [ ] I have read the [contributing guidelines](./CONTRIBUTING.md)
 - [ ] This branch was created from `main` and this PR targets `main`, the only branch of this repository
 
-## CLA
+## License
 
-- [ ] I have read and agree to the [Contributor License Agreement](./CLA.md)
+- [ ] I offer this contribution under the [AGPL-3.0](../LICENSE) license of this repository
 
 ## Implementation
 
