@@ -39,7 +39,6 @@ interface LayeredSvgOptions {
   displayCity: string;
   displayCountry: string;
   fontFamily?: string;
-  showPosterText: boolean;
   showOverlay: boolean;
   includeCredits: boolean;
   showTerrainCredit?: boolean;
@@ -89,7 +88,6 @@ export async function createLayeredSvgBlobFromMap({
   displayCity,
   displayCountry,
   fontFamily,
-  showPosterText,
   showOverlay,
   includeCredits,
   showTerrainCredit = false,
@@ -201,9 +199,7 @@ export async function createLayeredSvgBlobFromMap({
 
     const overlayLayers: { id: string; dataUrl: string }[] = [];
 
-    // A sheet whose text sits on the mat carries no fade, and an empty
-    // group would only add a full size transparent image to the file.
-    if (showOverlay && (geometry.fades.top > 0 || geometry.fades.bottom > 0)) {
+    if (showOverlay) {
       overlayLayers.push({
         id: "fades",
         dataUrl: canvasToDataUrl(exportWidth, exportHeight, (ctx) => {
@@ -301,7 +297,6 @@ export async function createLayeredSvgBlobFromMap({
           displayCity,
           displayCountry,
           fontFamily,
-          showPosterText,
           showOverlay,
           includeCredits,
           showTerrainCredit,

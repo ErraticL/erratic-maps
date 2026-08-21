@@ -91,7 +91,6 @@ export const DEFAULT_FORM: PosterForm = {
   displayCountry: "Germany",
   displayContinent: "Europe",
   fontFamily: "",
-  showPosterText: true,
   includeCredits: true,
   includeLandcover: true,
   // Erratic Maps default: ON, so the height-triad themes show their

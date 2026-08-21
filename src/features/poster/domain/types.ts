@@ -27,7 +27,6 @@ export interface ExportOptions {
   displayCountry: string;
   displayContinent?: string;
   fontFamily: string;
-  showPosterText: boolean;
   showOverlay?: boolean;
   includeCredits?: boolean;
   /** The poster carries the terrain credit while relief is on. */
@@ -48,6 +47,5 @@ export interface Typography {
   displayCountry: string;
   displayContinent?: string;
   fontFamily: string;
-  showPosterText: boolean;
   includeCredits?: boolean;
 }

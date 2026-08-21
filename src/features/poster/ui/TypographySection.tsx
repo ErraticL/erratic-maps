@@ -42,18 +42,11 @@ export default function TypographySection({
     <>
       <section className="panel-block">
         <p className="section-summary-label">STYLE</p>
-        <label className="toggle-field">
-          <span>Poster text</span>
-          <span className="theme-switch">
-            <input
-              type="checkbox"
-              name="showPosterText"
-              checked={Boolean(form.showPosterText)}
-              onChange={onChange}
-            />
-            <span className="theme-switch-track" aria-hidden="true" />
-          </span>
-        </label>
+        {/* The poster text has ONE control, and it lives in the
+            Layout section under "Composition". It decides the position
+            of the text block, and "None" removes it. A second switch
+            here would hide the text but keep its reserved band, which
+            is a state nobody asks for. */}
         <label className="toggle-field">
           <span>Overlay layer</span>
           <span className="theme-switch">

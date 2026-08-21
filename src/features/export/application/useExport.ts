@@ -125,7 +125,7 @@ export function useExport() {
 
       try {
         // Ensure font is loaded before compositing text
-        if (form.showPosterText && form.fontFamily.trim()) {
+        if (sheet.textPosition !== "none" && form.fontFamily.trim()) {
           await ensureFont(form.fontFamily.trim());
         }
 
@@ -177,7 +177,6 @@ export function useExport() {
             displayCity: form.displayCity || form.location || "",
             displayCountry: form.displayCountry || "",
             fontFamily: form.fontFamily.trim(),
-            showPosterText: form.showPosterText,
             showOverlay: form.showMarkers,
             includeCredits: form.includeCredits,
             showTerrainCredit,
@@ -226,7 +225,6 @@ export function useExport() {
           displayCity: form.displayCity || form.location || "",
           displayCountry: form.displayCountry || "",
           fontFamily: form.fontFamily.trim(),
-          showPosterText: form.showPosterText,
           showOverlay: form.showMarkers,
           includeCredits: form.includeCredits,
           showTerrainCredit,

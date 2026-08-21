@@ -27,7 +27,6 @@ interface PosterTextOverlayProps {
   fontFamily: string;
   textColor: string;
   landColor: string;
-  showPosterText: boolean;
   includeCredits: boolean;
   showTerrainCredit: boolean;
   showOverlay: boolean;
@@ -48,7 +47,6 @@ export default function PosterTextOverlay({
   fontFamily,
   textColor,
   landColor,
-  showPosterText,
   includeCredits,
   showTerrainCredit,
   showOverlay,
@@ -81,7 +79,7 @@ export default function PosterTextOverlay({
 
   return (
     <div className="poster-text-overlay" style={{ color: textColor }}>
-      {showPosterText && textBlock && (
+      {textBlock && (
         <>
           <p
             className="poster-city"

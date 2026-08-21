@@ -465,7 +465,6 @@ export default function PreviewPanel() {
             fontFamily={form.fontFamily}
             textColor={effectiveTheme.ui.text}
             landColor={effectiveTheme.map.land}
-            showPosterText={form.showPosterText}
             includeCredits={form.includeCredits}
             showTerrainCredit={Boolean(
               form.reliefContours || form.reliefHillshade,

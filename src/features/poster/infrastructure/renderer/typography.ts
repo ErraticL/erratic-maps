@@ -30,13 +30,13 @@ export function drawPosterText(
   city: string,
   country: string,
   fontFamily: string | undefined,
-  showPosterText: boolean,
   showOverlay: boolean,
   includeCredits: boolean = true,
   showTerrainCredit: boolean = false,
   /**
    * The box that the sheet reserves for the text block. Null means the
-   * sheet carries no text block, and the four poster lines stay away.
+   * sheet carries no text block, so the four poster lines stay away.
+   * This box is the ONE control over the poster text.
    */
   textBlock: Rect | null = null,
 ): void {
@@ -57,7 +57,7 @@ export function drawPosterText(
   );
   const attributionFontSize = ATTRIBUTION_FONT_BASE_PX * dimScale;
 
-  if (showPosterText && textBlock) {
+  if (textBlock) {
     const cityLabel = formatCityLabel(city);
     const cityFontSize = CITY_FONT_BASE_PX * dimScale * computeCityFontScale(city);
 

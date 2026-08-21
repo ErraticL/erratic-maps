@@ -35,7 +35,6 @@ export interface PosterForm {
   displayCountry: string;
   displayContinent: string;
   fontFamily: string;
-  showPosterText: boolean;
   includeCredits: boolean;
   includeLandcover: boolean;
   includeBuildings: boolean;
