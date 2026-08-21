@@ -1,0 +1,107 @@
+{
+  "presets": [
+    {
+      "id": "classic",
+      "name": "Classic",
+      "description": "The full map, solid fills, the name at the bottom.",
+      "theme": "classic"
+    },
+    {
+      "id": "blueprint",
+      "name": "Blueprint",
+      "description": "A technical drawing: outlines only, on deep blue paper.",
+      "theme": "blueprint",
+      "plate": { "weight": 0.9, "fills": "outline", "casings": false },
+      "sheet": { "mat": 6 }
+    },
+    {
+      "id": "figure-ground",
+      "name": "Figure Ground",
+      "description": "Buildings and water alone, white on black.",
+      "theme": "noir",
+      "layers": {
+        "landcover": false,
+        "parks": false,
+        "roads": false,
+        "rail": false,
+        "aeroway": false
+      }
+    },
+    {
+      "id": "contour",
+      "name": "Contour",
+      "description": "The land itself: contour lines and hillshade on paper.",
+      "theme": "sandstone",
+      "plate": { "weight": 0.9, "fills": "outline", "casings": false },
+      "sheet": { "mat": 8 },
+      "layers": { "aeroway": false },
+      "relief": {
+        "contours": true,
+        "contourInterval": "20",
+        "hillshade": true,
+        "hillshadeStrength": "strong"
+      }
+    },
+    {
+      "id": "medallion",
+      "name": "Medallion",
+      "description": "The map as a disc on a wide mat.",
+      "theme": "iris",
+      "sheet": { "mat": 15, "mask": "circle" }
+    },
+    {
+      "id": "arch",
+      "name": "Arch",
+      "description": "Heavy lines under a round arch.",
+      "theme": "bauhaus",
+      "plate": { "weight": 1.5 },
+      "sheet": { "mat": 12, "mask": "arch" }
+    },
+    {
+      "id": "neon",
+      "name": "Neon",
+      "description": "Bright roads and buildings on a night sheet.",
+      "theme": "neon",
+      "plate": { "weight": 1.5 },
+      "layers": { "landcover": false, "parks": false }
+    },
+    {
+      "id": "frame",
+      "name": "Frame",
+      "description": "A cold palette with the name above the map.",
+      "theme": "nord",
+      "sheet": { "mat": 8, "textPosition": "top" }
+    },
+    {
+      "id": "shoreline",
+      "name": "Shoreline",
+      "description": "Water and roads, without a single building.",
+      "theme": "ocean",
+      "sheet": { "mat": 10, "mask": "rounded" },
+      "layers": { "buildings": false, "rail": false, "aeroway": false }
+    },
+    {
+      "id": "ridge",
+      "name": "Ridge",
+      "description": "Terrain first: strong hillshade under bare roads.",
+      "theme": "gruvbox",
+      "plate": { "weight": 1.2 },
+      "layers": { "landcover": false, "buildings": false, "aeroway": false },
+      "relief": {
+        "contours": true,
+        "contourInterval": "50",
+        "hillshade": true,
+        "hillshadeStrength": "strong"
+      }
+    },
+    {
+      "id": "paper",
+      "name": "Paper",
+      "description": "Thin outlines, a wide mat and no text at all.",
+      "theme": "carrara",
+      "plate": { "weight": 0.6, "fills": "outline", "casings": false },
+      "sheet": { "mat": 18, "textPosition": "none", "mask": "rounded" },
+      "layers": { "landcover": false, "rail": false, "aeroway": false }
+    }
+  ]
+}
