@@ -1,6 +1,6 @@
 # Privacy Policy
 
-Effective date: 2026-08-20 · Applies to: https://maps.erraticl.uk
+Effective date: 2026-08-21 · Applies to: https://maps.erraticl.uk
 
 ## Summary
 
@@ -34,6 +34,17 @@ Cloudflare's privacy policy for details.
 The map loads vector tiles from `tiles.openfreemap.org` (OpenFreeMap,
 serving OpenStreetMap data). Each tile request tells that server your
 IP address and which map area you are viewing.
+
+### Terrain tiles (Amazon Web Services)
+
+The Layers section holds two relief switches, "Contour lines" and
+"Hillshade". Both are off until you turn them on. While one of them is
+on, your browser loads elevation tiles from
+`s3.amazonaws.com/elevation-tiles-prod` (Amazon Web Services, Inc.,
+hosting the Tilezen terrain tiles). Each tile request tells that server
+your IP address and the coordinates of the tile, which is the map area
+you are viewing. While both switches are off, the site sends nothing to
+Amazon.
 
 ### Location search (Nominatim)
 

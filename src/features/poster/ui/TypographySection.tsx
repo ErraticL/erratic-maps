@@ -85,7 +85,11 @@ export default function TypographySection({
         {!form.includeCredits ? (
           <p className="credits-hint">
             The credits stay in the footer. If you publish the poster, add
-            &ldquo;&copy; OpenStreetMap contributors&rdquo; next to it.
+            &ldquo;&copy; OpenStreetMap contributors&rdquo; next to it
+            {form.reliefContours || form.reliefHillshade
+              ? ", and the terrain credit for the relief"
+              : ""}
+            .
           </p>
         ) : null}
 

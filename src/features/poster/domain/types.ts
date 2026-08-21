@@ -27,6 +27,8 @@ export interface ExportOptions {
   showPosterText: boolean;
   showOverlay?: boolean;
   includeCredits?: boolean;
+  /** The poster carries the terrain credit while relief is on. */
+  showTerrainCredit?: boolean;
   markers?: MarkerItem[];
   markerIcons?: MarkerIconDefinition[];
   markerProjection?: MarkerProjectionInput;

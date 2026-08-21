@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import { CloseIcon } from "./Icons";
 import MapAttributionLinks from "./MapAttributionLinks";
+import TerrainAttribution from "./TerrainAttribution";
 
 interface AttributionModalProps {
   onClose: () => void;
@@ -56,6 +57,7 @@ export default function AttributionModal({ onClose }: AttributionModalProps) {
         <p className="attribution-modal-line">
           <MapAttributionLinks />
         </p>
+        <TerrainAttribution />
       </div>
     </div>,
     document.body,

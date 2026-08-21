@@ -450,6 +450,9 @@ export default function PreviewPanel() {
             landColor={effectiveTheme.map.land}
             showPosterText={form.showPosterText}
             includeCredits={form.includeCredits}
+            showTerrainCredit={Boolean(
+              form.reliefContours || form.reliefHillshade,
+            )}
             showOverlay={form.showMarkers}
           />
 

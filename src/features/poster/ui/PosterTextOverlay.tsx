@@ -11,6 +11,8 @@ import {
   COUNTRY_FONT_BASE_PX,
   COORDS_FONT_BASE_PX,
   ATTRIBUTION_FONT_BASE_PX,
+  TERRAIN_CREDIT_TEXT,
+  TERRAIN_CREDIT_LINE_STEP,
   formatCityLabel,
   computeCityFontScale,
   computeAttributionColor,
@@ -26,6 +28,7 @@ interface PosterTextOverlayProps {
   landColor: string;
   showPosterText: boolean;
   includeCredits: boolean;
+  showTerrainCredit: boolean;
   showOverlay: boolean;
 }
 
@@ -44,6 +47,7 @@ export default function PosterTextOverlay({
   landColor,
   showPosterText,
   includeCredits,
+  showTerrainCredit,
   showOverlay,
 }: PosterTextOverlayProps) {
   const toCqMin = (px: number) => (px / TEXT_DIMENSION_REFERENCE_PX) * 100;
@@ -120,6 +124,26 @@ export default function PosterTextOverlay({
           }}
         >
           &copy; OpenStreetMap contributors
+        </span>
+      )}
+
+      {/* The terrain line sits above the OpenStreetMap line, because
+          the terrain is a second data source, not a second producer. */}
+      {includeCredits && showTerrainCredit && (
+        <span
+          className="poster-attribution poster-attribution--terrain"
+          style={{
+            fontFamily: bodyFont,
+            color: attributionColor,
+            opacity: attributionOpacity,
+            fontSize: attributionFontSize,
+            bottom: `calc(${TEXT_EDGE_MARGIN_RATIO * 100}% + ${
+              toCqMin(ATTRIBUTION_FONT_BASE_PX) * TERRAIN_CREDIT_LINE_STEP
+            }cqmin)`,
+            right: `${TEXT_EDGE_MARGIN_RATIO * 100}%`,
+          }}
+        >
+          {TERRAIN_CREDIT_TEXT}
         </span>
       )}
 

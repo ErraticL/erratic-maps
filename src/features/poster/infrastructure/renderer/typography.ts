@@ -12,6 +12,8 @@ import {
   COUNTRY_FONT_BASE_PX,
   COORDS_FONT_BASE_PX,
   ATTRIBUTION_FONT_BASE_PX,
+  TERRAIN_CREDIT_TEXT,
+  TERRAIN_CREDIT_LINE_STEP,
   isLatinScript,
   formatCityLabel,
   computeCityFontScale,
@@ -30,6 +32,7 @@ export function drawPosterText(
   showPosterText: boolean,
   showOverlay: boolean,
   includeCredits: boolean = true,
+  showTerrainCredit: boolean = false,
 ): void {
   const textColor = theme.ui?.text || "#111111";
   const landColor = theme.map?.land || "#808080";
@@ -99,6 +102,17 @@ export function drawPosterText(
     width * (1 - TEXT_EDGE_MARGIN_RATIO),
     height * (1 - TEXT_EDGE_MARGIN_RATIO),
   );
+
+  // The terrain line sits above the OpenStreetMap line, because the
+  // terrain is a second data source, not a second producer.
+  if (showTerrainCredit) {
+    ctx.fillText(
+      TERRAIN_CREDIT_TEXT,
+      width * (1 - TEXT_EDGE_MARGIN_RATIO),
+      height * (1 - TEXT_EDGE_MARGIN_RATIO) -
+        attributionFontSize * TERRAIN_CREDIT_LINE_STEP,
+    );
+  }
 
   ctx.textAlign = "left";
   ctx.fillText(

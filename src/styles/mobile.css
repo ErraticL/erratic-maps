@@ -1320,8 +1320,25 @@
     gap: 4px;
   }
 
+  /* The full terrain credit lives in the attribution dialog, so the
+     button that opens it belongs on a phone as well. */
   .app-shell > .app-footer .desktop-footer-info-btn {
-    display: none;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    margin: 0;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--item-bg);
+    color: var(--ink-muted);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .app-shell > .app-footer .desktop-footer-info-btn svg {
+    width: 13px;
+    height: 13px;
   }
 
   .app-shell > .app-footer .desktop-footer-attribution {

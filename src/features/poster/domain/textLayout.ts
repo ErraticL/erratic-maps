@@ -22,6 +22,17 @@ export const COUNTRY_FONT_BASE_PX = 92;
 export const COORDS_FONT_BASE_PX = 58;
 export const ATTRIBUTION_FONT_BASE_PX = 50;
 
+/**
+ * The credit for the terrain data. The poster carries it only while
+ * relief is on and the credits are on. The full attribution of the
+ * twelve sources lives on the site, in the map attribution dialog.
+ */
+export const TERRAIN_CREDIT_TEXT =
+  "Terrain: Tilezen terrain tiles (Copernicus EU-DEM, USGS SRTM and others)";
+
+/** How far the terrain line sits above the OpenStreetMap line. */
+export const TERRAIN_CREDIT_LINE_STEP = 1.45;
+
 export function isLatinScript(text: string | undefined | null): boolean {
   if (!text) {
     return true;
