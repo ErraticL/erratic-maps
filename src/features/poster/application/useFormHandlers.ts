@@ -172,6 +172,15 @@ export function useFormHandlers() {
     [dispatch],
   );
 
+  // The relief parameters are segmented buttons, not inputs, so they
+  // reach the form through one handler instead of a change event.
+  const handleReliefOptionChange = useCallback(
+    (name: string, value: string) => {
+      dispatch({ type: "SET_FIELD", name, value });
+    },
+    [dispatch],
+  );
+
   const handleColorChange = useCallback(
     (key: string, value: string) => {
       dispatch({ type: "SET_COLOR", key, value });
@@ -216,6 +225,7 @@ export function useFormHandlers() {
     handleLayoutChange,
     handlePlateChange,
     handlePlateFillsChange,
+    handleReliefOptionChange,
     handleColorChange,
     handleResetColors,
     handleLocationSelect,

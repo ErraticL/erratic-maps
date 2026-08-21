@@ -50,6 +50,11 @@ export interface PosterForm {
   plateWeight: string;
   plateFills: string;
   plateCasings: boolean;
+  // Relief: the terrain content. See features/map/domain/relief.ts.
+  reliefContours: boolean;
+  reliefInterval: string;
+  reliefHillshade: boolean;
+  reliefStrength: string;
   showMarkers: boolean;
   showRoutes: boolean;
 }
@@ -68,6 +73,12 @@ export interface PosterState {
   routeDefaults: RouteDefaults;
   error: string;
   isExporting: boolean;
+  /**
+   * What the export does right now, for example "Loading terrain".
+   * Empty while no export runs. Real MapLibre events drive it, so it
+   * reports a phase and never a percentage.
+   */
+  exportPhase: string;
   isLocationFocused: boolean;
   selectedLocation: SearchResult | null;
   userLocation: SearchResult | null;
@@ -101,6 +112,7 @@ export type PosterAction =
   | { type: "SET_LOCATION_FOCUSED"; focused: boolean }
   | { type: "SET_ERROR"; error: string }
   | { type: "SET_EXPORT_STATUS"; exporting: boolean; error?: string }
+  | { type: "SET_EXPORT_PHASE"; phase: string }
   | { type: "SET_MARKER_EDITOR_ACTIVE"; active: boolean }
   | { type: "SET_ACTIVE_MARKER"; markerId: string | null }
   | { type: "ADD_MARKER"; marker: MarkerItem }
@@ -265,8 +277,12 @@ export function posterReducer(
       return {
         ...state,
         isExporting: action.exporting,
+        exportPhase: action.exporting ? state.exportPhase : "",
         error: action.exporting ? "" : (action.error ?? state.error),
       };
+
+    case "SET_EXPORT_PHASE":
+      return { ...state, exportPhase: action.phase };
 
     case "SET_MARKER_EDITOR_ACTIVE":
       return {

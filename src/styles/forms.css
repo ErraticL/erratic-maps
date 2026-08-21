@@ -3581,3 +3581,59 @@ button.plate-card:focus-visible {
   opacity: 0.85;
   font-weight: 400;
 }
+
+/* ────── Relief (the terrain, in the Layers section) ────── */
+
+.relief-section {
+  margin-top: 16px;
+  margin-bottom: 4px;
+}
+
+.relief-option-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 2px 0 12px;
+}
+
+.relief-option {
+  margin: 0;
+  padding: 6px 12px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--item-bg);
+  color: var(--ink-muted);
+  cursor: pointer;
+  transition:
+    border-color var(--dur-short) var(--ease-out),
+    background var(--dur-short) var(--ease-out),
+    color var(--dur-short) var(--ease-out);
+}
+
+.relief-option--active {
+  border-color: var(--accent-line);
+  background: var(--accent-wash);
+  color: var(--ink);
+}
+
+button.relief-option:focus-visible {
+  transform: none;
+  filter: none;
+  border-color: var(--accent-line);
+  box-shadow: 0 0 0 3px var(--accent-ring);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  /* This rule turns off the global lift on button:not(:disabled):hover.
+     It names the element and the disabled test, so it stays stronger
+     than the lift whatever the order of the files. */
+  button.relief-option:not(:disabled):hover {
+    transform: none;
+    filter: none;
+    border-color: var(--accent-line);
+    color: var(--ink);
+  }
+}

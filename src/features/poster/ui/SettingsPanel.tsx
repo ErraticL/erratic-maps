@@ -68,6 +68,7 @@ export default function SettingsPanel({
     handleLayoutChange,
     handlePlateChange,
     handlePlateFillsChange,
+    handleReliefOptionChange,
     handleColorChange,
     handleResetColors,
     handleLocationSelect,
@@ -241,6 +242,7 @@ export default function SettingsPanel({
                 onNumericFieldBlur={handleNumericFieldBlur}
                 onPlateChange={handlePlateChange}
                 onPlateFillsChange={handlePlateFillsChange}
+                onReliefOptionChange={handleReliefOptionChange}
               />
             ) : null}
           </div>

@@ -19,12 +19,19 @@ import { getTheme } from "@/features/theme/infrastructure/themeRepository";
 import { applyThemeColorOverrides } from "@/features/theme/domain/colorPaths";
 import { generateMapStyle } from "@/features/map/infrastructure/maplibreStyle";
 import { applyPlate } from "@/features/map/infrastructure/plateTransform";
+import { applyRelief } from "@/features/map/infrastructure/reliefTransform";
 import {
   clampPlateWeight,
   isPlateFills,
   DEFAULT_PLATE,
   type Plate,
 } from "@/features/map/domain/plate";
+import {
+  isContourInterval,
+  isHillshadeStrength,
+  DEFAULT_RELIEF,
+  type Relief,
+} from "@/features/map/domain/relief";
 import type { StyleSpecification } from "maplibre-gl";
 import type { MapInstanceRef } from "@/features/map/domain/types";
 import { createDefaultMarkerSettings } from "@/features/markers/infrastructure/helpers";
@@ -93,6 +100,10 @@ export const DEFAULT_FORM: PosterForm = {
   plateWeight: String(DEFAULT_PLATE.weight),
   plateFills: DEFAULT_PLATE.fills,
   plateCasings: DEFAULT_PLATE.casings,
+  reliefContours: DEFAULT_RELIEF.contours,
+  reliefInterval: DEFAULT_RELIEF.contourInterval,
+  reliefHillshade: DEFAULT_RELIEF.hillshade,
+  reliefStrength: DEFAULT_RELIEF.hillshadeStrength,
   showMarkers: true,
   showRoutes: true,
 };
@@ -124,6 +135,7 @@ const INITIAL_STATE: PosterState = {
   },
   error: "",
   isExporting: false,
+  exportPhase: "",
   isLocationFocused: false,
   selectedLocation: null,
   userLocation: null,
@@ -265,28 +277,55 @@ export function PosterProvider({ children }: { children: ReactNode }) {
     [state.form.plateWeight, state.form.plateFills, state.form.plateCasings],
   );
 
+  // Relief is content, so it is a Layers value. Its transform runs
+  // before the plate, and the plate then scales the contour lines with
+  // the weight control, as it scales every other line.
+  const relief = useMemo<Relief>(
+    () => ({
+      contours: Boolean(state.form.reliefContours),
+      contourInterval: isContourInterval(state.form.reliefInterval)
+        ? state.form.reliefInterval
+        : DEFAULT_RELIEF.contourInterval,
+      hillshade: Boolean(state.form.reliefHillshade),
+      hillshadeStrength: isHillshadeStrength(state.form.reliefStrength)
+        ? state.form.reliefStrength
+        : DEFAULT_RELIEF.hillshadeStrength,
+    }),
+    [
+      state.form.reliefContours,
+      state.form.reliefInterval,
+      state.form.reliefHillshade,
+      state.form.reliefStrength,
+    ],
+  );
+
   const mapStyle = useMemo(
     () =>
       applyPlate(
-        generateMapStyle(effectiveTheme, {
-          includeLandcover: state.form.includeLandcover,
-          includeBuildings: state.form.includeBuildings,
-          includeWater: state.form.includeWater,
-          includeParks: state.form.includeParks,
-          includeAeroway: state.form.includeAeroway,
-          includeRail: state.form.includeRail,
-          includeRoads: state.form.includeRoads,
-          includeRoadPath: state.form.includeRoadPath,
-          includeRoadMinorLow: state.form.includeRoadMinorLow,
-          includeRoadOutline: state.form.includeRoadOutline,
-          distanceMeters: Number(state.form.distance),
-        }),
+        applyRelief(
+          generateMapStyle(effectiveTheme, {
+            includeLandcover: state.form.includeLandcover,
+            includeBuildings: state.form.includeBuildings,
+            includeWater: state.form.includeWater,
+            includeParks: state.form.includeParks,
+            includeAeroway: state.form.includeAeroway,
+            includeRail: state.form.includeRail,
+            includeRoads: state.form.includeRoads,
+            includeRoadPath: state.form.includeRoadPath,
+            includeRoadMinorLow: state.form.includeRoadMinorLow,
+            includeRoadOutline: state.form.includeRoadOutline,
+            distanceMeters: Number(state.form.distance),
+          }),
+          effectiveTheme,
+          relief,
+        ),
         effectiveTheme,
         plate,
       ),
     [
       effectiveTheme,
       plate,
+      relief,
       state.form.includeLandcover,
       state.form.includeBuildings,
       state.form.includeWater,
