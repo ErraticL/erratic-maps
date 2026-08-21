@@ -14,8 +14,10 @@
  * A key appears only when its value differs from the default. The
  * plate keys are `lw` (line weight), `fills` and `casings`. The key
  * `off` lists the content layers that the poster hides, for example
- * `off=parks,rail`. A missing key means the default value, not "keep
- * the value the app shows now".
+ * `off=parks,rail`. The relief keys are `cont` (the contour interval)
+ * and `hs` (the hillshade strength); each appears only while its
+ * switch is on. A missing key means the default value, not "keep the
+ * value the app shows now".
  */
 
 export interface PermalinkData {
@@ -32,6 +34,10 @@ export interface PermalinkData {
   plateFills?: string;
   plateCasings?: boolean;
   layersOff?: string[];
+  /** The contour interval. Absent means the contour lines are off. */
+  contourInterval?: string;
+  /** The hillshade strength. Absent means the hillshade is off. */
+  hillshadeStrength?: string;
 }
 
 const DEFAULT_PLATE_WEIGHT = 1;
@@ -90,6 +96,12 @@ export function parsePermalinkHash(hash: string): PermalinkData | null {
   const casings = params.get("casings");
   if (casings !== null) data.plateCasings = casings !== "0";
 
+  const contourInterval = String(params.get("cont") ?? "").trim();
+  if (contourInterval) data.contourInterval = contourInterval;
+
+  const hillshadeStrength = String(params.get("hs") ?? "").trim();
+  if (hillshadeStrength) data.hillshadeStrength = hillshadeStrength;
+
   const layersOff = String(params.get("off") ?? "").trim();
   if (layersOff) {
     data.layersOff = layersOff
@@ -118,6 +130,8 @@ export function buildPermalinkHash(data: PermalinkData): string {
     params.set("fills", data.plateFills);
   }
   if (data.plateCasings === false) params.set("casings", "0");
+  if (data.contourInterval) params.set("cont", data.contourInterval);
+  if (data.hillshadeStrength) params.set("hs", data.hillshadeStrength);
   if (data.layersOff && data.layersOff.length > 0) {
     params.set("off", data.layersOff.join(","));
   }

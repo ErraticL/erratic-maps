@@ -14,6 +14,11 @@ import {
   isPlateFills,
   DEFAULT_PLATE,
 } from "@/features/map/domain/plate";
+import {
+  isContourInterval,
+  isHillshadeStrength,
+  DEFAULT_RELIEF,
+} from "@/features/map/domain/relief";
 
 /**
  * The content layers that the `off` key of a permalink can name. Only
@@ -100,6 +105,16 @@ export function permalinkFormFields(
     ? permalink.plateFills
     : DEFAULT_PLATE.fills;
   fields.plateCasings = permalink.plateCasings ?? DEFAULT_PLATE.casings;
+
+  // Relief follows the same rule: a missing key turns the switch off.
+  fields.reliefContours = isContourInterval(permalink.contourInterval);
+  fields.reliefInterval = isContourInterval(permalink.contourInterval)
+    ? permalink.contourInterval
+    : DEFAULT_RELIEF.contourInterval;
+  fields.reliefHillshade = isHillshadeStrength(permalink.hillshadeStrength);
+  fields.reliefStrength = isHillshadeStrength(permalink.hillshadeStrength)
+    ? permalink.hillshadeStrength
+    : DEFAULT_RELIEF.hillshadeStrength;
 
   const hiddenLayers = new Set(permalink.layersOff ?? []);
   const layerFields = fields as Record<string, boolean>;

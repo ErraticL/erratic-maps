@@ -20,6 +20,10 @@ interface PermalinkFormSlice {
   plateWeight: string;
   plateFills: string;
   plateCasings: boolean;
+  reliefContours: boolean;
+  reliefInterval: string;
+  reliefHillshade: boolean;
+  reliefStrength: string;
   includeLandcover: boolean;
   includeBuildings: boolean;
   includeWater: boolean;
@@ -56,6 +60,10 @@ export function usePermalinkSync(
     plateWeight,
     plateFills,
     plateCasings,
+    reliefContours,
+    reliefInterval,
+    reliefHillshade,
+    reliefStrength,
   } = form;
 
   // The list of hidden layers is one string, so the effect below needs
@@ -83,6 +91,8 @@ export function usePermalinkSync(
         plateWeight: Number(plateWeight) || undefined,
         plateFills: plateFills || undefined,
         plateCasings: Boolean(plateCasings),
+        contourInterval: reliefContours ? reliefInterval : undefined,
+        hillshadeStrength: reliefHillshade ? reliefStrength : undefined,
         layersOff: layersOff ? layersOff.split(",") : undefined,
       });
     }, WRITE_DEBOUNCE_MS);
@@ -100,6 +110,10 @@ export function usePermalinkSync(
     plateWeight,
     plateFills,
     plateCasings,
+    reliefContours,
+    reliefInterval,
+    reliefHillshade,
+    reliefStrength,
     layersOff,
   ]);
 
