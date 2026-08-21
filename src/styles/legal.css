@@ -20,18 +20,18 @@ button.legal-modal__close {
   border: none;
   border-radius: 8px;
   background: transparent;
-  color: rgba(190, 214, 232, 0.85);
+  color: var(--ink);
   cursor: pointer;
 }
 
 button.legal-modal__close:focus-visible {
-  background: rgba(151, 183, 207, 0.16);
+  background: var(--accent-wash);
   color: #fff;
 }
 
 @media (hover: hover) and (pointer: fine) {
   button.legal-modal__close:hover {
-    background: rgba(151, 183, 207, 0.16);
+    background: var(--accent-wash);
     color: #fff;
   }
 }
@@ -46,17 +46,17 @@ button.legal-modal__close:focus-visible {
 .legal-modal__status {
   margin: 24px 0;
   text-align: center;
-  color: rgba(170, 198, 220, 0.75);
+  color: var(--ink-muted);
 }
 
 .legal-modal__status a {
-  color: #7fb4e6;
+  color: var(--accent-bright);
 }
 
 /* ── Markdown content typography ── */
 
 .legal-modal__content {
-  color: rgba(214, 228, 240, 0.92);
+  color: var(--ink);
   font-size: 0.92rem;
   line-height: 1.6;
 }
@@ -101,7 +101,7 @@ button.legal-modal__close:focus-visible {
 }
 
 .legal-modal__content a {
-  color: #7fb4e6;
+  color: var(--accent-bright);
   word-break: break-word;
 }
 
@@ -113,12 +113,12 @@ button.legal-modal__close:focus-visible {
 
 .legal-modal__content hr {
   border: none;
-  border-top: 1px solid rgba(151, 183, 207, 0.22);
+  border-top: 1px solid var(--accent-ring);
   margin: 1.4em 0;
 }
 
 .legal-modal__content code {
-  background: rgba(151, 183, 207, 0.14);
+  background: var(--accent-wash);
   padding: 0.1em 0.35em;
   border-radius: 4px;
   font-size: 0.85em;

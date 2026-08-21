@@ -78,8 +78,8 @@
     margin: 0;
     padding: 0 20px;
     background: var(--overlay-bg);
-    border-bottom: 1px solid rgba(146, 176, 200, 0.12);
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.28);
+    border-bottom: 1px solid var(--line);
+    box-shadow: var(--shadow-panel);
     z-index: 50;
     gap: 14px;
     flex-shrink: 0;
@@ -95,7 +95,6 @@
   .desktop-brand-logo {
     width: 30px;
     height: auto;
-    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
   }
 
   .desktop-brand-copy {
@@ -110,7 +109,7 @@
     font-size: 1.62rem;
     line-height: 1;
     letter-spacing: 0.03em;
-    color: #ecf5ff;
+    color: var(--ink);
   }
 
   .desktop-brand-kicker {
@@ -119,7 +118,7 @@
     font-size: 0.67rem;
     text-transform: uppercase;
     letter-spacing: 0.14em;
-    color: rgba(184, 212, 232, 0.5);
+    color: var(--ink-muted);
   }
 
   .general-header-actions {
@@ -139,10 +138,10 @@
   .general-header-social-btn {
     width: 34px;
     height: 34px;
-    border: 1px solid rgba(146, 176, 200, 0.2);
+    border: 1px solid var(--border);
     border-radius: 9px;
-    background: rgba(10, 20, 31, 0.78);
-    color: rgba(195, 220, 240, 0.86);
+    background: rgba(var(--slate-rgb), 0.78);
+    color: var(--ink);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -160,9 +159,9 @@
 
   .general-header-social-btn:hover,
   .general-header-social-btn:focus-visible {
-    background: rgba(94, 174, 212, 0.1);
-    border-color: rgba(94, 174, 212, 0.5);
-    color: #c8e8f8;
+    background: var(--accent-wash);
+    border-color: var(--accent-line);
+    color: var(--ink);
   }
 
   .general-header-social-btn--github {
@@ -201,9 +200,9 @@
   .general-header-text-btn:hover:not(:disabled) {
     transform: none;
     filter: none;
-    background: rgba(94, 174, 212, 0.1);
-    border-color: rgba(94, 174, 212, 0.5);
-    color: #c8e8f8;
+    background: var(--accent-wash);
+    border-color: var(--accent-line);
+    color: var(--ink);
   }
 
   .general-header-btn-label {
@@ -223,8 +222,8 @@
     align-items: center;
     padding: 8px 0;
     gap: 2px;
-    background: rgba(10, 20, 31, 0.98);
-    border-right: 1px solid rgba(146, 176, 200, 0.1);
+    background: var(--panel);
+    border-right: 1px solid var(--line);
     overflow-y: auto;
     scrollbar-width: none;
     z-index: 40;
@@ -247,7 +246,7 @@
     border: none;
     border-radius: 10px;
     background: transparent;
-    color: rgba(180, 205, 225, 0.42);
+    color: var(--ink-dim);
     font-size: 0.5rem;
     font-weight: 600;
     font-family: "Spline Sans Mono", monospace;
@@ -266,13 +265,13 @@
   button.desktop-nav-tab:not(:disabled):hover {
     transform: none;
     filter: none;
-    background: rgba(94, 174, 212, 0.1);
-    color: rgba(180, 205, 225, 0.72);
+    background: var(--accent-wash);
+    color: var(--ink-muted);
   }
 
   .desktop-nav-tab.is-active {
-    background: rgba(55, 171, 203, 0.16);
-    color: #7dd8f0;
+    background: var(--accent-wash);
+    color: var(--accent);
   }
 
   .desktop-nav-icon {
@@ -335,14 +334,12 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    background: rgba(20, 36, 52, 0.97);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(171, 201, 224, 0.34);
+    background: var(--item-bg);
+    border: 1px solid var(--strong-line);
     border-radius: 12px;
     width: 100%;
     padding: 1px 6px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+    box-shadow: var(--shadow-panel);
   }
 
   .dsk-loc-bar .location-search-stack {
@@ -376,7 +373,7 @@
     background: transparent;
     border: none;
     border-radius: 0;
-    color: #e8f4ff;
+    color: var(--ink);
     font-family: "Spline Sans Mono", monospace;
     font-size: 0.82rem;
     box-shadow: none;
@@ -394,7 +391,7 @@
     border: none;
     border-radius: 0;
     background: transparent;
-    color: rgba(198, 221, 237, 0.72);
+    color: var(--ink-muted);
     font-size: 1.2rem;
     line-height: 1;
   }
@@ -403,7 +400,7 @@
   .dsk-loc-bar button.location-clear-btn:focus-visible {
     transform: translateY(-50%);
     background: transparent;
-    color: #e6f4ff;
+    color: var(--ink);
   }
 
   .dsk-loc-bar .location-input-wrap input:focus {
@@ -419,7 +416,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgba(183, 215, 235, 0.52);
+    color: var(--ink-muted);
     font-size: 0.9rem;
     pointer-events: none;
   }
@@ -430,10 +427,10 @@
     width: 30px;
     height: 30px;
     padding: 0;
-    border: 1px solid rgba(157, 189, 214, 0.26);
+    border: 1px solid var(--strong-line);
     border-radius: 9px;
-    background: rgba(31, 56, 75, 0.62);
-    color: rgba(210, 231, 245, 0.85);
+    background: rgba(var(--slate-rgb), 0.62);
+    color: var(--ink);
     font-size: 1.05rem;
     display: flex;
     align-items: center;
@@ -453,15 +450,15 @@
   .dsk-loc-bar button.location-row-icon-btn:hover:not(:disabled) {
     transform: none;
     filter: none;
-    background: rgba(68, 122, 153, 0.38);
-    border-color: rgba(126, 190, 225, 0.58);
-    color: #e5f5ff;
+    background: var(--accent-wash-strong);
+    border-color: var(--accent-line);
+    color: var(--ink);
   }
 
   .dsk-loc-bar button.location-row-icon-btn.is-active {
-    background: rgba(31, 56, 75, 0.62);
-    border-color: rgba(157, 189, 214, 0.26);
-    color: rgba(210, 231, 245, 0.85);
+    background: rgba(var(--slate-rgb), 0.62);
+    border-color: var(--strong-line);
+    color: var(--ink);
   }
 
   .dsk-loc-bar button.location-row-icon-btn:disabled {
@@ -492,11 +489,9 @@
     margin-top: 4px;
     padding: 4px;
     background: var(--overlay-bg);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(146, 176, 200, 0.18);
+    border: 1px solid var(--line);
     border-radius: 10px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    box-shadow: var(--shadow-modal);
     max-height: 240px;
     overflow-y: auto;
     z-index: 12;
@@ -507,22 +502,22 @@
     border-radius: 7px;
     font-family: "Spline Sans Mono", monospace;
     font-size: 0.76rem;
-    color: rgba(200, 228, 248, 0.85);
+    color: var(--ink);
     text-align: left;
   }
 
   .dsk-loc-bar .location-suggestion:hover {
     transform: none;
     filter: none;
-    background: rgba(94, 174, 212, 0.12);
-    color: #ddeeff;
+    background: var(--accent-wash);
+    color: var(--ink);
   }
 
   .dsk-loc-bar .location-suggestion-status {
     padding: 6px 10px;
     font-family: "Spline Sans Mono", monospace;
     font-size: 0.72rem;
-    color: rgba(156, 195, 218, 0.5);
+    color: var(--ink-muted);
   }
 
   /* Lat/Lon coordinate fields — hidden by default, shown when .show-coords */
@@ -535,19 +530,17 @@
     grid-template-columns: 1fr 1fr;
     gap: 8px;
     margin-top: 6px;
-    background: rgba(16, 29, 42, 0.94);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(157, 189, 214, 0.24);
+    background: var(--item-bg);
+    border: 1px solid var(--strong-line);
     border-radius: 10px;
     padding: 8px 9px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.38);
+    box-shadow: var(--shadow-panel);
   }
 
   .dsk-loc-bar .dsk-loc-coords label {
     margin-bottom: 0;
     font-size: 0.72rem;
-    color: rgba(188, 219, 238, 0.78);
+    color: var(--ink-muted);
   }
 
   /* These fields hold the latitude and the longitude. Both change while
@@ -556,17 +549,17 @@
     margin-top: 5px;
     min-height: 36px;
     padding: 6px 10px;
-    background: rgba(31, 56, 75, 0.46);
-    border-color: rgba(157, 189, 214, 0.3);
+    background: rgba(var(--slate-rgb), 0.46);
+    border-color: var(--strong-line);
     border-radius: 9px;
     font-family: "Spline Sans Mono", monospace;
     font-variant-numeric: tabular-nums;
     font-size: 0.76rem;
-    color: #def2ff;
+    color: var(--ink);
   }
 
   .dsk-loc-bar .dsk-loc-coords input:focus {
-    border-color: rgba(94, 174, 212, 0.5);
+    border-color: var(--accent-line);
     box-shadow: none;
   }
 
@@ -574,8 +567,8 @@
   .dsk-loc-bar .location-permission-message {
     margin-top: 4px;
     padding: 8px 10px;
-    background: rgba(9, 16, 24, 0.94);
-    border: 1px solid rgba(255, 152, 129, 0.3);
+    background: var(--panel);
+    border: 1px solid var(--danger-line);
     border-radius: 8px;
     font-family: "Spline Sans Mono", monospace;
     font-size: 0.7rem;
@@ -593,11 +586,9 @@
     overflow-x: hidden;
     pointer-events: auto;
     background: var(--sheet-bg);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(146, 176, 200, 0.14);
+    border: 1px solid var(--line);
     border-radius: 14px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+    box-shadow: var(--shadow-modal);
     overscroll-behavior: contain;
     scrollbar-width: none;
   }
@@ -642,7 +633,7 @@
   }
 
   .desktop-settings-slide .accordion-item {
-    border-bottom: 1px solid rgba(146, 176, 200, 0.1);
+    border-bottom: 1px solid var(--line);
     background: transparent;
   }
 
@@ -725,7 +716,7 @@
 
   /* Ghost frame: poster floats above ghost map; no more 100vmax overlay */
   .app-shell > .preview-panel .poster-frame {
-    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.65);
+    box-shadow: var(--shadow-modal);
     max-height: calc(84vh - 44px);
     width: min(
       calc(100% - 48px),
@@ -741,15 +732,17 @@
     overflow: hidden;
   }
 
-  /* Ghost map layer: full-bleed map at 50% opacity behind the poster */
+  /* Ghost map layer: the full-bleed map behind the poster. It stays
+     dim, so the poster carries the color and the ghost only gives
+     context. */
   .poster-ghost-layer {
     display: block;
     position: absolute;
     inset: -48px -24px;
     transform: translateY(var(--poster-frame-center-offset-y));
     z-index: 0;
-    opacity: 0.45;
-    filter: blur(6px) saturate(0.75) brightness(0.85);
+    opacity: 0.32;
+    filter: blur(6px) saturate(0.7) brightness(0.7);
     pointer-events: none;
   }
 
@@ -760,7 +753,7 @@
 
   /* Strip the solid bg so ghost map shows through */
   .app-shell > .preview-panel .poster-viewport {
-    background: #080f18;
+    background: var(--app-bg);
   }
 
   /* Map controls: floating pill at bottom center of map area */
@@ -817,11 +810,9 @@
     position: static;
     width: auto;
     margin: 0;
-    background: rgba(10, 20, 31, 0.72);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(146, 176, 200, 0.2);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.32);
+    background: rgba(var(--slate-rgb), 0.72);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-modal);
   }
 
   .app-shell > .preview-panel .settings-info-card .settings-info-list {
@@ -839,13 +830,11 @@
     z-index: 15;
     padding: 4px 10px;
     border-radius: 8px;
-    background: rgba(9, 16, 24, 0.72);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(146, 176, 200, 0.16);
+    background: rgba(var(--slate-rgb), 0.72);
+    border: 1px solid var(--line);
     font-family: "Spline Sans Mono", monospace;
     font-size: 0.66rem;
-    color: rgba(195, 220, 240, 0.65);
+    color: var(--ink-muted);
     text-transform: uppercase;
     letter-spacing: 0.06em;
     pointer-events: none;
@@ -886,9 +875,9 @@
     text-align: left;
     margin: 0;
     padding: 8px 18px 8px 82px;
-    border-top: 1px solid rgba(146, 176, 200, 0.12);
+    border-top: 1px solid var(--line);
     background: var(--overlay-bg);
-    box-shadow: 0 -1px 8px rgba(0, 0, 0, 0.28);
+    box-shadow: var(--shadow-panel);
     white-space: nowrap;
   }
 
@@ -935,10 +924,10 @@
     height: 20px;
     padding: 0;
     margin: 0;
-    border: 1px solid rgba(146, 176, 200, 0.2);
+    border: 1px solid var(--border);
     border-radius: 999px;
-    background: rgba(15, 30, 43, 0.9);
-    color: rgba(200, 228, 248, 0.78);
+    background: var(--item-bg);
+    color: var(--ink-muted);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -960,8 +949,8 @@
   }
 
   .desktop-footer-info-btn[aria-expanded="true"] {
-    border-color: rgba(94, 174, 212, 0.5);
-    color: #c8e8f8;
+    border-color: var(--accent-line);
+    color: var(--ink);
   }
 
   /* Attribution modal box (reuses .about-modal-backdrop for the overlay). */
@@ -969,9 +958,9 @@
     position: relative;
     width: min(420px, 90vw);
     background: var(--sheet-bg);
-    border: 1px solid rgba(146, 176, 200, 0.18);
+    border: 1px solid var(--line);
     border-radius: 16px;
-    box-shadow: 0 32px 64px rgba(0, 0, 0, 0.6);
+    box-shadow: var(--shadow-modal);
     padding: 24px;
     animation: about-modal-in var(--dur-medium) var(--ease-out);
   }
@@ -981,14 +970,14 @@
     font-family: "Bebas Neue", sans-serif;
     font-size: 1.4rem;
     letter-spacing: 0.03em;
-    color: #ecf5ff;
+    color: var(--ink);
   }
 
   .attribution-modal-line {
     margin: 0 0 8px;
     font-size: 0.8rem;
     line-height: 1.5;
-    color: #9bb3c5;
+    color: var(--ink-muted);
   }
 
   .attribution-modal-line:last-child {
@@ -1017,8 +1006,6 @@
     inset: 0;
     z-index: 500;
     background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1031,9 +1018,9 @@
     max-height: 82vh;
     overflow-y: auto;
     background: var(--sheet-bg);
-    border: 1px solid rgba(146, 176, 200, 0.18);
+    border: 1px solid var(--line);
     border-radius: 20px;
-    box-shadow: 0 32px 64px rgba(0, 0, 0, 0.6);
+    box-shadow: var(--shadow-modal);
     padding: 32px;
     animation: about-modal-in var(--dur-medium) var(--ease-out);
   }
@@ -1059,10 +1046,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid rgba(146, 176, 200, 0.22);
+    border: 1px solid var(--border);
     border-radius: 8px;
     background: transparent;
-    color: rgba(180, 205, 225, 0.6);
+    color: var(--ink-muted);
     font-size: 1rem;
     cursor: pointer;
     padding: 0;
@@ -1078,9 +1065,9 @@
   button.about-modal-close:not(:disabled):hover {
     transform: none;
     filter: none;
-    background: rgba(94, 174, 212, 0.1);
-    color: #c8e8f8;
-    border-color: rgba(94, 174, 212, 0.4);
+    background: var(--accent-wash);
+    color: var(--ink);
+    border-color: var(--accent-ring);
   }
 
   /* Strip info panel chrome inside the modal */
@@ -1150,7 +1137,7 @@
     letter-spacing: 0.06em;
     cursor: pointer;
     white-space: nowrap;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--shadow-panel);
     transition:
       background var(--dur-press) var(--ease-out),
       border-color var(--dur-press) var(--ease-out),
@@ -1164,17 +1151,17 @@
 
   /* Primary = PNG/Download — white/light, like browser-default generate-btn */
   .desktop-export-btn--primary {
-    background: rgba(232, 242, 251, 0.96);
-    border-color: rgba(180, 210, 235, 0.55);
-    color: #0d1f2e;
+    background: var(--accent);
+    border-color: var(--accent-deep);
+    color: var(--accent-ink);
   }
 
   .desktop-export-btn--primary:hover:not(:disabled) {
     transform: none;
     filter: none;
-    background: rgba(220, 236, 250, 1);
-    border-color: rgba(140, 185, 220, 0.8);
-    color: #091826;
+    background: var(--accent);
+    border-color: var(--accent-line);
+    color: var(--accent-ink);
   }
 
   /* PDF — dark warm/brown, like mobile .ghost but darker */
@@ -1269,11 +1256,9 @@
     justify-content: center;
     width: 34px;
     height: 34px;
-    border: 1px solid rgba(146, 176, 200, 0.14);
+    border: 1px solid var(--line);
     border-radius: 10px;
-    background: rgba(9, 16, 24, 0.72);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: rgba(var(--slate-rgb), 0.72);
     pointer-events: none;
     user-select: none;
   }
@@ -1281,7 +1266,7 @@
   .desktop-settings-deco-icon {
     width: 16px;
     height: 16px;
-    color: rgba(156, 195, 218, 0.3);
+    color: var(--ink-dim);
   }
 }
 

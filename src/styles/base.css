@@ -1,19 +1,57 @@
 /* UI typefaces are self-hosted and imported in src/main.tsx (@fontsource). */
 
 :root {
-  --ink: #e6edf4;
+  /* Color vocabulary. Every stylesheet uses these tokens. The values
+     come from the logo: slate #0a1824 for the surfaces and gold #e0a83c
+     for the accent. Surfaces are opaque and flat; one line color in
+     three strengths separates them. */
+
+  /* Surfaces, dark to light. */
   /* The opaque background of the application. #root paints it. */
-  --app-bg: #080f18;
-  --panel: rgba(10, 20, 31, 0.92);
-  --line: rgba(146, 176, 200, 0.24);
-  --border: rgba(151, 183, 207, 0.34);
-  --strong-line: rgba(166, 199, 223, 0.45);
+  --app-bg: #0b1219;
+  --panel: #111922;
+  --sheet-bg: #111922;
+  --overlay-bg: #0e151d;
+  --item-bg: #161f29;
+  --raised: #1f2a36;
+  /* The channels of the slate, for a translucent scrim or a fade. */
+  --slate-rgb: 11, 18, 25;
+
+  /* Lines. */
+  --line: rgba(255, 255, 255, 0.08);
+  --border: rgba(255, 255, 255, 0.13);
+  --strong-line: rgba(255, 255, 255, 0.2);
+
+  /* Text. Neutral, three strengths. */
+  --ink: #e8ecef;
+  --ink-muted: rgba(200, 208, 216, 0.62);
+  --ink-dim: rgba(200, 208, 216, 0.42);
+
+  /* The accent. One hue, the gold of the logo. */
+  --accent: #e0a83c;
+  --accent-bright: #f2c14e;
+  --accent-deep: #c28a24;
+  /* Text on an accent surface. */
+  --accent-ink: #1a1208;
+  --accent-wash: rgba(224, 168, 60, 0.14);
+  --accent-wash-strong: rgba(224, 168, 60, 0.26);
+  --accent-line: rgba(224, 168, 60, 0.55);
+  --accent-ring: rgba(224, 168, 60, 0.28);
+  --focus-ring: rgba(224, 168, 60, 0.7);
+
+  /* Status. */
   --positive: #6bd8a0;
   --negative: #ff8372;
-  --focus-ring: rgba(112, 184, 222, 0.82);
-  --item-bg: rgba(20, 38, 52, 0.94);
-  --sheet-bg: rgba(11, 20, 30, 0.98);
-  --overlay-bg: rgba(9, 16, 24, 0.97);
+  /* A destructive control: delete, reset, clear. */
+  --danger-bg: #3b241d;
+  --danger-bg-hover: #4a2c26;
+  --danger-line: rgba(255, 152, 129, 0.34);
+  --danger-line-strong: rgba(255, 152, 129, 0.72);
+  --danger-ink: #ffd5cb;
+
+  /* Shadows. A panel sits on the page; a modal or the poster floats. */
+  --shadow-panel: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-modal: 0 24px 48px rgba(0, 0, 0, 0.5);
 
   /* Motion vocabulary. Every transition and animation uses these tokens. */
 

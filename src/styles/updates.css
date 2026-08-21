@@ -6,8 +6,7 @@
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background: rgba(7, 13, 20, 0.72);
-  backdrop-filter: blur(6px);
+  background: rgba(var(--slate-rgb), 0.72);
 }
 
 .updates-modal {
@@ -17,8 +16,8 @@
   display: flex;
   flex-direction: column;
   background:
-    linear-gradient(156deg, rgba(17, 29, 41, 0.98), rgba(9, 18, 29, 0.98));
-  border: 1px solid rgba(142, 177, 204, 0.3);
+    var(--sheet-bg);
+  border: 1px solid var(--accent-ring);
   border-radius: 18px;
   overflow: hidden;
   box-shadow:
@@ -29,12 +28,12 @@
 .updates-modal-progress {
   height: 8px;
   width: 100%;
-  background: rgba(116, 148, 176, 0.24);
+  background: var(--raised);
 }
 
 .updates-modal-progress-bar {
   height: 100%;
-  background: linear-gradient(90deg, #56f8b3 0%, #7de3ff 100%);
+  background: var(--accent);
   transition: width var(--dur-short) var(--ease-in-out);
 }
 
@@ -45,8 +44,8 @@
   width: 36px;
   height: 36px;
   border-radius: 999px;
-  border: 1px solid rgba(163, 194, 218, 0.45);
-  background: rgba(18, 33, 47, 0.9);
+  border: 1px solid var(--strong-line);
+  background: var(--item-bg);
   color: var(--ink);
   display: grid;
   place-items: center;
@@ -85,7 +84,7 @@
 
 .updates-released-on {
   margin: 0;
-  color: rgba(206, 220, 233, 0.85);
+  color: var(--ink);
 }
 
 .updates-modal-content {
@@ -101,9 +100,9 @@
 .updates-step-image {
   width: 100%;
   border-radius: 12px;
-  border: 1px solid rgba(146, 176, 200, 0.35);
+  border: 1px solid var(--border);
   margin-top: 16px;
-  background: rgba(10, 18, 26, 0.7);
+  background: rgba(var(--slate-rgb), 0.7);
   object-fit: cover;
 }
 
@@ -122,8 +121,8 @@
   align-items: start;
   padding: 10px 12px;
   border-radius: 12px;
-  border: 1px solid rgba(136, 167, 193, 0.24);
-  background: rgba(14, 27, 39, 0.62);
+  border: 1px solid var(--border);
+  background: rgba(var(--slate-rgb), 0.62);
 }
 
 /* The icon is an SVG glyph. The box keeps the height of the first text line. */
@@ -140,7 +139,7 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
-  color: rgba(227, 239, 249, 0.95);
+  color: var(--ink);
 }
 
 .updates-point-label {
@@ -159,11 +158,11 @@
 }
 
 .updates-point--fixed {
-  border-color: rgba(121, 188, 255, 0.44);
+  border-color: var(--strong-line);
 }
 
 .updates-point--fixed .updates-point-label {
-  color: #8fc9ff;
+  color: var(--ink-muted);
 }
 
 .updates-point--improved {
@@ -175,11 +174,11 @@
 }
 
 .updates-point--info {
-  border-color: rgba(143, 204, 255, 0.42);
+  border-color: var(--strong-line);
 }
 
 .updates-point--info .updates-point-label {
-  color: #b4dcff;
+  color: var(--ink);
 }
 
 .updates-point--community {
@@ -191,11 +190,11 @@
 }
 
 .updates-point--docs {
-  border-color: rgba(156, 214, 255, 0.42);
+  border-color: var(--strong-line);
 }
 
 .updates-point--docs .updates-point-label {
-  color: #b7dcff;
+  color: var(--ink);
 }
 
 .updates-point--roadmap {
@@ -247,11 +246,11 @@
 }
 
 .updates-point--core {
-  border-color: rgba(135, 224, 236, 0.5);
+  border-color: var(--strong-line);
 }
 
 .updates-point--core .updates-point-label {
-  color: #98eaf7;
+  color: var(--ink-muted);
 }
 
 .updates-modal-footer {
@@ -286,9 +285,9 @@
 
 .updates-actions button {
   min-width: 90px;
-  border: 1px solid rgba(147, 177, 201, 0.42);
+  border: 1px solid var(--strong-line);
   border-radius: 10px;
-  background: rgba(24, 43, 58, 0.92);
+  background: var(--item-bg);
   color: var(--ink);
   padding: 9px 14px;
   cursor: pointer;
@@ -305,8 +304,8 @@
 }
 
 .updates-okay-button {
-  border-color: rgba(121, 188, 255, 0.52) !important;
-  background: rgba(70, 137, 189, 0.22) !important;
+  border-color: var(--strong-line) !important;
+  background: var(--accent-wash-strong) !important;
 }
 
 @media (max-width: 720px) {

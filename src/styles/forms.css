@@ -16,7 +16,7 @@
   text-transform: uppercase;
   letter-spacing: 0.1em;
   font-size: 0.76rem;
-  color: #88b7d5;
+  color: var(--ink-muted);
 }
 
 label {
@@ -24,7 +24,7 @@ label {
   margin-bottom: 9px;
   font-size: 0.84rem;
   font-weight: 600;
-  color: #d9e7f2;
+  color: var(--ink);
 }
 
 .field-grid {
@@ -67,7 +67,7 @@ label {
   font-family: "Spline Sans Mono", monospace;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.02em;
-  color: #dff0fb;
+  color: var(--ink);
 }
 
 .distance-slider-input {
@@ -109,8 +109,8 @@ label {
   border: 1px solid var(--border);
   background: linear-gradient(
     180deg,
-    rgba(28, 51, 69, 0.95),
-    rgba(17, 34, 47, 0.95)
+    var(--item-bg),
+    var(--item-bg)
   );
   box-sizing: border-box;
 }
@@ -122,10 +122,10 @@ label {
   height: 20px;
   margin-top: -5px;
   border-radius: 999px;
-  border: 2px solid #e8f3fb;
-  background: radial-gradient(circle at 35% 35%, #4ca9cd, #2a7fa0 70%);
+  border: 2px solid var(--strong-line);
+  background: var(--accent);
   box-shadow:
-    0 0 0 2px rgba(5, 13, 20, 0.45),
+    0 0 0 2px var(--line),
     0 2px 6px rgba(0, 0, 0, 0.35);
   box-sizing: border-box;
   cursor: grab;
@@ -137,8 +137,8 @@ label {
   border: 1px solid var(--border);
   background: linear-gradient(
     180deg,
-    rgba(28, 51, 69, 0.95),
-    rgba(17, 34, 47, 0.95)
+    var(--item-bg),
+    var(--item-bg)
   );
   box-sizing: border-box;
 }
@@ -147,10 +147,10 @@ label {
   width: 20px;
   height: 20px;
   border-radius: 999px;
-  border: 2px solid #e8f3fb;
-  background: radial-gradient(circle at 35% 35%, #4ca9cd, #2a7fa0 70%);
+  border: 2px solid var(--strong-line);
+  background: var(--accent);
   box-shadow:
-    0 0 0 2px rgba(5, 13, 20, 0.45),
+    0 0 0 2px var(--line),
     0 2px 6px rgba(0, 0, 0, 0.35);
   box-sizing: border-box;
 }
@@ -161,7 +161,7 @@ label {
   margin-top: 5px;
   font-family: "Spline Sans Mono", monospace;
   font-size: 0.66rem;
-  color: #8fb0c6;
+  color: var(--ink-muted);
 }
 
 .distance-slider-meta-mark {
@@ -190,13 +190,13 @@ label {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 0.72rem;
-  color: #88b7d5;
+  color: var(--ink-muted);
 }
 
 .map-details-card {
   border: none;
   border-radius: 12px;
-  background: rgba(9, 18, 27, 0.8);
+  background: rgba(var(--slate-rgb), 0.8);
   padding: 0;
   display: grid;
   gap: 10px;
@@ -243,7 +243,7 @@ label {
   width: 58px;
   height: 34px;
   border-radius: 999px;
-  background: rgba(93, 121, 142, 0.55);
+  background: var(--raised);
   transition: background-color var(--dur-press) var(--ease-out);
 }
 
@@ -255,13 +255,13 @@ label {
   width: 26px;
   height: 26px;
   border-radius: 999px;
-  background: #eaf5fd;
+  background: var(--ink);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
   transition: transform var(--dur-press) var(--ease-in-out);
 }
 
 .theme-switch input:checked + .theme-switch-track {
-  background: #5eaed4;
+  background: var(--accent);
 }
 
 .theme-switch input:checked + .theme-switch-track::after {
@@ -269,7 +269,7 @@ label {
 }
 
 .theme-switch input:focus-visible + .theme-switch-track {
-  box-shadow: 0 0 0 3px rgba(75, 149, 186, 0.3);
+  box-shadow: 0 0 0 3px var(--accent-ring);
 }
 
 .credits-toggle-field {
@@ -280,7 +280,7 @@ label {
   margin: 2px 0 12px;
   font-size: 0.74rem;
   line-height: 1.45;
-  color: #7da8c4;
+  color: var(--ink-muted);
   opacity: 0.85;
   font-weight: 400;
 }
@@ -295,11 +295,11 @@ input:not([type="checkbox"]):not([type="radio"]),
 select {
   width: 100%;
   margin-top: 4px;
-  border: 1px solid rgba(151, 183, 207, 0.26);
+  border: 1px solid var(--accent-ring);
   border-radius: 10px;
-  background: rgba(9, 18, 27, 0.84);
+  background: rgba(var(--slate-rgb), 0.84);
   padding: 9px 10px;
-  color: #ebf3fa;
+  color: var(--ink);
   outline: none;
   transition:
     border-color var(--dur-press) var(--ease-out),
@@ -307,13 +307,13 @@ select {
 }
 
 input::placeholder {
-  color: #8ca8bc;
+  color: var(--ink-muted);
 }
 
 input:not([type="checkbox"]):not([type="radio"]):focus,
 select:focus {
-  border-color: rgba(102, 174, 209, 0.82);
-  box-shadow: 0 0 0 3px rgba(75, 149, 186, 0.24);
+  border-color: var(--accent-line);
+  box-shadow: 0 0 0 3px var(--accent-ring);
 }
 
 .location-autocomplete {
@@ -348,7 +348,7 @@ button.location-current-btn {
   border: 1px solid var(--border);
   border-radius: 10px;
   background: var(--item-bg);
-  color: #d9e7f2;
+  color: var(--ink);
   font-size: 0.72rem;
   font-weight: 700;
   display: inline-flex;
@@ -365,16 +365,16 @@ button.location-current-btn {
 button.location-current-btn:focus-visible {
   transform: none;
   filter: none;
-  border-color: rgba(112, 184, 222, 0.8);
-  background: rgba(47, 79, 102, 0.95);
+  border-color: var(--accent-line);
+  background: var(--raised);
 }
 
 @media (hover: hover) and (pointer: fine) {
   button.location-current-btn:not(:disabled):hover {
     transform: none;
     filter: none;
-    border-color: rgba(112, 184, 222, 0.8);
-    background: rgba(47, 79, 102, 0.95);
+    border-color: var(--accent-line);
+    background: var(--raised);
   }
 }
 
@@ -409,10 +409,10 @@ button.location-current-btn:focus-visible {
   margin: 0;
   padding: 6px;
   list-style: none;
-  border: 1px solid rgba(151, 183, 207, 0.36);
+  border: 1px solid var(--accent-ring);
   border-radius: 10px;
-  background: rgba(9, 18, 27, 0.98);
-  box-shadow: 0 16px 28px rgba(0, 0, 0, 0.44);
+  background: var(--panel);
+  box-shadow: var(--shadow-modal);
   max-height: 220px;
   overflow-y: auto;
   z-index: 30;
@@ -422,7 +422,7 @@ button.location-current-btn:focus-visible {
   width: 100%;
   border: none;
   background: transparent;
-  color: #dfebf6;
+  color: var(--ink);
   border-radius: 8px;
   text-align: left;
   padding: 8px 10px;
@@ -431,12 +431,12 @@ button.location-current-btn:focus-visible {
 }
 
 .location-suggestion:focus-visible {
-  background: rgba(69, 133, 169, 0.2);
+  background: var(--accent-wash);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .location-suggestion:hover {
-    background: rgba(69, 133, 169, 0.2);
+    background: var(--accent-wash);
   }
 }
 
@@ -450,7 +450,7 @@ button.location-current-btn:focus-visible {
 .location-suggestion-status {
   padding: 8px 10px;
   font-size: 0.78rem;
-  color: #8fb0c6;
+  color: var(--ink-muted);
 }
 
 /* Recent-locations history rows inside the suggestions dropdown */
@@ -471,7 +471,7 @@ button.location-current-btn:focus-visible {
 .location-recent-icon {
   flex-shrink: 0;
   font-size: 0.85rem;
-  color: #8fb0c6;
+  color: var(--ink-muted);
 }
 
 .location-recent-label {
@@ -491,20 +491,20 @@ button.location-recent-remove {
   border: none;
   border-radius: 8px;
   background: transparent;
-  color: #8fb0c6;
+  color: var(--ink-muted);
 }
 
 button.location-recent-remove:focus-visible {
-  background: rgba(69, 133, 169, 0.2);
-  color: #dfebf6;
+  background: var(--accent-wash);
+  color: var(--ink);
   transform: none;
   filter: none;
 }
 
 @media (hover: hover) and (pointer: fine) {
   button.location-recent-remove:not(:disabled):hover {
-    background: rgba(69, 133, 169, 0.2);
-    color: #dfebf6;
+    background: var(--accent-wash);
+    color: var(--ink);
     transform: none;
     filter: none;
   }
@@ -514,7 +514,7 @@ button.location-recent-remove:focus-visible {
   width: 100%;
   border: none;
   background: transparent;
-  color: #9fc1da;
+  color: var(--ink-muted);
   border-radius: 8px;
   text-align: left;
   padding: 8px 10px;
@@ -523,14 +523,14 @@ button.location-recent-remove:focus-visible {
 }
 
 .location-suggestions-action:focus-visible {
-  background: rgba(69, 133, 169, 0.2);
+  background: var(--accent-wash);
   transform: none;
   filter: none;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .location-suggestions-action:not(:disabled):hover {
-    background: rgba(69, 133, 169, 0.2);
+    background: var(--accent-wash);
     transform: none;
     filter: none;
   }
@@ -544,21 +544,21 @@ button.location-recent-remove:focus-visible {
   margin: 0 0 8px;
   font-size: 0.8rem;
   opacity: 0.74;
-  color: #a8bfd1;
+  color: var(--ink-muted);
 }
 
 .theme-active-label {
   margin: 0;
   font-size: 0.84rem;
   font-weight: 600;
-  color: #d9e7f2;
+  color: var(--ink);
 }
 
 .theme-section {
   margin: 0 0 10px;
   border: 1px solid var(--border);
   border-radius: 12px;
-  background: rgba(9, 18, 27, 0.8);
+  background: rgba(var(--slate-rgb), 0.8);
   padding: 10px;
 }
 
@@ -605,7 +605,7 @@ button.location-recent-remove:focus-visible {
   font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.03em;
-  color: #e7f2fb;
+  color: var(--ink);
   text-transform: uppercase;
 }
 
@@ -613,7 +613,7 @@ button.location-recent-remove:focus-visible {
   margin: 0;
   font-size: 1rem;
   font-weight: 700;
-  color: #e7f2fb;
+  color: var(--ink);
   text-transform: uppercase;
 }
 
@@ -670,11 +670,11 @@ button.location-recent-remove:focus-visible {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: rgba(216, 232, 244, 0.35);
+  color: var(--ink-dim);
   font-size: 1.15rem;
   font-weight: 700;
   pointer-events: none;
-  background: linear-gradient(90deg, rgba(9, 18, 27, 0.86), rgba(9, 18, 27, 0));
+  background: linear-gradient(90deg, var(--panel), rgba(var(--slate-rgb), 0));
 }
 
 .theme-slider-chevron--left {
@@ -685,8 +685,8 @@ button.location-recent-remove:focus-visible {
   right: -8px;
   background: linear-gradient(
     270deg,
-    rgba(9, 18, 27, 0.86),
-    rgba(9, 18, 27, 0)
+    var(--panel),
+    rgba(var(--slate-rgb), 0)
   );
 }
 
@@ -716,10 +716,10 @@ button.theme-customize-btn {
   min-height: 42px;
   margin: 0;
   padding: 0;
-  border: 1px solid rgba(151, 183, 207, 0.42);
+  border: 1px solid var(--accent-ring);
   border-radius: 10px;
   background: var(--item-bg);
-  color: #d9e7f2;
+  color: var(--ink);
   font-size: 0.72rem;
   font-weight: 700;
   line-height: 1;
@@ -736,16 +736,16 @@ button.theme-customize-btn {
 button.theme-customize-btn:focus-visible {
   transform: none;
   filter: none;
-  border-color: rgba(112, 184, 222, 0.8);
-  background: rgba(47, 79, 102, 0.95);
+  border-color: var(--accent-line);
+  background: var(--raised);
 }
 
 @media (hover: hover) and (pointer: fine) {
   button.theme-customize-btn:not(:disabled):hover {
     transform: none;
     filter: none;
-    border-color: rgba(112, 184, 222, 0.8);
-    background: rgba(47, 79, 102, 0.95);
+    border-color: var(--accent-line);
+    background: var(--raised);
   }
 }
 
@@ -774,10 +774,10 @@ button.theme-edit-done-btn {
   width: auto;
   margin: 0;
   padding: 5px 10px;
-  border: 1px solid rgba(151, 183, 207, 0.42);
+  border: 1px solid var(--accent-ring);
   border-radius: 8px;
-  background: rgba(24, 49, 64, 0.95);
-  color: #e8f3fb;
+  background: var(--item-bg);
+  color: var(--ink);
   font-size: 0.72rem;
   font-weight: 700;
 }
@@ -786,7 +786,7 @@ button.theme-edit-done-btn:focus-visible {
   transform: none;
   filter: none;
   border-color: var(--focus-ring);
-  background: rgba(44, 78, 102, 0.98);
+  background: var(--raised);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -794,7 +794,7 @@ button.theme-edit-done-btn:focus-visible {
     transform: none;
     filter: none;
     border-color: var(--focus-ring);
-    background: rgba(44, 78, 102, 0.98);
+    background: var(--raised);
   }
 }
 
@@ -802,10 +802,10 @@ button.theme-reset-all-btn {
   width: auto;
   margin: 0;
   padding: 5px 10px;
-  border: 1px solid rgba(255, 177, 142, 0.58);
+  border: 1px solid var(--danger-line-strong);
   border-radius: 8px;
-  background: rgba(73, 45, 34, 0.84);
-  color: #ffd7c2;
+  background: var(--danger-bg-hover);
+  color: var(--danger-ink);
   font-size: 0.72rem;
   font-weight: 700;
 }
@@ -813,16 +813,16 @@ button.theme-reset-all-btn {
 button.theme-reset-all-btn:focus-visible {
   transform: none;
   filter: none;
-  border-color: rgba(255, 177, 142, 0.85);
-  background: rgba(96, 58, 43, 0.92);
+  border-color: var(--danger-line-strong);
+  background: var(--danger-bg-hover);
 }
 
 @media (hover: hover) and (pointer: fine) {
   button.theme-reset-all-btn:not(:disabled):hover {
     transform: none;
     filter: none;
-    border-color: rgba(255, 177, 142, 0.85);
-    background: rgba(96, 58, 43, 0.92);
+    border-color: var(--danger-line-strong);
+    background: var(--danger-bg-hover);
   }
 }
 
@@ -849,9 +849,9 @@ button.color-editor-target {
   margin: 0;
   width: 100%;
   padding: 6px;
-  border: 1px solid rgba(151, 183, 207, 0.28);
+  border: 1px solid var(--accent-ring);
   border-radius: 9px;
-  background: rgba(11, 21, 30, 0.86);
+  background: var(--panel);
   display: grid;
   gap: 4px;
   justify-items: center;
@@ -859,7 +859,7 @@ button.color-editor-target {
 
 button.color-editor-target.is-active {
   border-color: var(--focus-ring);
-  box-shadow: 0 0 0 2px rgba(75, 149, 186, 0.24);
+  box-shadow: 0 0 0 2px var(--accent-ring);
 }
 
 button.color-editor-target:focus-visible {
@@ -882,13 +882,13 @@ button.color-editor-target:focus-visible {
   width: 100%;
   height: 34px;
   border-radius: 6px;
-  border: 1px solid rgba(214, 233, 247, 0.2);
+  border: 1px solid var(--strong-line);
 }
 
 .color-editor-target-name {
   font-size: 0.66rem;
   line-height: 1.2;
-  color: #a8bfd1;
+  color: var(--ink-muted);
   text-align: center;
 }
 
@@ -896,7 +896,7 @@ button.color-editor-target:focus-visible {
   margin: 0 0 8px;
   font-size: 0.84rem;
   font-weight: 600;
-  color: #d9e7f2;
+  color: var(--ink);
 }
 
 .layout-summary-head {
@@ -917,7 +917,7 @@ button.color-editor-target:focus-visible {
   font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.03em;
-  color: #e7f2fb;
+  color: var(--ink);
   text-transform: uppercase;
 }
 
@@ -929,7 +929,7 @@ button.color-editor-target:focus-visible {
   margin: 8px 0 0;
   font-size: 0.78rem;
   line-height: 1.42;
-  color: #b9cfde;
+  color: var(--ink-muted);
 }
 
 .section-summary-label {
@@ -937,7 +937,7 @@ button.color-editor-target:focus-visible {
   font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.03em;
-  color: #e7f2fb;
+  color: var(--ink);
   text-transform: uppercase;
 }
 
@@ -960,7 +960,7 @@ button.color-editor-target:focus-visible {
   font-size: 0.92rem;
   font-weight: 700;
   letter-spacing: 0.06em;
-  color: #a8bfd1;
+  color: var(--ink-muted);
   text-transform: uppercase;
 }
 
@@ -989,7 +989,7 @@ button.color-editor-target:focus-visible {
   text-align: left;
   border: 1px solid var(--border);
   border-radius: 12px;
-  background: rgba(9, 18, 27, 0.86);
+  background: var(--panel);
   transition:
     border-color var(--dur-short) var(--ease-out),
     box-shadow var(--dur-short) var(--ease-out),
@@ -998,16 +998,16 @@ button.color-editor-target:focus-visible {
 }
 
 .theme-card.is-selected {
-  border-color: rgba(112, 184, 222, 0.8);
-  box-shadow: 0 0 0 2px rgba(75, 149, 186, 0.22);
+  border-color: var(--accent-line);
+  box-shadow: 0 0 0 2px var(--accent-ring);
 }
 
 .theme-card:focus-within {
   transform: none;
   filter: none;
-  border-color: rgba(112, 184, 222, 0.8);
-  box-shadow: 0 0 0 2px rgba(75, 149, 186, 0.22);
-  background: rgba(9, 18, 27, 0.86);
+  border-color: var(--accent-line);
+  box-shadow: 0 0 0 2px var(--accent-ring);
+  background: var(--panel);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -1017,9 +1017,9 @@ button.color-editor-target:focus-visible {
   button.theme-card:not(:disabled):hover {
     transform: none;
     filter: none;
-    border-color: rgba(112, 184, 222, 0.8);
-    box-shadow: 0 0 0 2px rgba(75, 149, 186, 0.22);
-    background: rgba(9, 18, 27, 0.86);
+    border-color: var(--accent-line);
+    box-shadow: 0 0 0 2px var(--accent-ring);
+    background: var(--panel);
   }
 }
 
@@ -1033,7 +1033,7 @@ button.color-editor-target:focus-visible {
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #e7f2fb;
+  color: var(--ink);
   z-index: 2;
 }
 
@@ -1067,7 +1067,7 @@ button.color-editor-target:focus-visible {
   width: 100%;
   height: 100%;
   min-height: 108px;
-  border-right: 1px solid rgba(214, 233, 247, 0.16);
+  border-right: 1px solid var(--strong-line);
   box-shadow: none;
 }
 
@@ -1083,10 +1083,10 @@ button.color-editor-target:focus-visible {
   height: 100%;
   background: linear-gradient(
     to top,
-    rgba(4, 8, 12, 1) 0%,
-    rgba(4, 8, 12, 0.78) 50%,
-    rgba(4, 8, 12, 0.44) 80%,
-    rgba(6, 11, 16, 0) 100%
+    var(--app-bg) 0%,
+    rgba(var(--slate-rgb), 0.78) 50%,
+    rgba(var(--slate-rgb), 0.44) 80%,
+    rgba(var(--slate-rgb), 0) 100%
   );
   pointer-events: none;
   z-index: 1;
@@ -1096,7 +1096,7 @@ button.color-editor-target:focus-visible {
   margin: 10px 0 0;
   font-size: 0.78rem;
   line-height: 1.42;
-  color: #b9cfde;
+  color: var(--ink-muted);
   flex: 1 1 auto;
   min-width: 0;
 }
@@ -1117,29 +1117,29 @@ button.color-editor-target:focus-visible {
   text-align: left;
   border: 1px solid var(--border);
   border-radius: 12px;
-  background: rgba(9, 18, 27, 0.86);
+  background: var(--panel);
   overflow: hidden;
 }
 
 .layout-card.is-selected {
-  border-color: rgba(112, 184, 222, 0.8);
-  box-shadow: 0 0 0 2px rgba(75, 149, 186, 0.22);
+  border-color: var(--accent-line);
+  box-shadow: 0 0 0 2px var(--accent-ring);
   background: var(--item-bg);
 }
 
 .layout-card:not(.is-selected):focus-visible {
   transform: none;
   filter: none;
-  border-color: rgba(151, 183, 207, 0.5);
-  background: rgba(13, 25, 36, 0.9);
+  border-color: var(--accent-line);
+  background: var(--panel);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .layout-card:not(.is-selected):not(:disabled):hover {
     transform: none;
     filter: none;
-    border-color: rgba(151, 183, 207, 0.5);
-    background: rgba(13, 25, 36, 0.9);
+    border-color: var(--accent-line);
+    background: var(--panel);
   }
 }
 
@@ -1157,7 +1157,7 @@ button.color-editor-target:focus-visible {
   font-weight: 700;
   letter-spacing: 0.03em;
   text-transform: uppercase;
-  color: #e7f2fb;
+  color: var(--ink);
 }
 
 /* This line shows the poster size, for example "21 x 29.7 cm". */
@@ -1167,7 +1167,7 @@ button.color-editor-target:focus-visible {
   font-variant-numeric: tabular-nums;
   font-size: 0.64rem;
   letter-spacing: 0.03em;
-  color: #9fbcd0;
+  color: var(--ink-muted);
   text-transform: uppercase;
 }
 
@@ -1186,7 +1186,7 @@ button.color-editor-target:focus-visible {
   margin: 8px 0 0;
   font-size: 0.78rem;
   line-height: 1.42;
-  color: #b9cfde;
+  color: var(--ink-muted);
 }
 
 .picker-modal-backdrop {
@@ -1197,8 +1197,7 @@ button.color-editor-target:focus-visible {
   justify-content: center;
   align-items: center;
   padding: 14px;
-  background: rgba(2, 8, 14, 0.74);
-  backdrop-filter: blur(3px);
+  background: rgba(var(--slate-rgb), 0.74);
 }
 
 .picker-modal {
@@ -1206,11 +1205,11 @@ button.color-editor-target:focus-visible {
   max-height: 86vh;
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(151, 183, 207, 0.42);
+  border: 1px solid var(--accent-ring);
   border-radius: 14px;
   padding: 12px;
-  background: rgba(8, 16, 24, 0.98);
-  box-shadow: 0 28px 52px rgba(0, 0, 0, 0.55);
+  background: var(--panel);
+  box-shadow: var(--shadow-modal);
 }
 
 .picker-modal-header {
@@ -1227,7 +1226,7 @@ button.color-editor-target:focus-visible {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 0.76rem;
-  color: #8cb6d0;
+  color: var(--ink-muted);
 }
 
 button.picker-modal-close {
@@ -1235,10 +1234,10 @@ button.picker-modal-close {
   height: 28px;
   margin: 0;
   padding: 0;
-  border: 1px solid rgba(151, 183, 207, 0.42);
+  border: 1px solid var(--accent-ring);
   border-radius: 999px;
   background: var(--item-bg);
-  color: #d8e8f4;
+  color: var(--ink);
   font-size: 0.8rem;
   line-height: 1;
   display: inline-flex;
@@ -1249,14 +1248,14 @@ button.picker-modal-close {
 button.picker-modal-close:focus-visible {
   transform: none;
   filter: none;
-  background: rgba(47, 79, 102, 0.95);
+  background: var(--raised);
 }
 
 @media (hover: hover) and (pointer: fine) {
   button.picker-modal-close:not(:disabled):hover {
     transform: none;
     filter: none;
-    background: rgba(47, 79, 102, 0.95);
+    background: var(--raised);
   }
 }
 
@@ -1287,7 +1286,7 @@ button.picker-modal-close:focus-visible {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 0.9rem;
-  color: #87adc4;
+  color: var(--ink-muted);
 }
 
 .layout-picker-group .picker-option-list {
@@ -1303,23 +1302,23 @@ button.picker-modal-close:focus-visible {
 }
 
 button.picker-modal-done {
-  border: 1px solid rgba(151, 183, 207, 0.42);
+  border: 1px solid var(--accent-ring);
   background: var(--item-bg);
-  color: #e6f2fb;
+  color: var(--ink);
   padding: 8px 12px;
 }
 
 button.picker-modal-done:focus-visible {
   transform: none;
   filter: none;
-  background: rgba(47, 79, 102, 0.95);
+  background: var(--raised);
 }
 
 @media (hover: hover) and (pointer: fine) {
   button.picker-modal-done:not(:disabled):hover {
     transform: none;
     filter: none;
-    background: rgba(47, 79, 102, 0.95);
+    background: var(--raised);
   }
 }
 
@@ -1338,21 +1337,21 @@ button.palette-color-item {
   width: 100%;
   margin: 0;
   padding: 5px;
-  border: 1px solid rgba(151, 183, 207, 0.26);
+  border: 1px solid var(--accent-ring);
   border-radius: 8px;
-  background: rgba(9, 18, 27, 0.84);
+  background: rgba(var(--slate-rgb), 0.84);
   cursor: pointer;
 }
 
 button.palette-color-item.is-active {
-  border-color: rgba(112, 184, 222, 0.8);
-  box-shadow: 0 0 0 2px rgba(75, 149, 186, 0.22);
+  border-color: var(--accent-line);
+  box-shadow: 0 0 0 2px var(--accent-ring);
 }
 
 button.palette-color-item:focus-visible {
   transform: none;
   filter: none;
-  border-color: rgba(112, 184, 222, 0.78);
+  border-color: var(--accent-line);
   background: var(--item-bg);
 }
 
@@ -1360,7 +1359,7 @@ button.palette-color-item:focus-visible {
   button.palette-color-item:not(:disabled):hover {
     transform: none;
     filter: none;
-    border-color: rgba(112, 184, 222, 0.78);
+    border-color: var(--accent-line);
     background: var(--item-bg);
   }
 }
@@ -1370,14 +1369,14 @@ button.palette-color-item:focus-visible {
   width: 100%;
   height: 44px;
   border-radius: 5px;
-  border: 1px solid rgba(214, 233, 247, 0.15);
+  border: 1px solid var(--strong-line);
 }
 
 .palette-color-name {
   display: block;
   font-size: 0.7rem;
   font-weight: 500;
-  color: #a8bfd1;
+  color: var(--ink-muted);
   line-height: 1.2;
   word-break: break-word;
   text-align: center;
@@ -1385,13 +1384,13 @@ button.palette-color-item:focus-visible {
 
 .color-picker-popup {
   position: relative;
-  border: 1px solid rgba(151, 183, 207, 0.42);
+  border: 1px solid var(--accent-ring);
   border-radius: 12px;
-  background: rgba(21, 40, 55, 0.96);
+  background: var(--item-bg);
   padding: 15px;
   max-width: 500px;
   margin: 0 auto;
-  box-shadow: inset 0 0 0 1px rgba(31, 57, 77, 0.78);
+  box-shadow: inset 0 0 0 1px var(--line);
 }
 
 .color-preset-grid {
@@ -1428,14 +1427,14 @@ button.color-preset-cell.is-active {
 button.color-preset-cell:focus-visible {
   transform: scale(1.08);
   filter: none;
-  border-color: rgba(214, 233, 247, 0.8);
+  border-color: var(--strong-line);
 }
 
 @media (hover: hover) and (pointer: fine) {
   button.color-preset-cell:not(:disabled):hover {
     transform: scale(1.08);
     filter: none;
-    border-color: rgba(214, 233, 247, 0.8);
+    border-color: var(--strong-line);
   }
 }
 
@@ -1443,10 +1442,10 @@ button.color-grid-action {
   margin: 0;
   min-height: 44px;
   padding: 0 8px;
-  border: 1px solid rgba(151, 183, 207, 0.42);
+  border: 1px solid var(--accent-ring);
   border-radius: 9px;
-  background: rgba(22, 43, 58, 0.95);
-  color: #d5e5f0;
+  background: var(--item-bg);
+  color: var(--ink);
   font-size: 0.82rem;
   font-weight: 700;
   line-height: 1.05;
@@ -1459,14 +1458,14 @@ button.color-grid-action {
 
 button.color-grid-action.is-active {
   border-color: var(--focus-ring);
-  background: rgba(45, 78, 102, 0.98);
+  background: var(--raised);
 }
 
 button.color-grid-action:focus-visible {
   transform: none;
   filter: none;
   border-color: var(--focus-ring);
-  background: rgba(45, 78, 102, 0.98);
+  background: var(--raised);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -1474,13 +1473,13 @@ button.color-grid-action:focus-visible {
     transform: none;
     filter: none;
     border-color: var(--focus-ring);
-    background: rgba(45, 78, 102, 0.98);
+    background: var(--raised);
   }
 }
 
 button.color-grid-reset {
-  border-color: rgba(255, 177, 142, 0.58);
-  color: #ffd7c2;
+  border-color: var(--danger-line-strong);
+  color: var(--danger-ink);
 }
 
 .color-manual-panel {
@@ -1488,8 +1487,8 @@ button.color-grid-reset {
   padding: 12px;
   border: 1px solid var(--border);
   border-radius: 10px;
-  background: rgba(13, 25, 35, 0.86);
-  box-shadow: inset 0 0 0 1px rgba(31, 57, 77, 0.62);
+  background: var(--panel);
+  box-shadow: inset 0 0 0 1px var(--line);
 }
 
 .color-custom-panel {
@@ -1501,7 +1500,7 @@ button.color-grid-reset {
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 10px;
-  background: rgba(15, 28, 38, 0.96);
+  background: var(--panel);
 }
 
 .color-picker-frame .react-colorful {
@@ -1529,8 +1528,8 @@ button.color-grid-reset {
   height: 20px;
   border-width: 2px;
   box-shadow:
-    0 0 0 1px rgba(6, 14, 20, 0.84),
-    0 0 0 4px rgba(6, 14, 20, 0.18);
+    0 0 0 1px var(--line),
+    0 0 0 4px var(--line);
 }
 
 label.color-field-label {
@@ -1540,7 +1539,7 @@ label.color-field-label {
   margin-bottom: 0;
   font-size: 0.68rem;
   font-weight: 600;
-  color: #8ab0c6;
+  color: var(--ink-muted);
 }
 
 .color-hex-input {
@@ -1552,8 +1551,8 @@ label.color-field-label {
   font-size: 1rem;
   font-family: "Spline Sans Mono", monospace;
   letter-spacing: 0.04em;
-  background: rgba(26, 47, 64, 0.98);
-  border-color: rgba(151, 183, 207, 0.5);
+  background: var(--item-bg);
+  border-color: var(--accent-line);
 }
 
 .markers-summary-card {
@@ -1565,7 +1564,7 @@ label.color-field-label {
   margin: 0;
   font-size: 0.78rem;
   line-height: 1.45;
-  color: #9fbcd0;
+  color: var(--ink-muted);
 }
 
 .markers-summary-preview {
@@ -1582,10 +1581,10 @@ label.color-field-label {
   min-width: 28px;
   height: 28px;
   padding: 0 8px;
-  border: 1px solid rgba(151, 183, 207, 0.28);
+  border: 1px solid var(--accent-ring);
   border-radius: 999px;
-  background: rgba(12, 23, 34, 0.9);
-  color: #b8cedd;
+  background: var(--panel);
+  color: var(--ink-muted);
   font-family: "Spline Sans Mono", monospace;
   font-size: 0.68rem;
 }
@@ -1596,7 +1595,7 @@ label.color-field-label {
   margin: 0;
   font-size: 0.78rem;
   line-height: 1.45;
-  color: #9fbcd0;
+  color: var(--ink-muted);
 }
 
 .markers-section__content {
@@ -1631,25 +1630,25 @@ label.color-field-label {
 button.marker-info-btn {
   width: 24px;
   height: 24px;
-  border: 1px solid rgba(151, 183, 207, 0.32);
+  border: 1px solid var(--accent-ring);
   border-radius: 999px;
-  background: rgba(15, 28, 40, 0.9);
-  color: #b6cfe0;
+  background: var(--panel);
+  color: var(--ink-muted);
 }
 
 button.marker-info-btn:focus-visible {
   transform: none;
   filter: none;
-  border-color: rgba(112, 184, 222, 0.72);
-  background: rgba(36, 62, 80, 0.94);
+  border-color: var(--accent-line);
+  background: var(--raised);
 }
 
 @media (hover: hover) and (pointer: fine) {
   button.marker-info-btn:not(:disabled):hover {
     transform: none;
     filter: none;
-    border-color: rgba(112, 184, 222, 0.72);
-    background: rgba(36, 62, 80, 0.94);
+    border-color: var(--accent-line);
+    background: var(--raised);
   }
 }
 
@@ -1667,8 +1666,8 @@ button.marker-info-btn:focus-visible {
   padding: 8px 10px;
   border: 1px solid var(--border);
   border-radius: 8px;
-  background: rgba(7, 14, 21, 0.97);
-  color: #c2d8e7;
+  background: var(--panel);
+  color: var(--ink);
   font-size: 0.72rem;
   line-height: 1.45;
   opacity: 0;
@@ -1723,14 +1722,14 @@ button.marker-info-btn:focus-visible {
   flex: 0 0 clamp(90px, 30%, 116px);
   min-width: clamp(90px, 30%, 116px);
   scroll-snap-align: start;
-  border: 1px solid rgba(151, 183, 207, 0.26);
+  border: 1px solid var(--accent-ring);
   border-radius: 10px;
-  background: rgba(10, 20, 31, 0.78);
+  background: rgba(var(--slate-rgb), 0.78);
 }
 
 .marker-mobile-card.is-selected {
   border-color: var(--focus-ring);
-  box-shadow: 0 0 0 2px rgba(75, 149, 186, 0.2);
+  box-shadow: 0 0 0 2px var(--accent-ring);
 }
 
 button.marker-mobile-card__select {
@@ -1741,7 +1740,7 @@ button.marker-mobile-card__select {
   border: none;
   border-radius: 10px;
   background: transparent;
-  color: #d8e8f4;
+  color: var(--ink);
   display: grid;
   justify-items: center;
   align-content: center;
@@ -1751,14 +1750,14 @@ button.marker-mobile-card__select {
 button.marker-mobile-card__select:focus-visible {
   transform: none;
   filter: none;
-  background: rgba(20, 39, 54, 0.94);
+  background: var(--item-bg);
 }
 
 @media (hover: hover) and (pointer: fine) {
   button.marker-mobile-card__select:not(:disabled):hover {
     transform: none;
     filter: none;
-    background: rgba(20, 39, 54, 0.94);
+    background: var(--item-bg);
   }
 }
 
@@ -1768,7 +1767,7 @@ button.marker-mobile-card__select:focus-visible {
   line-height: 1.25;
   font-weight: 700;
   text-align: center;
-  color: #d9e8f4;
+  color: var(--ink);
   white-space: normal;
   word-break: break-word;
 }
@@ -1784,9 +1783,9 @@ button.marker-mobile-card__delete {
   margin: 0;
   padding: 0;
   border-radius: 999px;
-  border: 1px solid rgba(255, 152, 129, 0.34);
-  background: rgba(82, 44, 36, 0.86);
-  color: #ffd5cb;
+  border: 1px solid var(--danger-line);
+  background: var(--danger-bg-hover);
+  color: var(--danger-ink);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1800,16 +1799,16 @@ button.marker-mobile-card__delete svg {
 button.marker-mobile-card__delete:focus-visible {
   transform: translate(35%, -35%);
   filter: none;
-  border-color: rgba(255, 152, 129, 0.72);
-  background: rgba(97, 53, 44, 0.94);
+  border-color: var(--danger-line-strong);
+  background: var(--danger-bg-hover);
 }
 
 @media (hover: hover) and (pointer: fine) {
   button.marker-mobile-card__delete:not(:disabled):hover {
     transform: translate(35%, -35%);
     filter: none;
-    border-color: rgba(255, 152, 129, 0.72);
-    background: rgba(97, 53, 44, 0.94);
+    border-color: var(--danger-line-strong);
+    background: var(--danger-bg-hover);
   }
 }
 
@@ -1831,9 +1830,9 @@ button.marker-delete-all-btn {
   min-height: 40px;
   padding: 8px 12px;
   border-radius: 10px;
-  background: rgba(82, 44, 36, 0.82);
-  border-color: rgba(255, 152, 129, 0.34);
-  color: #ffd5cb;
+  background: var(--danger-bg-hover);
+  border-color: var(--danger-line);
+  color: var(--danger-ink);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1843,16 +1842,16 @@ button.marker-delete-all-btn {
 button.marker-delete-all-btn:focus-visible {
   transform: none;
   filter: none;
-  border-color: rgba(255, 152, 129, 0.72);
-  background: rgba(97, 53, 44, 0.92);
+  border-color: var(--danger-line-strong);
+  background: var(--danger-bg-hover);
 }
 
 @media (hover: hover) and (pointer: fine) {
   button.marker-delete-all-btn:not(:disabled):hover {
     transform: none;
     filter: none;
-    border-color: rgba(255, 152, 129, 0.72);
-    background: rgba(97, 53, 44, 0.92);
+    border-color: var(--danger-line-strong);
+    background: var(--danger-bg-hover);
   }
 }
 
@@ -1865,20 +1864,20 @@ button.marker-delete-all-btn:focus-visible {
   padding: 16px;
   display: grid;
   gap: 12px;
-  background: linear-gradient(180deg, rgba(255, 124, 107, 0.1), #0a1824);
+  background: var(--panel);
 }
 
 .marker-delete-modal__headline {
   margin: 0;
   font-size: 1rem;
   font-weight: 700;
-  color: #e4f2fc;
+  color: var(--ink);
 }
 
 .marker-delete-modal__text {
   margin: 0;
   font-size: 0.9rem;
-  color: #b8cedd;
+  color: var(--ink-muted);
 }
 
 .marker-delete-modal__actions {
@@ -1892,17 +1891,17 @@ button.marker-delete-modal__cancel {
   width: auto;
   margin: 0;
   padding: 8px 12px;
-  border: 1px solid rgba(151, 183, 207, 0.42);
+  border: 1px solid var(--accent-ring);
   border-radius: 9px;
   background: var(--item-bg);
-  color: #e8f3fb;
+  color: var(--ink);
 }
 
 button.marker-delete-modal__cancel:focus-visible {
   transform: none;
   filter: none;
   border-color: var(--focus-ring);
-  background: rgba(44, 78, 102, 0.98);
+  background: var(--raised);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -1910,7 +1909,7 @@ button.marker-delete-modal__cancel:focus-visible {
     transform: none;
     filter: none;
     border-color: var(--focus-ring);
-    background: rgba(44, 78, 102, 0.98);
+    background: var(--raised);
   }
 }
 
@@ -1919,9 +1918,9 @@ button.marker-delete-modal__confirm {
   margin: 0;
   padding: 8px 12px;
   border-radius: 9px;
-  border: 1px solid rgba(255, 152, 129, 0.42);
-  background: rgba(82, 44, 36, 0.88);
-  color: #ffd5cb;
+  border: 1px solid var(--danger-line);
+  background: var(--danger-bg-hover);
+  color: var(--danger-ink);
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -1930,16 +1929,16 @@ button.marker-delete-modal__confirm {
 button.marker-delete-modal__confirm:focus-visible {
   transform: none;
   filter: none;
-  border-color: rgba(255, 152, 129, 0.72);
-  background: rgba(97, 53, 44, 0.92);
+  border-color: var(--danger-line-strong);
+  background: var(--danger-bg-hover);
 }
 
 @media (hover: hover) and (pointer: fine) {
   button.marker-delete-modal__confirm:not(:disabled):hover {
     transform: none;
     filter: none;
-    border-color: rgba(255, 152, 129, 0.72);
-    background: rgba(97, 53, 44, 0.92);
+    border-color: var(--danger-line-strong);
+    background: var(--danger-bg-hover);
   }
 }
 
@@ -1948,9 +1947,9 @@ button.marker-delete-modal__confirm:focus-visible {
   display: grid;
   gap: 10px;
   padding: 12px;
-  border: 1px solid rgba(151, 183, 207, 0.26);
+  border: 1px solid var(--accent-ring);
   border-radius: 12px;
-  background: rgba(10, 20, 31, 0.78);
+  background: rgba(var(--slate-rgb), 0.78);
 }
 
 .marker-editor-card.is-disabled {
@@ -1970,16 +1969,16 @@ button.marker-delete-modal__confirm:focus-visible {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 0.72rem;
-  color: #8cb6d0;
+  color: var(--ink-muted);
 }
 
 button.marker-settings-card__reset-btn {
   width: auto;
   margin: 0;
   padding: 7px 10px;
-  background: rgba(73, 45, 34, 0.84);
-  border-color: rgba(255, 177, 142, 0.58);
-  color: #ffd7c2;
+  background: var(--danger-bg-hover);
+  border-color: var(--danger-line-strong);
+  color: var(--danger-ink);
 }
 
 .marker-editor-toolbar-btn {
@@ -1988,24 +1987,24 @@ button.marker-settings-card__reset-btn {
 }
 
 .marker-editor-toolbar-btn--danger {
-  background: rgba(73, 45, 34, 0.84);
-  border-color: rgba(255, 177, 142, 0.58);
-  color: #ffd7c2;
+  background: var(--danger-bg-hover);
+  border-color: var(--danger-line-strong);
+  color: var(--danger-ink);
 }
 
 .marker-editor-toolbar-btn--danger:focus-visible {
   transform: none;
   filter: none;
-  border-color: rgba(255, 177, 142, 0.85);
-  background: rgba(96, 58, 43, 0.92);
+  border-color: var(--danger-line-strong);
+  background: var(--danger-bg-hover);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .marker-editor-toolbar-btn--danger:not(:disabled):hover {
     transform: none;
     filter: none;
-    border-color: rgba(255, 177, 142, 0.85);
-    background: rgba(96, 58, 43, 0.92);
+    border-color: var(--danger-line-strong);
+    background: var(--danger-bg-hover);
   }
 }
 
@@ -2017,7 +2016,7 @@ button.marker-settings-card__reset-btn {
 .marker-settings-card__theme-label {
   font-size: 0.84rem;
   font-weight: 600;
-  color: #d9e7f2;
+  color: var(--ink);
 }
 
 .marker-header-action-btn {
@@ -2032,7 +2031,7 @@ button.marker-settings-card__reset-btn {
 
 .marker-header-action-btn.is-active {
   border-color: var(--focus-ring);
-  background: rgba(42, 72, 93, 0.95);
+  background: var(--raised);
 }
 
 .marker-settings-toggle-hint {
@@ -2040,14 +2039,14 @@ button.marker-settings-card__reset-btn {
   width: 100%;
   font-size: 0.72rem;
   line-height: 1.35;
-  color: #8fb0c6;
+  color: var(--ink-muted);
 }
 
 .marker-settings-card__theme-note {
   margin: 0;
   font-size: 0.74rem;
   line-height: 1.45;
-  color: #8fb0c6;
+  color: var(--ink-muted);
 }
 
 .marker-row {
@@ -2067,7 +2066,7 @@ button.marker-settings-card__reset-btn {
 .marker-row__title {
   font-size: 0.84rem;
   font-weight: 700;
-  color: #e7f2fb;
+  color: var(--ink);
 }
 
 .marker-row__actions {
@@ -2083,9 +2082,9 @@ button.marker-row__icon-btn {
   margin: 0;
   padding: 0 12px;
   border-radius: 10px;
-  background: rgba(18, 37, 52, 0.94);
+  background: var(--item-bg);
   border-color: var(--border);
-  color: #d8e8f4;
+  color: var(--ink);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -2106,14 +2105,14 @@ button.marker-row__icon-btn {
 button.marker-row__icon-btn--danger {
   min-width: 38px;
   padding: 0;
-  background: rgba(82, 44, 36, 0.82);
-  border-color: rgba(255, 152, 129, 0.34);
-  color: #ffd5cb;
+  background: var(--danger-bg-hover);
+  border-color: var(--danger-line);
+  color: var(--danger-ink);
 }
 
 .marker-editor-card__details {
   padding-top: 10px;
-  border-top: 1px solid rgba(151, 183, 207, 0.18);
+  border-top: 1px solid var(--accent-ring);
   display: grid;
   gap: 10px;
 }
@@ -2152,8 +2151,8 @@ button.marker-row__icon-btn--danger {
   border: 1px solid var(--border);
   background: linear-gradient(
     180deg,
-    rgba(28, 51, 69, 0.95),
-    rgba(17, 34, 47, 0.95)
+    var(--item-bg),
+    var(--item-bg)
   );
   box-sizing: border-box;
 }
@@ -2165,10 +2164,10 @@ button.marker-row__icon-btn--danger {
   height: 22px;
   margin-top: -6px;
   border-radius: 999px;
-  border: 2px solid #e8f3fb;
-  background: radial-gradient(circle at 35% 35%, #4ca9cd, #2a7fa0 70%);
+  border: 2px solid var(--strong-line);
+  background: var(--accent);
   box-shadow:
-    0 0 0 2px rgba(5, 13, 20, 0.45),
+    0 0 0 2px var(--line),
     0 2px 6px rgba(0, 0, 0, 0.35);
   box-sizing: border-box;
 }
@@ -2179,8 +2178,8 @@ button.marker-row__icon-btn--danger {
   border: 1px solid var(--border);
   background: linear-gradient(
     180deg,
-    rgba(28, 51, 69, 0.95),
-    rgba(17, 34, 47, 0.95)
+    var(--item-bg),
+    var(--item-bg)
   );
   box-sizing: border-box;
 }
@@ -2189,10 +2188,10 @@ button.marker-row__icon-btn--danger {
   width: 22px;
   height: 22px;
   border-radius: 999px;
-  border: 2px solid #e8f3fb;
-  background: radial-gradient(circle at 35% 35%, #4ca9cd, #2a7fa0 70%);
+  border: 2px solid var(--strong-line);
+  background: var(--accent);
   box-shadow:
-    0 0 0 2px rgba(5, 13, 20, 0.45),
+    0 0 0 2px var(--line),
     0 2px 6px rgba(0, 0, 0, 0.35);
   box-sizing: border-box;
 }
@@ -2202,8 +2201,8 @@ button.marker-row__icon-btn--danger {
   border-radius: 999px;
   background: linear-gradient(
     180deg,
-    rgba(43, 95, 126, 0.95),
-    rgba(35, 84, 112, 0.95)
+    var(--accent),
+    var(--raised)
   );
 }
 
@@ -2231,7 +2230,7 @@ button.marker-row__icon-btn--danger {
   width: 48px;
   min-width: 48px;
   min-height: 48px;
-  border: 1px solid rgba(151, 183, 207, 0.26);
+  border: 1px solid var(--accent-ring);
   border-radius: 10px;
   background: #000000;
 }
@@ -2273,8 +2272,8 @@ button.marker-color-edit-btn {
   padding: 5px 10px;
   border-radius: 8px;
   border: 1px solid var(--border);
-  background: rgba(19, 38, 53, 0.94);
-  color: #d8e8f4;
+  background: var(--item-bg);
+  color: var(--ink);
   font-size: 0.72rem;
   font-weight: 700;
 }
@@ -2283,7 +2282,7 @@ button.marker-color-edit-btn:focus-visible {
   transform: none;
   filter: none;
   border-color: var(--focus-ring);
-  background: rgba(42, 72, 93, 0.95);
+  background: var(--raised);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -2291,7 +2290,7 @@ button.marker-color-edit-btn:focus-visible {
     transform: none;
     filter: none;
     border-color: var(--focus-ring);
-    background: rgba(42, 72, 93, 0.95);
+    background: var(--raised);
   }
 }
 
@@ -2300,10 +2299,10 @@ button.marker-color-edit-btn:focus-visible {
   align-items: center;
   min-height: 48px;
   padding: 0 12px;
-  border: 1px solid rgba(151, 183, 207, 0.26);
+  border: 1px solid var(--accent-ring);
   border-radius: 10px;
-  background: rgba(9, 18, 27, 0.84);
-  color: #ebf3fa;
+  background: rgba(var(--slate-rgb), 0.84);
+  color: var(--ink);
   font-family: "Spline Sans Mono", monospace;
   font-size: 0.8rem;
   letter-spacing: 0.04em;
@@ -2325,13 +2324,13 @@ button.marker-color-edit-btn:focus-visible {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: #8cb6d0;
+  color: var(--ink-muted);
 }
 
 .marker-picker__divider {
   width: 100%;
   height: 1px;
-  background: rgba(151, 183, 207, 0.22);
+  background: var(--accent-wash-strong);
 }
 
 .marker-picker__divider--actions {
@@ -2350,9 +2349,9 @@ button.marker-picker__option {
   gap: 6px;
   margin: 0;
   padding: 8px 6px;
-  border: 1px solid rgba(151, 183, 207, 0.28);
+  border: 1px solid var(--accent-ring);
   border-radius: 10px;
-  background: rgba(12, 23, 34, 0.9);
+  background: var(--panel);
 }
 
 button.marker-picker__option--uploaded {
@@ -2361,47 +2360,47 @@ button.marker-picker__option--uploaded {
 
 button.marker-picker__option--upload-tile {
   border-style: dashed;
-  border-color: rgba(112, 184, 222, 0.52);
-  background: rgba(16, 31, 44, 0.9);
+  border-color: var(--accent-line);
+  background: var(--item-bg);
 }
 
 button.marker-picker__option--toggle {
   border-style: dashed;
   border-color: var(--border);
-  background: rgba(14, 27, 39, 0.92);
+  background: var(--panel);
 }
 
 button.marker-picker__option.is-selected {
   border-color: var(--focus-ring);
-  box-shadow: 0 0 0 2px rgba(75, 149, 186, 0.22);
+  box-shadow: 0 0 0 2px var(--accent-ring);
 }
 
 button.marker-picker__option:focus-visible {
   transform: none;
   filter: none;
-  border-color: rgba(112, 184, 222, 0.8);
-  background: rgba(22, 42, 58, 0.96);
+  border-color: var(--accent-line);
+  background: var(--item-bg);
 }
 
 @media (hover: hover) and (pointer: fine) {
   button.marker-picker__option:not(:disabled):hover {
     transform: none;
     filter: none;
-    border-color: rgba(112, 184, 222, 0.8);
-    background: rgba(22, 42, 58, 0.96);
+    border-color: var(--accent-line);
+    background: var(--item-bg);
   }
 }
 
 .marker-picker__label {
   font-size: 0.68rem;
   line-height: 1.2;
-  color: #b8cedd;
+  color: var(--ink-muted);
 }
 
 .marker-picker__uploaded-empty {
   margin: 0;
   font-size: 0.74rem;
-  color: #8fb0c6;
+  color: var(--ink-muted);
 }
 
 .marker-picker__upload-plus {
@@ -2411,8 +2410,8 @@ button.marker-picker__option:focus-visible {
   width: 30px;
   height: 30px;
   border-radius: 8px;
-  border: 1px solid rgba(112, 184, 222, 0.52);
-  color: #cfe6f5;
+  border: 1px solid var(--accent-line);
+  color: var(--ink);
   font-size: 1rem;
   font-weight: 700;
 }
@@ -2424,7 +2423,7 @@ button.marker-picker__option:focus-visible {
   width: 30px;
   height: 30px;
   border-radius: 8px;
-  color: #d8e8f4;
+  color: var(--ink);
   font-size: 1.4rem;
   font-weight: 700;
   line-height: 1;
@@ -2437,9 +2436,9 @@ button.marker-picker__option:focus-visible {
   width: 18px;
   height: 18px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 152, 129, 0.4);
-  background: rgba(82, 44, 36, 0.9);
-  color: #ffd5cb;
+  border: 1px solid var(--danger-line);
+  background: var(--danger-bg-hover);
+  color: var(--danger-ink);
   font-size: 0.72rem;
   line-height: 1;
   display: inline-flex;
@@ -2448,14 +2447,14 @@ button.marker-picker__option:focus-visible {
 }
 
 .marker-picker__remove-uploaded:focus-visible {
-  border-color: rgba(255, 152, 129, 0.72);
-  background: rgba(97, 53, 44, 0.95);
+  border-color: var(--danger-line-strong);
+  background: var(--danger-bg-hover);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .marker-picker__remove-uploaded:hover {
-    border-color: rgba(255, 152, 129, 0.72);
-    background: rgba(97, 53, 44, 0.95);
+    border-color: var(--danger-line-strong);
+    background: var(--danger-bg-hover);
   }
 }
 
@@ -2471,9 +2470,9 @@ button.marker-picker__upload {
   margin: 0;
   padding: 7px 10px;
   border-radius: 9px;
-  background: rgba(19, 38, 53, 0.94);
+  background: var(--item-bg);
   border-color: var(--border);
-  color: #d8e8f4;
+  color: var(--ink);
   font-size: 0.74rem;
   display: inline-flex;
   align-items: center;
@@ -2481,9 +2480,9 @@ button.marker-picker__upload {
 }
 
 button.marker-picker__clear-uploaded {
-  background: rgba(82, 44, 36, 0.82);
-  border-color: rgba(255, 152, 129, 0.34);
-  color: #ffd5cb;
+  background: var(--danger-bg-hover);
+  border-color: var(--danger-line);
+  color: var(--danger-ink);
 }
 
 .marker-picker__file-input {
@@ -2724,8 +2723,8 @@ button:disabled {
 }
 
 button[type="submit"] {
-  background: linear-gradient(135deg, #1a6f8c, #2f8eaf);
-  color: #f4fbff;
+  background: var(--accent);
+  color: var(--ink);
 }
 
 button.location-clear-btn {
@@ -2740,8 +2739,8 @@ button.location-clear-btn {
   padding: 0;
   border: 1px solid var(--border);
   border-radius: 999px;
-  background: rgba(30, 53, 71, 0.9);
-  color: #d2e3ef;
+  background: var(--item-bg);
+  color: var(--ink);
   font-size: 0.7rem;
   font-weight: 700;
   line-height: 1;
@@ -2753,14 +2752,14 @@ button.location-clear-btn {
 button.location-clear-btn:focus-visible {
   transform: translateY(-50%);
   filter: none;
-  background: rgba(47, 79, 102, 0.95);
+  background: var(--raised);
 }
 
 @media (hover: hover) and (pointer: fine) {
   button.location-clear-btn:not(:disabled):hover {
     transform: translateY(-50%);
     filter: none;
-    background: rgba(47, 79, 102, 0.95);
+    background: var(--raised);
   }
 }
 
@@ -3037,7 +3036,7 @@ button.location-clear-btn:focus-visible {
   margin: 0;
   padding: 12px;
   font-size: 0.85rem;
-  color: rgba(231, 242, 251, 0.65);
+  color: var(--ink-muted);
   background: rgba(255, 255, 255, 0.03);
   border: 1px dashed rgba(255, 255, 255, 0.12);
   border-radius: 8px;
@@ -3085,7 +3084,7 @@ button.route-card__summary {
   border: none;
   border-radius: 8px;
   background: transparent;
-  color: #d8e8f4;
+  color: var(--ink);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -3142,7 +3141,7 @@ button.route-card__summary:focus-visible {
 .route-card__label {
   font-size: 0.8rem;
   font-weight: 600;
-  color: #e7f2fb;
+  color: var(--ink);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -3155,7 +3154,7 @@ button.route-card__summary:focus-visible {
 
 .route-card__distance {
   font-size: 0.72rem;
-  color: rgba(231, 242, 251, 0.6);
+  color: var(--ink-muted);
   font-variant-numeric: tabular-nums;
 }
 
@@ -3174,9 +3173,9 @@ button.route-card__delete {
   margin: 0;
   padding: 0;
   border-radius: 999px;
-  border: 1px solid rgba(255, 152, 129, 0.34);
-  background: rgba(82, 44, 36, 0.86);
-  color: #ffd5cb;
+  border: 1px solid var(--danger-line);
+  background: var(--danger-bg-hover);
+  color: var(--danger-ink);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -3191,16 +3190,16 @@ button.route-card__delete svg {
 button.route-card__delete:focus-visible {
   transform: translate(35%, -35%);
   filter: none;
-  border-color: rgba(255, 152, 129, 0.72);
-  background: rgba(97, 53, 44, 0.94);
+  border-color: var(--danger-line-strong);
+  background: var(--danger-bg-hover);
 }
 
 @media (hover: hover) and (pointer: fine) {
   button.route-card__delete:not(:disabled):hover {
     transform: translate(35%, -35%);
     filter: none;
-    border-color: rgba(255, 152, 129, 0.72);
-    background: rgba(97, 53, 44, 0.94);
+    border-color: var(--danger-line-strong);
+    background: var(--danger-bg-hover);
   }
 }
 
@@ -3223,7 +3222,7 @@ button.route-card__delete:focus-visible {
   justify-content: space-between;
   align-items: center;
   font-size: 0.8rem;
-  color: rgba(231, 242, 251, 0.8);
+  color: var(--ink);
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
@@ -3234,7 +3233,7 @@ button.route-card__delete:focus-visible {
 
 .route-card__value {
   font-size: 0.8rem;
-  color: rgba(231, 242, 251, 0.6);
+  color: var(--ink-muted);
   font-variant-numeric: tabular-nums;
 }
 
@@ -3279,7 +3278,7 @@ button.route-card__delete:focus-visible {
   font-size: 0.8rem;
   border-radius: 4px;
   background: transparent;
-  color: rgba(231, 242, 251, 0.7);
+  color: var(--ink-muted);
   border: none;
   cursor: pointer;
   transition:
@@ -3289,7 +3288,7 @@ button.route-card__delete:focus-visible {
 
 @media (hover: hover) and (pointer: fine) {
   .route-card__style-btn:hover {
-    color: #e7f2fb;
+    color: var(--ink);
   }
 }
 
@@ -3300,7 +3299,7 @@ button.route-card__delete:focus-visible {
 
 .route-card__style-btn.is-active {
   background: rgba(255, 255, 255, 0.12);
-  color: #e7f2fb;
+  color: var(--ink);
 }
 
 button.route-card__done {
@@ -3358,7 +3357,7 @@ button.route-card__endpoint-row {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 6px;
-  color: #e7f2fb;
+  color: var(--ink);
   cursor: pointer;
   transition:
     background var(--dur-press) var(--ease-out),

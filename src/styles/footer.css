@@ -12,7 +12,7 @@
   font-size: 0.8rem;
   font-family: "Spline Sans Mono", monospace;
   opacity: 0.74;
-  color: #9bb3c5;
+  color: var(--ink-muted);
 }
 
 /* Hosts Mediavine's injected consent button (see useConsentButtonSlot).
@@ -47,14 +47,14 @@
   line-height: inherit !important;
   letter-spacing: inherit !important;
   text-transform: none !important;
-  color: #cbe8ff !important;
+  color: var(--ink) !important;
   text-decoration: underline;
   text-underline-offset: 2px;
   cursor: pointer;
 }
 
 .source-link {
-  color: #cbe8ff;
+  color: var(--ink);
   text-decoration: underline;
   text-underline-offset: 2px;
   background: none;
@@ -65,12 +65,12 @@
 }
 
 .source-link:focus-visible {
-  color: #ecf8ff;
+  color: var(--ink);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .source-link:hover {
-    color: #ecf8ff;
+    color: var(--ink);
   }
 }
 
@@ -78,7 +78,7 @@
   margin: 0;
   text-align: center;
   font-size: 0.82rem;
-  color: #b8cedd;
+  color: var(--ink-muted);
 }
 
 .heart {

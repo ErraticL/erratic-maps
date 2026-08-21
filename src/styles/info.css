@@ -20,7 +20,7 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 0.78rem;
-  color: #88b7d5;
+  color: var(--ink-muted);
 }
 
 .swatch-row {
@@ -33,7 +33,7 @@
 .swatch {
   aspect-ratio: 1 / 1;
   border-radius: 7px;
-  border: 1px solid rgba(214, 233, 247, 0.3);
+  border: 1px solid var(--strong-line);
 }
 
 .inspector-copy,
@@ -43,7 +43,7 @@
   font-size: 0.83rem;
   line-height: 1.45;
   opacity: 0.9;
-  color: #c5d9e8;
+  color: var(--ink);
 }
 
 .inspector-card p + p,
@@ -65,8 +65,8 @@
   padding: 7px 10px;
   border-radius: 999px;
   border: 1px solid var(--border);
-  background: rgba(9, 18, 27, 0.9);
-  color: #d5e8f7;
+  background: var(--panel);
+  color: var(--ink);
   text-decoration: none;
   font-size: 0.78rem;
   font-weight: 600;
@@ -78,16 +78,16 @@
 }
 
 .github-badge:focus-visible {
-  border-color: rgba(120, 179, 214, 0.75);
-  background: rgba(20, 39, 54, 0.95);
-  color: #ecf8ff;
+  border-color: var(--accent-line);
+  background: var(--item-bg);
+  color: var(--ink);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .github-badge:hover {
-    border-color: rgba(120, 179, 214, 0.75);
-    background: rgba(20, 39, 54, 0.95);
-    color: #ecf8ff;
+    border-color: var(--accent-line);
+    background: var(--item-bg);
+    color: var(--ink);
   }
 }
 
@@ -129,8 +129,8 @@
   padding: 6px 10px;
   border-radius: 999px;
   border: 1px solid var(--border);
-  background: rgba(9, 18, 27, 0.9);
-  color: #d5e8f7;
+  background: var(--panel);
+  color: var(--ink);
   text-decoration: none;
   font-size: 0.78rem;
   font-weight: 600;
@@ -142,16 +142,16 @@
 }
 
 .footer-link:focus-visible {
-  border-color: rgba(120, 179, 214, 0.75);
-  background: rgba(20, 39, 54, 0.95);
-  color: #ecf8ff;
+  border-color: var(--accent-line);
+  background: var(--item-bg);
+  color: var(--ink);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .footer-link:hover {
-    border-color: rgba(120, 179, 214, 0.75);
-    background: rgba(20, 39, 54, 0.95);
-    color: #ecf8ff;
+    border-color: var(--accent-line);
+    background: var(--item-bg);
+    color: var(--ink);
   }
 }
 
@@ -159,7 +159,7 @@
   margin: 0;
   font-family: "Spline Sans Mono", monospace;
   font-size: 0.76rem;
-  color: #9bb3c5;
+  color: var(--ink-muted);
   opacity: 0.8;
 }
 
@@ -169,7 +169,7 @@
   margin: 12px 20px;
   font-size: 0.82rem;
   line-height: 1.5;
-  color: #b8cedd;
+  color: var(--ink-muted);
 }
 
 .hug-rows {
@@ -189,7 +189,7 @@
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.07em;
-  color: #6a90a8;
+  color: var(--ink-muted);
 }
 
 .hug-row-content {
@@ -233,8 +233,8 @@
   height: 36px;
   border-radius: 10px;
   border: 1px solid var(--border);
-  background: rgba(9, 18, 27, 0.9);
-  color: #c8dff0;
+  background: var(--panel);
+  color: var(--ink);
   text-decoration: none;
   flex: 0 0 auto;
   transition:
@@ -245,17 +245,17 @@
 }
 
 a.social-badge:focus-visible {
-  border-color: rgba(120, 179, 214, 0.75);
-  background: rgba(20, 39, 54, 0.95);
-  color: #ecf8ff;
+  border-color: var(--accent-line);
+  background: var(--item-bg);
+  color: var(--ink);
   transform: translateY(-1px);
 }
 
 @media (hover: hover) and (pointer: fine) {
   a.social-badge:hover {
-    border-color: rgba(120, 179, 214, 0.75);
-    background: rgba(20, 39, 54, 0.95);
-    color: #ecf8ff;
+    border-color: var(--accent-line);
+    background: var(--item-bg);
+    color: var(--ink);
     transform: translateY(-1px);
   }
 }
